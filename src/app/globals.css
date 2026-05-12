@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --background: #fffaf8;
+  --foreground: #17181d;
+  --muted: #66666f;
+  --muted-strong: #34353d;
+  --border: rgba(235, 177, 173, 0.65);
+  --border-dark: rgba(255, 255, 255, 0.18);
+  --accent: #ff756b;
+  --accent-strong: #ff675c;
+  --soft: #fff1f0;
+  --soft-strong: #ffe4e1;
+  --header: #030403;
+  --surface: #ffffff;
+  --surface-muted: #fff7f5;
+  --shadow: 0 24px 70px rgba(22, 20, 19, 0.09);
+  --shadow-soft: 0 20px 45px rgba(255, 117, 107, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-soft: var(--soft);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "IBM Plex Sans", Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+::selection {
+  background: rgba(255, 117, 107, 0.22);
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+.site-background {
+  background:
+    radial-gradient(circle at top left, rgba(255, 117, 107, 0.1), transparent 24%),
+    radial-gradient(circle at right 15%, rgba(255, 224, 221, 0.75), transparent 18%),
+    linear-gradient(180deg, #fffaf8 0%, #ffffff 32%, #fff7f6 100%);
+}
+
+.section-soft {
+  background: var(--soft);
+}
+
+.section-card {
+  border: 1px solid rgba(235, 177, 173, 0.48);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.section-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(235, 177, 173, 0.78);
+  box-shadow: 0 28px 76px rgba(22, 20, 19, 0.11);
+}
+
+.section-pill {
+  border-radius: 999px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
