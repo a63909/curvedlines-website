@@ -10,7 +10,7 @@ export function SiteHeader() {
         <Link href="/" className="flex min-w-0 items-center gap-3">
           <div className="overflow-hidden rounded-xl border border-white/8 bg-black/50">
             <Image
-              src="/images/tilda/service-welding.png"
+              src="/images/optimized/service-welding.webp"
               alt={SITE.brandName}
               width={106}
               height={75}
@@ -80,7 +80,7 @@ export function SiteFooter() {
         <div>
           <div className="inline-flex overflow-hidden rounded-2xl border border-white/10 bg-black/50">
             <Image
-              src="/images/tilda/service-welding.png"
+              src="/images/optimized/service-welding.webp"
               alt={SITE.brandName}
               width={140}
               height={100}

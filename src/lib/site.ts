@@ -45,7 +45,7 @@ export const SERVICES = [
       "Работаем по договору и фиксированной смете",
     ],
     href: "/remont-kvartir-moskva",
-    image: "/images/tilda/repair-type-1.png",
+    image: "/images/optimized/repair-type-1.webp",
   },
   {
     title: "Реставрация ванн",
@@ -57,7 +57,7 @@ export const SERVICES = [
       "Установка сифона и бордюрной ленты",
     ],
     href: "/restavraciya-vann-moskva",
-    image: "/images/tilda/work-14.png",
+    image: "/images/optimized/work-14.webp",
   },
   {
     title: "Сварочные работы",
@@ -69,7 +69,7 @@ export const SERVICES = [
       "Надежные конструкции для дома и участка",
     ],
     href: "/svarochnye-raboty-moskva",
-    image: "/images/generated/welding-hero-realistic.png",
+    image: "/images/optimized/welding-hero-realistic.webp",
   },
 ];
 
@@ -224,7 +224,7 @@ export const PROJECTS = [
     term: "Под ключ",
     summary:
       "Интерьер в теплых нейтральных тонах с аккуратной отделкой, ровной геометрией и современной мебелью.",
-    image: "/images/tilda/repair-type-1.png",
+    image: "/images/optimized/repair-type-1.webp",
   },
   {
     title: "Светлая комната после обновления",
@@ -232,7 +232,7 @@ export const PROJECTS = [
     term: "Быстрый запуск",
     summary:
       "Чистовая отделка и визуально легкое пространство без перегруза деталями.",
-    image: "/images/tilda/repair-type-2.png",
+    image: "/images/optimized/repair-type-2.webp",
   },
   {
     title: "Уютная зона отдыха",
@@ -240,7 +240,7 @@ export const PROJECTS = [
     term: "Локальный ремонт",
     summary:
       "Комфортная небольшая комната с мягким светом, чистыми стенами и спокойной мебельной композицией.",
-    image: "/images/tilda/repair-type-3.png",
+    image: "/images/optimized/repair-type-3.webp",
   },
   {
     title: "Современный интерьер с подсветкой",
@@ -248,7 +248,7 @@ export const PROJECTS = [
     term: "Премиум-подача",
     summary:
       "Сложная декоративная стена, скрытый свет и аккуратная работа с фактурами.",
-    image: "/images/tilda/work-13.png",
+    image: "/images/optimized/work-13.webp",
   },
   {
     title: "Реставрация ванны жидким акрилом",
@@ -256,7 +256,7 @@ export const PROJECTS = [
     term: "Без демонтажа",
     summary:
       "Ровное наливное покрытие и аккуратная обработка сложных участков чаши.",
-    image: "/images/tilda/work-14.png",
+    image: "/images/optimized/work-14.webp",
   },
   {
     title: "Сварочные работы на объекте",
@@ -264,16 +264,16 @@ export const PROJECTS = [
     term: "По размерам",
     summary:
       "Надежные конструкции и точная подгонка под задачи заказчика.",
-    image: "/images/generated/welding-hero-realistic.png",
+    image: "/images/optimized/welding-hero-realistic.webp",
   },
 ];
 
 export const CERTIFICATES = [
-  "/images/tilda/work-01.png",
-  "/images/tilda/work-02.png",
-  "/images/tilda/work-03.png",
-  "/images/tilda/work-04.png",
-  "/images/tilda/work-05.png",
+  "/images/optimized/work-01.webp",
+  "/images/optimized/work-02.webp",
+  "/images/optimized/work-03.webp",
+  "/images/optimized/work-04.webp",
+  "/images/optimized/work-05.webp",
 ];
 
 export const PRICING = [
@@ -553,6 +553,6 @@ export const localBusinessSchema = {
     })),
   },
   sameAs: [SITE.whatsappHref],
-  image: absoluteUrl("/images/tilda/hero-interior.jpg"),
+  image: absoluteUrl("/images/optimized/hero-interior.webp"),
   priceRange: "$$",
 };

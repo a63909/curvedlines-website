@@ -56,30 +56,30 @@ function isExternalHref(href: string) {
 
 function getHeroImage(title: string) {
   if (title.toLowerCase().includes("ремонт квартир и реставрация ванн")) {
-    return "/images/tilda/hero-interior.jpg";
+    return "/images/optimized/hero-interior.webp";
   }
 
   if (title.toLowerCase().includes("реставрация")) {
-    return "/images/tilda/work-14.png";
+    return "/images/optimized/work-14.webp";
   }
 
   if (title.toLowerCase().includes("свароч")) {
-    return "/images/generated/welding-hero-realistic.png";
+    return "/images/optimized/welding-hero-realistic.webp";
   }
 
   if (title.toLowerCase().includes("контакт")) {
-    return "/images/tilda/repair-type-3.png";
+    return "/images/optimized/repair-type-3.webp";
   }
 
   if (title.toLowerCase().includes("стоим")) {
-    return "/images/tilda/repair-type-4.png";
+    return "/images/optimized/repair-type-4.webp";
   }
 
   if (title.toLowerCase().includes("ремонт квартир")) {
-    return "/images/tilda/hero-interior.jpg";
+    return "/images/optimized/hero-interior.webp";
   }
 
-  return "/images/tilda/hero-interior.jpg";
+  return "/images/optimized/hero-interior.webp";
 }
 
 function ActionLink({
@@ -255,6 +255,7 @@ export function ServicesSection() {
                 src={service.image}
                 alt={service.title}
                 fill
+                sizes="(min-width: 1024px) 33vw, 100vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
             </div>
@@ -373,7 +374,7 @@ export function BathRestorationSection() {
 
         <div className="group relative overflow-hidden rounded-[28px] shadow-[var(--shadow)]">
           <Image
-            src="/images/tilda/work-14.png"
+            src="/images/optimized/work-14.webp"
             alt="Реставрация ванн"
             width={1680}
             height={945}
@@ -397,7 +398,7 @@ export function WeldingSection() {
       <div className="mt-14 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="group overflow-hidden rounded-[28px] shadow-[var(--shadow)]">
           <Image
-            src="/images/generated/welding-hero-realistic.png"
+            src="/images/optimized/welding-hero-realistic.webp"
             alt="Сварочные работы"
             width={967}
             height={732}
@@ -515,6 +516,7 @@ export function ProjectsSection({ id }: { id?: string } = {}) {
                 src={project.image}
                 alt={project.title}
                 fill
+                sizes="(min-width: 640px) 340px, 285px"
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
             </div>
@@ -644,7 +646,7 @@ export function AboutSection() {
 
         <div className="overflow-hidden rounded-[28px] shadow-[var(--shadow)]">
           <Image
-            src="/images/tilda/about-company.png"
+            src="/images/optimized/about-company.webp"
             alt={SITE.brandName}
             width={785}
             height={556}
@@ -839,6 +841,7 @@ export function RelatedServicesSection({
                 src={service.image}
                 alt={service.title}
                 fill
+                sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
             </div>
