@@ -42,6 +42,13 @@ type SmtpConfig = {
   to: string;
 };
 
+type MaxConfig = {
+  apiBase: string;
+  token: string;
+  chatId?: string;
+  userId?: string;
+};
+
 function cleanText(value: unknown) {
   if (typeof value !== "string") {
     return "";
@@ -63,6 +70,7 @@ function sanitizeSensitiveText(value: string) {
     process.env.SMTP_PASS,
     process.env.SMTP_USER,
     process.env.MAX_BOT_TOKEN,
+    process.env.MAX_API_BASE,
     process.env.LEAD_WEBHOOK_URL,
   ].filter((secret): secret is string => Boolean(secret));
 
@@ -95,6 +103,20 @@ function formatLeadMessage(payload: NormalizedLead) {
   return lines.join("\n");
 }
 
+function formatMaxLeadMessage(payload: NormalizedLead) {
+  const lines = [
+    "Новая заявка с сайта curvedlines.ru",
+    "",
+    `Имя: ${payload.name}`,
+    `Телефон: ${payload.phone}`,
+    `Услуга: ${payload.service}`,
+    `Комментарий: ${payload.comment || "—"}`,
+    `Страница: ${payload.page || "—"}`,
+    `Время: ${payload.createdAt}`,
+  ];
+
+  return lines.join("\n");
+}
 function escapeHtml(value: string) {
   return value
     .replaceAll("&", "&amp;")
@@ -153,6 +175,10 @@ function logLeadDelivery(channel: DeliveryChannel, result: "success" | "fail") {
   console.info(`lead delivery channel: ${channel} result: ${result}`);
 }
 
+function logLeadDeliveryFinal(result: "success" | "fail") {
+  console.info(`lead delivery final result: ${result}`);
+}
+
 function getSmtpConfig(): { config?: SmtpConfig; missing: string[] } {
   const smtpHost = process.env.SMTP_HOST?.trim();
   const smtpPortRaw = process.env.SMTP_PORT?.trim();
@@ -199,6 +225,33 @@ function getSmtpConfig(): { config?: SmtpConfig; missing: string[] } {
   };
 }
 
+function getMaxConfig(): { config?: MaxConfig; error?: DeliveryError } {
+  const token = process.env.MAX_BOT_TOKEN?.trim();
+  const chatId = process.env.MAX_CHAT_ID?.trim();
+  const userId = process.env.MAX_USER_ID?.trim();
+
+  if (!token) {
+    return {};
+  }
+
+  if (!chatId && !userId) {
+    return {
+      error: {
+        channel: "max",
+        message: "Указан MAX_BOT_TOKEN, но не указан MAX_CHAT_ID или MAX_USER_ID.",
+      },
+    };
+  }
+
+  return {
+    config: {
+      apiBase: (process.env.MAX_API_BASE?.trim() || "https://platform-api.max.ru").replace(/\/+$/, ""),
+      token,
+      chatId: chatId || undefined,
+      userId: userId || undefined,
+    },
+  };
+}
 async function sendLeadWebhook(url: string, payload: NormalizedLead) {
   const webhookResponse = await fetch(url, {
     method: "POST",
@@ -220,38 +273,27 @@ async function sendLeadWebhook(url: string, payload: NormalizedLead) {
   }
 }
 
-async function sendLeadToMax({
-  token,
-  chatId,
-  userId,
-  message,
-}: {
-  token: string;
-  chatId?: string;
-  userId?: string;
-  message: string;
-}) {
+async function sendLeadToMax(config: MaxConfig, message: string) {
   const params = new URLSearchParams();
 
-  if (chatId) {
-    params.set("chat_id", chatId);
-  } else if (userId) {
-    params.set("user_id", userId);
+  if (config.chatId) {
+    params.set("chat_id", config.chatId);
+  } else if (config.userId) {
+    params.set("user_id", config.userId);
   } else {
     throw new Error("Не указан MAX_CHAT_ID или MAX_USER_ID.");
   }
 
   const maxResponse = await fetch(
-    `https://platform-api.max.ru/messages?${params.toString()}`,
+    `${config.apiBase}/messages?${params.toString()}`,
     {
       method: "POST",
       headers: {
-        Authorization: token,
+        Authorization: config.token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         text: message,
-        notify: true,
       }),
       cache: "no-store",
     },
@@ -267,7 +309,6 @@ async function sendLeadToMax({
     );
   }
 }
-
 async function sendLeadEmail(payload: NormalizedLead, config: SmtpConfig) {
   const transporter = nodemailer.createTransport({
     host: config.host,
@@ -289,17 +330,16 @@ async function sendLeadEmail(payload: NormalizedLead, config: SmtpConfig) {
 }
 
 function deliveryErrorMessage(errors: DeliveryError[], smtpMissing: string[]) {
-  if (process.env.NODE_ENV !== "production" && smtpMissing.length > 0) {
-    return `Заявка не дошла до приемника. Не заданы SMTP env: ${smtpMissing.join(", ")}.`;
-  }
-
   if (process.env.NODE_ENV !== "production" && errors.length > 0) {
     return `Заявка не дошла до приемника. Канал доставки: ${errors[0].channel}. Ошибка: ${errors[0].message}`;
   }
 
+  if (process.env.NODE_ENV !== "production" && smtpMissing.length > 0) {
+    return `Заявка не дошла до приемника. Не заданы SMTP env: ${smtpMissing.join(", ")}.`;
+  }
+
   return "Заявка не дошла до приемника. Проверьте настройки доставки заявок и попробуйте снова.";
 }
-
 export async function POST(request: Request) {
   let body: LeadPayload;
 
@@ -352,21 +392,21 @@ export async function POST(request: Request) {
   };
 
   const { config: smtpConfig, missing: smtpMissing } = getSmtpConfig();
+  const { config: maxConfig, error: maxConfigError } = getMaxConfig();
   const webhookUrl = process.env.LEAD_WEBHOOK_URL?.trim();
-  const maxBotToken = process.env.MAX_BOT_TOKEN?.trim();
-  const maxChatId = process.env.MAX_CHAT_ID?.trim();
-  const maxUserId = process.env.MAX_USER_ID?.trim();
   const deliveryErrors: DeliveryError[] = [];
+  const successMessage =
+    "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.";
+  let delivered = false;
+  let configuredChannels = 0;
 
   if (smtpConfig) {
+    configuredChannels += 1;
+
     try {
       await sendLeadEmail(payload, smtpConfig);
+      delivered = true;
       logLeadDelivery("email", "success");
-
-      return Response.json({
-        message:
-          "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.",
-      });
     } catch (error) {
       const safeErrorMessage = getSafeErrorMessage(
         error,
@@ -383,23 +423,46 @@ export async function POST(request: Request) {
       console.error(
         `lead delivery channel: email result: fail error code: ${safeErrorCode || "none"} message: ${safeErrorMessage}`,
       );
-
-      return Response.json(
-        { message: deliveryErrorMessage(deliveryErrors, []) },
-        { status: 502 },
-      );
     }
   }
 
-  if (webhookUrl) {
+  if (maxConfig) {
+    configuredChannels += 1;
+
+    try {
+      await sendLeadToMax(maxConfig, formatMaxLeadMessage(payload));
+      delivered = true;
+      logLeadDelivery("max", "success");
+    } catch (error) {
+      const safeErrorMessage = getSafeErrorMessage(
+        error,
+        "MAX delivery failed.",
+      );
+      const safeErrorCode = getSafeErrorCode(error);
+
+      logLeadDelivery("max", "fail");
+      deliveryErrors.push({
+        channel: "max",
+        message: safeErrorMessage,
+      });
+
+      console.error(
+        `lead delivery channel: max result: fail error code: ${safeErrorCode || "none"} message: ${safeErrorMessage}`,
+      );
+    }
+  } else if (maxConfigError) {
+    configuredChannels += 1;
+    logLeadDelivery("max", "fail");
+    deliveryErrors.push(maxConfigError);
+  }
+
+  if (!delivered && webhookUrl) {
+    configuredChannels += 1;
+
     try {
       await sendLeadWebhook(webhookUrl, payload);
+      delivered = true;
       logLeadDelivery("webhook", "success");
-
-      return Response.json({
-        message:
-          "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.",
-      });
     } catch (error) {
       logLeadDelivery("webhook", "fail");
       deliveryErrors.push({
@@ -409,36 +472,19 @@ export async function POST(request: Request) {
     }
   }
 
-  if (maxBotToken && (maxChatId || maxUserId)) {
-    try {
-      await sendLeadToMax({
-        token: maxBotToken,
-        chatId: maxChatId,
-        userId: maxUserId,
-        message: formatLeadMessage(payload),
-      });
-      logLeadDelivery("max", "success");
+  if (delivered) {
+    logLeadDeliveryFinal("success");
 
-      return Response.json({
-        message:
-          "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.",
-      });
-    } catch (error) {
-      logLeadDelivery("max", "fail");
-      deliveryErrors.push({
-        channel: "max",
-        message: getSafeErrorMessage(error, "MAX delivery failed."),
-      });
-    }
-  } else if (maxBotToken && !maxChatId && !maxUserId) {
-    logLeadDelivery("max", "fail");
-    deliveryErrors.push({
-      channel: "max",
-      message: "Указан MAX_BOT_TOKEN, но не указан MAX_CHAT_ID или MAX_USER_ID.",
+    return Response.json({
+      message: successMessage,
     });
   }
 
-  logLeadDelivery("none", "fail");
+  if (configuredChannels === 0) {
+    logLeadDelivery("none", "fail");
+  }
+
+  logLeadDeliveryFinal("fail");
 
   return Response.json(
     { message: deliveryErrorMessage(deliveryErrors, smtpMissing) },

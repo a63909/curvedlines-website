@@ -57,9 +57,10 @@ LEAD_WEBHOOK_URL=https://your-webhook-endpoint.example
 Дополнительно, если используется MAX:
 
 ```bash
+MAX_API_BASE=https://platform-api.max.ru
 MAX_BOT_TOKEN=your-max-bot-token
-MAX_CHAT_ID=123456789
-MAX_USER_ID=
+MAX_CHAT_ID=
+MAX_USER_ID=160207671
 ```
 
 Дополнительно, если используется email через SMTP:
@@ -119,6 +120,27 @@ curl.exe -X POST https://curvedlines.ru/api/lead ^
 -d "{\"name\":\"Тест\",\"phone\":\"+79999999999\",\"service\":\"Комплексный запрос\",\"message\":\"Проверка email-заявки\",\"page\":\"/\"}"
 ```
 
+## Доставка заявок в MAX
+
+MAX подключается как дополнительный канал доставки заявок: форма на сайте -> `POST /api/lead` -> email через SMTP и сообщение владельцу в MAX. Если SMTP и MAX настроены одновременно, заявка отправляется в оба канала. Заявка считается доставленной, если хотя бы один настроенный канал сработал успешно.
+
+MAX-переменные задаются в Vercel: Project -> Settings -> Environment Variables. После добавления или изменения env нужно сделать Redeploy проекта.
+
+Пример env без секретов:
+
+```bash
+MAX_API_BASE=https://platform-api.max.ru
+MAX_BOT_TOKEN=
+MAX_USER_ID=160207671
+MAX_CHAT_ID=
+```
+
+Правила:
+
+- `MAX_BOT_TOKEN` задавать только в Vercel Environment Variables.
+- `MAX_USER_ID=160207671` для отправки лично владельцу.
+- Если нужен чат, задайте `MAX_CHAT_ID`; при наличии `MAX_CHAT_ID` он имеет приоритет над `MAX_USER_ID`.
+- Токены и реальные секреты не коммитить.
 ## Vercel + Cloudflare DNS fix
 
 Канонический production-домен проекта: `https://curvedlines.ru`.
