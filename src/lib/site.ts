@@ -1,5 +1,22 @@
 import type { Metadata } from "next";
 
+export const WHATSAPP_PHONE = "79129378990";
+export const WHATSAPP_MESSAGE = "Здравствуйте! Хочу оставить заявку с сайта curvedlines.ru";
+
+function createWhatsAppLinks(phone: string, text: string) {
+  const encodedText = encodeURIComponent(text);
+  const href = `https://wa.me/${phone}?text=${encodedText}`;
+
+  return {
+    href,
+    androidIntentHref: `intent://send?phone=${phone}&text=${encodedText}#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url=${encodeURIComponent(href)};end`,
+  };
+}
+
+export const WHATSAPP_LINKS = createWhatsAppLinks(
+  WHATSAPP_PHONE,
+  WHATSAPP_MESSAGE,
+);
 export const SITE = {
   brandName: "Кривые Линии Design",
   businessName:
@@ -11,7 +28,7 @@ export const SITE = {
     "Занимаемся ремонтом квартир, реставрацией ванн и сварочными работами в Москве и Московской области. Работаем аккуратно, соблюдаем договоренности по срокам и доводим каждую задачу до готового результата.",
   phoneDisplay: "+7 (982) 221-92-69",
   phoneHref: "tel:+79822219269",
-  whatsappHref: "https://api.whatsapp.com/send?phone=79822219269",
+  whatsappHref: WHATSAPP_LINKS.href,
   whatsappLabel: "Написать в WhatsApp",
   region: "Москва и Московская область",
   hoursLabel: "Ежедневно с 09:00 до 21:00",
