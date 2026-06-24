@@ -1,19 +1,45 @@
 import nodemailer from "nodemailer";
 
+export const runtime = "nodejs";
+
 type LeadPayload = {
   name?: string;
   phone?: string;
+  service?: string;
   workType?: string;
+  message?: string;
   comment?: string;
+  page?: string;
+  [key: string]: unknown;
 };
 
 type NormalizedLead = {
   name: string;
   phone: string;
+  service: string;
   workType: string;
   comment: string;
+  message: string;
+  page: string;
   createdAt: string;
   source: string;
+};
+
+type DeliveryChannel = "email" | "webhook" | "max" | "none";
+
+type DeliveryError = {
+  channel: DeliveryChannel;
+  message: string;
+};
+
+type SmtpConfig = {
+  host: string;
+  port: number;
+  secure: boolean;
+  user: string;
+  pass: string;
+  from: string;
+  to: string;
 };
 
 function cleanText(value: unknown) {
@@ -32,15 +58,38 @@ function truncateErrorText(value: string) {
   return value.trim().slice(0, 300);
 }
 
+function sanitizeSensitiveText(value: string) {
+  const secrets = [
+    process.env.SMTP_PASS,
+    process.env.SMTP_USER,
+    process.env.MAX_BOT_TOKEN,
+    process.env.LEAD_WEBHOOK_URL,
+  ].filter((secret): secret is string => Boolean(secret));
+
+  return secrets.reduce(
+    (text, secret) => text.split(secret).join("[redacted]"),
+    value,
+  );
+}
+
+function formatLeadDate(date: Date) {
+  return new Intl.DateTimeFormat("ru-RU", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: "Europe/Moscow",
+  }).format(date);
+}
+
 function formatLeadMessage(payload: NormalizedLead) {
   const lines = [
     "Новая заявка с сайта",
+    "",
     `Имя: ${payload.name}`,
     `Телефон: ${payload.phone}`,
-    `Вид работ: ${payload.workType}`,
+    `Услуга: ${payload.service}`,
     `Комментарий: ${payload.comment || "—"}`,
-    `Источник: ${payload.source}`,
-    `Время: ${payload.createdAt}`,
+    `Страница: ${payload.page || "—"}`,
+    `Дата/время: ${payload.createdAt}`,
   ];
 
   return lines.join("\n");
@@ -59,27 +108,95 @@ function formatLeadHtml(payload: NormalizedLead) {
   const rows = [
     ["Имя", payload.name],
     ["Телефон", payload.phone],
-    ["Вид работ", payload.workType],
+    ["Услуга", payload.service],
     ["Комментарий", payload.comment || "—"],
-    ["Источник", payload.source],
-    ["Время", payload.createdAt],
+    ["Страница", payload.page || "—"],
+    ["Дата/время", payload.createdAt],
   ];
 
   const items = rows
     .map(
       ([label, value]) =>
-        `<tr><td style="padding:10px 14px;border:1px solid #e7dfd5;font-weight:600;background:#faf6f1;">${escapeHtml(label)}</td><td style="padding:10px 14px;border:1px solid #e7dfd5;">${escapeHtml(value)}</td></tr>`,
+        `<tr><td style="padding:10px 14px;border:1px solid #e7dfd5;font-weight:600;background:#faf6f1;vertical-align:top;">${escapeHtml(label)}</td><td style="padding:10px 14px;border:1px solid #e7dfd5;vertical-align:top;">${escapeHtml(value)}</td></tr>`,
     )
     .join("");
 
   return `
-    <div style="font-family:Arial,sans-serif;color:#1f1a16;">
-      <h2 style="margin:0 0 16px;">Новая заявка с сайта</h2>
+    <div style="font-family:Arial,sans-serif;color:#1f1a16;line-height:1.5;">
+      <h2 style="margin:0 0 16px;font-size:22px;">Новая заявка с сайта</h2>
       <table style="border-collapse:collapse;width:100%;max-width:720px;background:#fff;">
         ${items}
       </table>
     </div>
   `;
+}
+
+function getSafeErrorMessage(error: unknown, fallback: string) {
+  if (!(error instanceof Error)) {
+    return fallback;
+  }
+
+  return sanitizeSensitiveText(truncateErrorText(error.message || fallback));
+}
+
+function getSafeErrorCode(error: unknown) {
+  if (!(error instanceof Error) || !("code" in error)) {
+    return "";
+  }
+
+  const code = (error as { code?: unknown }).code;
+
+  return typeof code === "string" ? sanitizeSensitiveText(code) : "";
+}
+
+function logLeadDelivery(channel: DeliveryChannel, result: "success" | "fail") {
+  console.info(`lead delivery channel: ${channel} result: ${result}`);
+}
+
+function getSmtpConfig(): { config?: SmtpConfig; missing: string[] } {
+  const smtpHost = process.env.SMTP_HOST?.trim();
+  const smtpPortRaw = process.env.SMTP_PORT?.trim();
+  const smtpSecureRaw = process.env.SMTP_SECURE?.trim();
+  const smtpUser = process.env.SMTP_USER?.trim();
+  const smtpPass = process.env.SMTP_PASS?.trim();
+  const smtpFrom = process.env.SMTP_FROM?.trim();
+  const leadEmailTo = process.env.LEAD_EMAIL_TO?.trim();
+
+  const requiredEnv: Array<[string, string | undefined]> = [
+    ["SMTP_HOST", smtpHost],
+    ["SMTP_PORT", smtpPortRaw],
+    ["SMTP_SECURE", smtpSecureRaw],
+    ["SMTP_USER", smtpUser],
+    ["SMTP_PASS", smtpPass],
+    ["SMTP_FROM", smtpFrom],
+    ["LEAD_EMAIL_TO", leadEmailTo],
+  ];
+  const missing = requiredEnv
+    .filter(([, value]) => !value)
+    .map(([name]) => name);
+
+  if (missing.length > 0) {
+    return { missing };
+  }
+
+  const port = Number(smtpPortRaw);
+
+  if (!Number.isInteger(port) || port <= 0) {
+    return { missing: ["SMTP_PORT"] };
+  }
+
+  return {
+    config: {
+      host: smtpHost!,
+      port,
+      secure: smtpSecureRaw?.toLowerCase() === "true",
+      user: smtpUser!,
+      pass: smtpPass!,
+      from: smtpFrom!,
+      to: leadEmailTo!,
+    },
+    missing: [],
+  };
 }
 
 async function sendLeadWebhook(url: string, payload: NormalizedLead) {
@@ -151,51 +268,55 @@ async function sendLeadToMax({
   }
 }
 
-async function sendLeadEmail({
-  payload,
-  host,
-  port,
-  secure,
-  user,
-  pass,
-  to,
-  from,
-}: {
-  payload: NormalizedLead;
-  host: string;
-  port: number;
-  secure: boolean;
-  user: string;
-  pass: string;
-  to: string;
-  from: string;
-}) {
+async function sendLeadEmail(payload: NormalizedLead, config: SmtpConfig) {
   const transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure,
+    host: config.host,
+    port: config.port,
+    secure: config.secure,
     auth: {
-      user,
-      pass,
+      user: config.user,
+      pass: config.pass,
     },
   });
 
   await transporter.sendMail({
-    from,
-    to,
-    subject: `Новая заявка: ${payload.workType} — ${payload.phone}`,
+    from: config.from,
+    to: config.to,
+    subject: "Новая заявка с сайта curvedlines.ru",
     text: formatLeadMessage(payload),
     html: formatLeadHtml(payload),
   });
 }
 
+function deliveryErrorMessage(errors: DeliveryError[], smtpMissing: string[]) {
+  if (process.env.NODE_ENV !== "production" && smtpMissing.length > 0) {
+    return `Заявка не дошла до приемника. Не заданы SMTP env: ${smtpMissing.join(", ")}.`;
+  }
+
+  if (process.env.NODE_ENV !== "production" && errors.length > 0) {
+    return `Заявка не дошла до приемника. Канал доставки: ${errors[0].channel}. Ошибка: ${errors[0].message}`;
+  }
+
+  return "Заявка не дошла до приемника. Проверьте настройки доставки заявок и попробуйте снова.";
+}
+
 export async function POST(request: Request) {
-  const body = (await request.json()) as LeadPayload;
+  let body: LeadPayload;
+
+  try {
+    body = (await request.json()) as LeadPayload;
+  } catch {
+    return Response.json(
+      { message: "Передайте данные заявки в формате JSON." },
+      { status: 400 },
+    );
+  }
 
   const name = cleanText(body.name);
   const phone = normalizePhone(cleanText(body.phone));
-  const workType = cleanText(body.workType);
-  const comment = cleanText(body.comment);
+  const service = cleanText(body.service) || cleanText(body.workType);
+  const comment = cleanText(body.message) || cleanText(body.comment);
+  const page = cleanText(body.page);
 
   if (name.length < 2) {
     return Response.json(
@@ -211,7 +332,7 @@ export async function POST(request: Request) {
     );
   }
 
-  if (workType.length < 3) {
+  if (service.length < 3) {
     return Response.json(
       { message: "Выберите вид работ, чтобы мы правильно обработали заявку." },
       { status: 400 },
@@ -221,35 +342,70 @@ export async function POST(request: Request) {
   const payload: NormalizedLead = {
     name,
     phone,
-    workType,
+    service,
+    workType: service,
     comment,
-    createdAt: new Date().toISOString(),
+    message: comment,
+    page,
+    createdAt: formatLeadDate(new Date()),
     source: "website-form",
   };
 
+  const { config: smtpConfig, missing: smtpMissing } = getSmtpConfig();
   const webhookUrl = process.env.LEAD_WEBHOOK_URL?.trim();
   const maxBotToken = process.env.MAX_BOT_TOKEN?.trim();
   const maxChatId = process.env.MAX_CHAT_ID?.trim();
   const maxUserId = process.env.MAX_USER_ID?.trim();
-  const smtpHost = process.env.SMTP_HOST?.trim() || "smtp.yandex.ru";
-  const smtpPort = Number(process.env.SMTP_PORT?.trim() || "465");
-  const smtpSecure = (process.env.SMTP_SECURE?.trim() || "true") !== "false";
-  const smtpUser = process.env.SMTP_USER?.trim();
-  const smtpPass = process.env.SMTP_PASS?.trim();
-  const leadEmailTo = process.env.LEAD_EMAIL_TO?.trim() || "a639091@yandex.ru";
-  const smtpFrom =
-    process.env.SMTP_FROM?.trim() || smtpUser || "a639091@yandex.ru";
-  const deliveryErrors: string[] = [];
-  let deliveredSomewhere = false;
+  const deliveryErrors: DeliveryError[] = [];
+
+  if (smtpConfig) {
+    try {
+      await sendLeadEmail(payload, smtpConfig);
+      logLeadDelivery("email", "success");
+
+      return Response.json({
+        message:
+          "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.",
+      });
+    } catch (error) {
+      const safeErrorMessage = getSafeErrorMessage(
+        error,
+        "Email delivery failed.",
+      );
+      const safeErrorCode = getSafeErrorCode(error);
+
+      logLeadDelivery("email", "fail");
+      deliveryErrors.push({
+        channel: "email",
+        message: safeErrorMessage,
+      });
+
+      console.error(
+        `lead delivery channel: email result: fail error code: ${safeErrorCode || "none"} message: ${safeErrorMessage}`,
+      );
+
+      return Response.json(
+        { message: deliveryErrorMessage(deliveryErrors, []) },
+        { status: 502 },
+      );
+    }
+  }
 
   if (webhookUrl) {
     try {
       await sendLeadWebhook(webhookUrl, payload);
-      deliveredSomewhere = true;
+      logLeadDelivery("webhook", "success");
+
+      return Response.json({
+        message:
+          "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.",
+      });
     } catch (error) {
-      deliveryErrors.push(
-        error instanceof Error ? error.message : "Webhook delivery failed.",
-      );
+      logLeadDelivery("webhook", "fail");
+      deliveryErrors.push({
+        channel: "webhook",
+        message: getSafeErrorMessage(error, "Webhook delivery failed."),
+      });
     }
   }
 
@@ -261,60 +417,31 @@ export async function POST(request: Request) {
         userId: maxUserId,
         message: formatLeadMessage(payload),
       });
-      deliveredSomewhere = true;
+      logLeadDelivery("max", "success");
+
+      return Response.json({
+        message:
+          "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.",
+      });
     } catch (error) {
-      deliveryErrors.push(
-        error instanceof Error ? error.message : "MAX delivery failed.",
-      );
+      logLeadDelivery("max", "fail");
+      deliveryErrors.push({
+        channel: "max",
+        message: getSafeErrorMessage(error, "MAX delivery failed."),
+      });
     }
   } else if (maxBotToken && !maxChatId && !maxUserId) {
-    deliveryErrors.push("Указан MAX_BOT_TOKEN, но не указан MAX_CHAT_ID или MAX_USER_ID.");
+    logLeadDelivery("max", "fail");
+    deliveryErrors.push({
+      channel: "max",
+      message: "Указан MAX_BOT_TOKEN, но не указан MAX_CHAT_ID или MAX_USER_ID.",
+    });
   }
 
-  if (smtpUser && smtpPass && leadEmailTo) {
-    try {
-      await sendLeadEmail({
-        payload,
-        host: smtpHost,
-        port: smtpPort,
-        secure: smtpSecure,
-        user: smtpUser,
-        pass: smtpPass,
-        to: leadEmailTo,
-        from: smtpFrom,
-      });
-      deliveredSomewhere = true;
-    } catch (error) {
-      deliveryErrors.push(
-        error instanceof Error ? error.message : "Email delivery failed.",
-      );
-    }
-  } else if (smtpUser && !smtpPass) {
-    deliveryErrors.push("Указан SMTP_USER, но не указан SMTP_PASS.");
-  }
+  logLeadDelivery("none", "fail");
 
-  if (!webhookUrl && !maxBotToken && !smtpUser) {
-    console.info("[lead-request]", payload);
-  }
-
-  if (!deliveredSomewhere && deliveryErrors.length > 0) {
-    console.error("[lead-request:delivery-errors]", deliveryErrors);
-
-    return Response.json(
-      {
-        message:
-          "Заявка не дошла до приемника. Проверьте настройки webhook или MAX и попробуйте снова.",
-      },
-      { status: 502 },
-    );
-  }
-
-  if (deliveryErrors.length > 0) {
-    console.warn("[lead-request:partial-delivery]", deliveryErrors);
-  }
-
-  return Response.json({
-    message:
-      "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.",
-  });
+  return Response.json(
+    { message: deliveryErrorMessage(deliveryErrors, smtpMissing) },
+    { status: 502 },
+  );
 }
