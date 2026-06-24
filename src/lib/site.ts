@@ -326,7 +326,12 @@ export const PRICING = [
   },
 ];
 
-export const FAQ_ITEMS = [
+export type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Сколько времени займёт ремонт квартиры?",
     answer:
@@ -354,6 +359,74 @@ export const FAQ_ITEMS = [
   },
 ];
 
+export const APARTMENT_FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "Делаете ли ремонт под ключ?",
+    answer:
+      "Да, можно собрать полный цикл работ: демонтаж, подготовку, отделку, инженерные работы и финальную сдачу. Состав работ фиксируем после осмотра и согласования сметы.",
+  },
+  {
+    question: "Можно ли начать с выезда и сметы?",
+    answer:
+      "Да, обычно сначала обсуждаем задачу, смотрим объект или фото, после чего готовим понятный состав работ и ориентир по материалам.",
+  },
+  {
+    question: "Работаете ли по Москве и области?",
+    answer:
+      "Работаем по Москве и Московской области. Возможность выезда по конкретному адресу лучше уточнить заранее при заявке.",
+  },
+  {
+    question: "Можно ли делать ремонт поэтапно?",
+    answer:
+      "Да, если это удобно по бюджету или срокам, ремонт можно разбить на этапы. Порядок этапов обсуждаем до начала работ, чтобы не переделывать уже готовые участки.",
+  },
+];
+
+export const BATH_FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "Когда реставрация ванны лучше замены?",
+    answer:
+      "Реставрация подходит, когда чаша сохраняет форму и ее можно обновить без демонтажа. Если есть серьезные повреждения основания, сначала стоит оценить состояние ванны.",
+  },
+  {
+    question: "Сколько времени занимает работа?",
+    answer:
+      "Срок зависит от состояния покрытия и выбранного способа восстановления. Обычно перед работой уточняем подготовку, этапы и время, когда покрытием можно будет пользоваться.",
+  },
+  {
+    question: "Нужно ли демонтировать ванну?",
+    answer:
+      "В большинстве случаев ванну не нужно демонтировать. Мастер готовит поверхность на месте, закрывает рабочую зону и обновляет покрытие без замены чаши.",
+  },
+  {
+    question: "Как ухаживать за покрытием после реставрации?",
+    answer:
+      "После реставрации важно соблюдать рекомендации по первому использованию и уходу: избегать абразивов, резких ударов и агрессивной химии.",
+  },
+];
+
+export const WELDING_FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "Какие сварочные работы можно заказать?",
+    answer:
+      "Можно обсудить бытовые и строительные задачи: ремонт металлоконструкций, перила, навесы, ворота, каркасы, ограждения и локальные усиления.",
+  },
+  {
+    question: "Выезжаете ли по Москве и области?",
+    answer:
+      "Да, выезд возможен по Москве и Московской области. Адрес, доступ к объекту и формат работ лучше уточнить до согласования времени.",
+  },
+  {
+    question: "Можно ли заранее оценить стоимость?",
+    answer:
+      "Предварительно можно оценить задачу по фото, размерам и описанию. Точная смета зависит от металла, объема, сложности доступа и монтажа.",
+  },
+  {
+    question: "Работаете ли с небольшими бытовыми задачами?",
+    answer:
+      "Да, можно обратиться и с небольшой задачей. Если работа подходит по формату и выезду, подскажем порядок выполнения и ориентир по стоимости.",
+  },
+];
 export const SERVICE_AREAS = [
   "Москва",
   "Химки",
@@ -483,7 +556,9 @@ export function buildMetadata({
   keywords = [],
 }: MetadataOptions): Metadata {
   return {
-    title,
+    title: {
+      absolute: title,
+    },
     description,
     keywords,
     alternates: {
@@ -573,3 +648,45 @@ export const localBusinessSchema = {
   image: absoluteUrl("/images/optimized/hero-interior.webp"),
   priceRange: "$$",
 };
+
+export const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE.brandName,
+  url: SITE_URL,
+  inLanguage: "ru-RU",
+  publisher: {
+    "@type": "Organization",
+    name: SITE.legalName,
+  },
+};
+
+export function buildBreadcrumbSchema(
+  items: Array<{ name: string; path: string }>,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  };
+}
+
+export function buildFaqPageSchema(items: FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}

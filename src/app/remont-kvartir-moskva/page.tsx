@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 import {
   ContactsSection,
   FaqSection,
@@ -8,24 +10,46 @@ import {
   RelatedServicesSection,
   RepairTypesSection,
 } from "@/components/site-sections";
-import { APARTMENT_FEATURES, buildMetadata } from "@/lib/site";
+import {
+  APARTMENT_FAQ_ITEMS,
+  APARTMENT_FEATURES,
+  buildBreadcrumbSchema,
+  buildFaqPageSchema,
+  buildMetadata,
+} from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Ремонт квартир в Москве и Московской области",
+  title:
+    "Ремонт квартир под ключ в Москве и МО — Кривые Линии Design",
   description:
-    "Ремонт квартир в Москве и МО: косметический, капитальный и под ключ. Поможем с расчетом, материалами, сроками и поэтапным выполнением работ.",
+    "Ремонт квартир под ключ в Москве и Московской области: демонтаж, отделка, электрика, сантехника, плитка, смета и договор. Оставьте заявку на выезд мастера.",
   path: "/remont-kvartir-moskva",
   keywords: [
     "ремонт квартир москва",
-    "ремонт квартиры под ключ москва",
-    "капитальный ремонт квартиры москва",
-    "косметический ремонт квартиры московская область",
+    "ремонт квартир под ключ москва",
+    "ремонт квартир московская область",
+    "ремонт квартир под ключ московская область",
   ],
 });
+
+const apartmentRepairSchema = [
+  buildBreadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Ремонт квартир", path: "/remont-kvartir-moskva" },
+  ]),
+  buildFaqPageSchema(APARTMENT_FAQ_ITEMS),
+];
 
 export default function ApartmentRepairPage() {
   return (
     <main className="flex-1 pb-24">
+      <Script
+        id="apartment-repair-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(apartmentRepairSchema),
+        }}
+      />
       <HeroSection
         eyebrow="Ремонт квартир"
         title="Ремонт квартир в Москве и Московской области"
@@ -56,7 +80,7 @@ export default function ApartmentRepairPage() {
       <RepairTypesSection />
       <ProcessSection />
       <PriceFactorsSection />
-      <FaqSection />
+      <FaqSection items={APARTMENT_FAQ_ITEMS} />
       <RelatedServicesSection currentHref="/remont-kvartir-moskva" />
       <ContactsSection defaultWorkType="Ремонт квартиры" />
     </main>

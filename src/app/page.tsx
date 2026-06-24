@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 import {
   AboutSection,
   AdvantagesSection,
@@ -13,16 +15,17 @@ import {
   ServicesSection,
   WeldingSection,
 } from "@/components/site-sections";
-import { SITE, buildMetadata } from "@/lib/site";
+import { FAQ_ITEMS, SITE, buildFaqPageSchema, buildMetadata } from "@/lib/site";
 
 export const metadata = buildMetadata({
   title:
-    "Ремонт квартир, реставрация ванн и сварочные работы в Москве и Московской области",
+    "Кривые Линии Design — ремонт квартир, реставрация ванн и сварочные работы в Москве",
   description:
-    "Ремонт квартир под ключ, реставрация ванн жидким акрилом и литьевым мрамором, а также сварочные работы в Москве и МО. Выезд, смета, договор и аккуратное выполнение работ.",
+    "Ремонт квартир под ключ, реставрация ванн жидким акрилом и сварочные работы в Москве и Московской области. Выезд, смета, договор, аккуратное выполнение.",
   path: "/",
   keywords: [
     "ремонт квартир москва",
+    "ремонт квартир под ключ москва",
     "реставрация ванн москва",
     "сварочные работы москва",
     "ремонт квартир московская область",
@@ -32,6 +35,13 @@ export const metadata = buildMetadata({
 export default function Home() {
   return (
     <main className="flex-1 pb-24">
+      <Script
+        id="home-faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildFaqPageSchema(FAQ_ITEMS)),
+        }}
+      />
       <HeroSection
         eyebrow="Ремонт, ванны, сварка"
         title="Ремонт квартир и реставрация ванн в Москве и МО"

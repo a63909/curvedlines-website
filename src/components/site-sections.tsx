@@ -50,6 +50,10 @@ type ContactsSectionProps = {
   description?: string;
 };
 
+type FaqSectionProps = {
+  items?: Array<{ question: string; answer: string }>;
+};
+
 function isExternalHref(href: string) {
   return href.startsWith("http://") || href.startsWith("https://");
 }
@@ -658,7 +662,7 @@ export function AboutSection() {
   );
 }
 
-export function FaqSection() {
+export function FaqSection({ items = FAQ_ITEMS }: FaqSectionProps = {}) {
   return (
     <SectionShell id="faq">
       <SectionHeading
@@ -668,7 +672,7 @@ export function FaqSection() {
         centered
       />
       <div className="mx-auto mt-14 max-w-4xl">
-        {FAQ_ITEMS.map((item, index) => (
+        {items.map((item, index) => (
           <details
             key={item.question}
             className={`group ${index === 0 ? "border-t" : ""} border-b border-[color:var(--border)] py-6`}

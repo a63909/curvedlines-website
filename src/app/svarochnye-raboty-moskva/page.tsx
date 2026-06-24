@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 import {
   ContactsSection,
   FaqSection,
@@ -8,24 +10,46 @@ import {
   RelatedServicesSection,
   WeldingSection,
 } from "@/components/site-sections";
-import { WELDING_FEATURES, buildMetadata } from "@/lib/site";
+import {
+  WELDING_FAQ_ITEMS,
+  WELDING_FEATURES,
+  buildBreadcrumbSchema,
+  buildFaqPageSchema,
+  buildMetadata,
+} from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Сварочные работы в Москве и Московской области",
+  title:
+    "Сварочные работы в Москве и Московской области — Кривые Линии Design",
   description:
-    "Сварочные работы в Москве и МО: перила, ворота, навесы, каркасы, ограждения и другие металлоконструкции по размерам с выездом и монтажом.",
+    "Сварочные работы в Москве и МО: бытовые и строительные задачи, ремонт металлоконструкций, аккуратный выезд мастера и предварительная оценка работ.",
   path: "/svarochnye-raboty-moskva",
   keywords: [
     "сварочные работы москва",
-    "сварщик москва",
-    "изготовление металлоконструкций москва",
     "сварочные работы московская область",
+    "ремонт металлоконструкций москва",
+    "сварщик москва",
   ],
 });
+
+const weldingSchema = [
+  buildBreadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Сварочные работы", path: "/svarochnye-raboty-moskva" },
+  ]),
+  buildFaqPageSchema(WELDING_FAQ_ITEMS),
+];
 
 export default function WeldingPage() {
   return (
     <main className="flex-1 pb-24">
+      <Script
+        id="welding-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(weldingSchema),
+        }}
+      />
       <HeroSection
         eyebrow="Сварочные работы"
         title="Сварочные работы в Москве и Московской области"
@@ -56,7 +80,7 @@ export default function WeldingPage() {
       <WeldingSection />
       <ProjectsSection id="projects" />
       <PriceFactorsSection />
-      <FaqSection />
+      <FaqSection items={WELDING_FAQ_ITEMS} />
       <RelatedServicesSection currentHref="/svarochnye-raboty-moskva" />
       <ContactsSection defaultWorkType="Сварочные работы" />
     </main>

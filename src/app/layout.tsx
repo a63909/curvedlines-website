@@ -6,7 +6,7 @@ import {
   SiteFooter,
   SiteHeader,
 } from "@/components/site-layout";
-import { SITE, SITE_URL, localBusinessSchema } from "@/lib/site";
+import { SITE, SITE_URL, localBusinessSchema, websiteSchema } from "@/lib/site";
 
 import "./globals.css";
 
@@ -36,6 +36,13 @@ export default function RootLayout({
           {children}
           <SiteFooter />
         </div>
+        <Script
+          id="website-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
+          }}
+        />
         <Script
           id="local-business-schema"
           type="application/ld+json"

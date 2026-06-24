@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 import {
   ContactsSection,
   FaqSection,
@@ -5,12 +7,18 @@ import {
   PriceFactorsSection,
   PricingSection,
 } from "@/components/site-sections";
-import { buildMetadata } from "@/lib/site";
+import {
+  FAQ_ITEMS,
+  buildBreadcrumbSchema,
+  buildFaqPageSchema,
+  buildMetadata,
+} from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Цены на ремонт квартир, реставрацию ванн и сварочные работы",
+  title:
+    "Цены на ремонт, реставрацию ванн и сварочные работы — Кривые Линии Design",
   description:
-    "Цены на ремонт квартир, реставрацию ванн и сварочные работы в Москве и МО. Объясняем, из чего складывается стоимость и когда нужен замер.",
+    "Ориентиры по стоимости ремонта квартир, реставрации ванн и сварочных работ. Итоговая цена зависит от объёма, материалов, состояния объекта и выезда мастера.",
   path: "/ceni",
   keywords: [
     "цены на ремонт квартир москва",
@@ -19,9 +27,24 @@ export const metadata = buildMetadata({
   ],
 });
 
+const pricesSchema = [
+  buildBreadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Цены", path: "/ceni" },
+  ]),
+  buildFaqPageSchema(FAQ_ITEMS),
+];
+
 export default function PricesPage() {
   return (
     <main className="flex-1 pb-24">
+      <Script
+        id="prices-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(pricesSchema),
+        }}
+      />
       <HeroSection
         eyebrow="Стоимость"
         title="Стоимость работ по ремонту, реставрации ванн и сварке"
@@ -45,7 +68,7 @@ export default function PricesPage() {
       />
       <PricingSection />
       <PriceFactorsSection />
-      <FaqSection />
+      <FaqSection items={FAQ_ITEMS} />
       <ContactsSection defaultWorkType="Комплексный запрос" />
     </main>
   );

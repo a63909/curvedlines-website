@@ -1,25 +1,45 @@
+import Script from "next/script";
+
 import {
   ContactsSection,
   FeatureBand,
   HeroSection,
 } from "@/components/site-sections";
-import { SERVICE_AREAS, SITE, buildMetadata } from "@/lib/site";
+import {
+  SERVICE_AREAS,
+  SITE,
+  buildBreadcrumbSchema,
+  buildMetadata,
+} from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Контакты: ремонт квартир, реставрация ванн и сварочные работы",
+  title:
+    "Контакты Кривые Линии Design — заявки на ремонт, ванны и сварочные работы",
   description:
-    "Контакты по ремонту квартир, реставрации ванн и сварочным работам в Москве и Московской области. Телефон, WhatsApp, график связи и форма заявки.",
+    "Связаться с Кривые Линии Design: заявка на ремонт квартир, реставрацию ванн и сварочные работы в Москве и Московской области. Телефон, WhatsApp и форма заявки.",
   path: "/kontakty",
   keywords: [
     "контакты ремонт квартир москва",
-    "телефон реставрация ванн москва",
+    "заявка на реставрацию ванн москва",
     "контакты сварочные работы москва",
   ],
 });
 
+const contactsSchema = buildBreadcrumbSchema([
+  { name: "Главная", path: "/" },
+  { name: "Контакты", path: "/kontakty" },
+]);
+
 export default function ContactsPage() {
   return (
     <main className="flex-1 pb-24">
+      <Script
+        id="contacts-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(contactsSchema),
+        }}
+      />
       <HeroSection
         eyebrow="Контакты"
         title="Связь по ремонту квартир, реставрации ванн и сварочным работам"

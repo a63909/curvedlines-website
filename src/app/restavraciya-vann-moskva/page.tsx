@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 import {
   BathRestorationSection,
   ContactsSection,
@@ -7,24 +9,47 @@ import {
   PricingSection,
   RelatedServicesSection,
 } from "@/components/site-sections";
-import { BATH_FEATURES, SITE, buildMetadata } from "@/lib/site";
+import {
+  BATH_FAQ_ITEMS,
+  BATH_FEATURES,
+  SITE,
+  buildBreadcrumbSchema,
+  buildFaqPageSchema,
+  buildMetadata,
+} from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Реставрация ванн в Москве и Московской области",
+  title:
+    "Реставрация ванн в Москве жидким акрилом — Кривые Линии Design",
   description:
-    "Реставрация ванн в Москве и МО: жидкий акрил, литьевой мрамор, восстановление сколов и изношенной эмали без замены чаши. Подскажем подходящий способ и рассчитаем стоимость.",
+    "Реставрация ванн жидким акрилом и литьевым мрамором в Москве и МО. Обновление покрытия без демонтажа, аккуратная подготовка и консультация по уходу.",
   path: "/restavraciya-vann-moskva",
   keywords: [
     "реставрация ванн москва",
+    "реставрация ванн жидким акрилом москва",
     "жидкий акрил ванна москва",
-    "литьевой мрамор ванна москва",
-    "восстановление ванны московская область",
+    "реставрация ванн московская область",
   ],
 });
+
+const bathRestorationSchema = [
+  buildBreadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Реставрация ванн", path: "/restavraciya-vann-moskva" },
+  ]),
+  buildFaqPageSchema(BATH_FAQ_ITEMS),
+];
 
 export default function BathRestorationPage() {
   return (
     <main className="flex-1 pb-24">
+      <Script
+        id="bath-restoration-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(bathRestorationSchema),
+        }}
+      />
       <HeroSection
         eyebrow="Реставрация ванн"
         title="Реставрация ванн в Москве и Московской области"
@@ -54,7 +79,7 @@ export default function BathRestorationPage() {
       />
       <BathRestorationSection />
       <PricingSection />
-      <FaqSection />
+      <FaqSection items={BATH_FAQ_ITEMS} />
       <RelatedServicesSection currentHref="/restavraciya-vann-moskva" />
       <ContactsSection defaultWorkType="Реставрация ванны" />
     </main>
