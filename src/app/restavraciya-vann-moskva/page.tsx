@@ -7,7 +7,7 @@ import {
   PricingSection,
   RelatedServicesSection,
 } from "@/components/site-sections";
-import { BATH_FEATURES, buildMetadata } from "@/lib/site";
+import { BATH_FEATURES, SITE, buildMetadata } from "@/lib/site";
 
 export const metadata = buildMetadata({
   title: "Реставрация ванн в Москве и Московской области",
@@ -44,7 +44,7 @@ export default function BathRestorationPage() {
         primaryLabel="Оставить заявку"
         primaryHref="#contacts"
         secondaryLabel="Открыть WhatsApp"
-        secondaryHref="https://wa.me/79822219269"
+        secondaryHref={SITE.whatsappHref}
       />
       <FeatureBand
         eyebrow="Преимущества услуги"

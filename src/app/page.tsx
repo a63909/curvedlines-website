@@ -13,7 +13,7 @@ import {
   ServicesSection,
   WeldingSection,
 } from "@/components/site-sections";
-import { buildMetadata } from "@/lib/site";
+import { SITE, buildMetadata } from "@/lib/site";
 
 export const metadata = buildMetadata({
   title:
@@ -51,7 +51,7 @@ export default function Home() {
         primaryLabel="Оставить заявку"
         primaryHref="#contacts"
         secondaryLabel="Написать в WhatsApp"
-        secondaryHref="https://api.whatsapp.com/send?phone=79822219269"
+        secondaryHref={SITE.whatsappHref}
       />
       <ServicesSection />
       <RepairTypesSection />
