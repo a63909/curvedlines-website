@@ -2,6 +2,7 @@
 
 import { type FormEvent, useState, useTransition } from "react";
 
+import { reachMetrikaGoal } from "@/lib/metrika";
 import { SERVICE_OPTIONS, SITE } from "@/lib/site";
 
 type LeadFormProps = {
@@ -75,6 +76,7 @@ export function LeadForm({ defaultWorkType }: LeadFormProps) {
           payload.message ??
           "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.",
       });
+      reachMetrikaGoal("lead_submit_success");
       setForm(makeInitialState(defaultWorkType));
     } catch (error) {
       setResult({

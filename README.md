@@ -141,6 +141,23 @@ MAX_CHAT_ID=
 - `MAX_USER_ID=160207671` для отправки лично владельцу.
 - Если нужен чат, задайте `MAX_CHAT_ID`; при наличии `MAX_CHAT_ID` он имеет приоритет над `MAX_USER_ID`.
 - Токены и реальные секреты не коммитить.
+
+## Яндекс Метрика
+
+Счетчик подключается только если задан public env:
+
+```bash
+NEXT_PUBLIC_YANDEX_METRIKA_ID=110396274
+```
+
+Переменная задается в Vercel: Project -> Settings -> Environment Variables. После добавления или изменения env нужно сделать Redeploy проекта.
+
+Цели должны быть заранее созданы в интерфейсе Яндекс Метрики:
+
+- `lead_submit_success` — успешная заявка с формы.
+- `phone_click` — клик по телефону.
+- `whatsapp_click` — клик по WhatsApp.
+
 ## Vercel + Cloudflare DNS fix
 
 Канонический production-домен проекта: `https://curvedlines.ru`.

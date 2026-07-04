@@ -6,6 +6,8 @@ import {
   SiteFooter,
   SiteHeader,
 } from "@/components/site-layout";
+import { MetrikaClickTracker } from "@/components/metrika-click-tracker";
+import { YandexMetrika } from "@/components/yandex-metrika";
 import { SITE, SITE_URL, localBusinessSchema, websiteSchema } from "@/lib/site";
 
 import "./globals.css";
@@ -31,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className="h-full antialiased">
       <body className="min-h-full bg-background text-foreground">
+        <MetrikaClickTracker />
         <div className="site-background flex min-h-full flex-col">
           <SiteHeader />
           {children}
@@ -50,6 +53,7 @@ export default function RootLayout({
             __html: JSON.stringify(localBusinessSchema),
           }}
         />
+        <YandexMetrika />
       </body>
     </html>
   );
