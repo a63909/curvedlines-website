@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   },
   description: SITE.description,
   applicationName: SITE.brandName,
+  verification: {
+    google: "nhUgk59idJHomU_3l1jREJuF-GJof6IHBNR09yQYoCA",
+  },
   formatDetection: {
     telephone: false,
   },
