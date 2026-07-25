@@ -1,80 +1,78 @@
-import Script from "next/script";
+﻿import type { Metadata } from "next";
 
-import {
-  AboutSection,
-  AdvantagesSection,
-  BathRestorationSection,
-  CertificatesSection,
-  ContactsSection,
-  FaqSection,
-  HeroSection,
-  PricingSection,
-  ProcessSection,
-  ProjectsSection,
-  RepairTypesSection,
-  ServicesSection,
-  WeldingSection,
-} from "@/components/site-sections";
-import { FAQ_ITEMS, SITE, buildFaqPageSchema, buildMetadata } from "@/lib/site";
+import { SITE } from "@/lib/site";
 
-export const metadata = buildMetadata({
-  title:
-    "Кривые Линии Design — ремонт квартир, реставрация ванн и сварочные работы в Москве",
+export const metadata: Metadata = {
+  title: "Кривые Линии — сайт обновляется",
   description:
-    "Ремонт квартир под ключ, реставрация ванн жидким акрилом и сварочные работы в Москве и Московской области. Выезд, смета, договор, аккуратное выполнение.",
-  path: "/",
-  keywords: [
-    "ремонт квартир москва",
-    "ремонт квартир под ключ москва",
-    "реставрация ванн москва",
-    "сварочные работы москва",
-    "ремонт квартир московская область",
-  ],
-});
+    "Мы обновляем сайт «Кривые Линии». По вопросам ремонта, реставрации ванн и сварочных работ свяжитесь с нами по телефону или в WhatsApp.",
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: "Кривые Линии — сайт обновляется",
+    description: "Новая версия сайта уже в работе.",
+    url: "https://curvedlines.ru",
+    siteName: "Кривые Линии",
+    locale: "ru_RU",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Кривые Линии — сайт обновляется",
+    description: "Новая версия сайта уже в работе.",
+    images: ["/og.png"],
+  },
+};
+
+const directions = ["Ремонт квартир", "Реставрация ванн", "Сварочные работы"];
 
 export default function Home() {
   return (
-    <main className="flex-1 pb-24">
-      <Script
-        id="home-faq-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(buildFaqPageSchema(FAQ_ITEMS)),
-        }}
-      />
-      <HeroSection
-        eyebrow="Ремонт, ванны, сварка"
-        title="Ремонт квартир и реставрация ванн в Москве и МО"
-        description="Полный спектр работ — от косметического ремонта до «под ключ», реставрация ванн и надежные сварочные конструкции."
-        bullets={[
-          "Выезд по Москве и области",
-          "Работа по договору",
-          "Фиксированная смета",
-          "Аккуратные мастера",
-        ]}
-        stats={[
-          { value: "3 услуги", label: "Ремонт, реставрация ванн и сварочные работы" },
-          { value: "09:00–21:00", label: "Ежедневно на связи по телефону и в WhatsApp" },
-          { value: "Москва + МО", label: "Выезжаем по городу и Московской области" },
-          { value: "Под ключ", label: "Берем как локальные, так и комплексные задачи" },
-        ]}
-        primaryLabel="Оставить заявку"
-        primaryHref="#contacts"
-        secondaryLabel="Написать в WhatsApp"
-        secondaryHref={SITE.whatsappHref}
-      />
-      <ServicesSection />
-      <RepairTypesSection />
-      <BathRestorationSection />
-      <WeldingSection />
-      <AdvantagesSection />
-      <ProcessSection />
-      <ProjectsSection />
-      <PricingSection />
-      <CertificatesSection />
-      <AboutSection />
-      <FaqSection />
-      <ContactsSection />
+    <main className="holding-page">
+      <div className="holding-noise" aria-hidden="true" />
+      <div className="holding-curve holding-curve-one" aria-hidden="true" />
+      <div className="holding-curve holding-curve-two" aria-hidden="true" />
+
+      <header className="holding-header">
+        <a className="holding-brand" href="/" aria-label="Кривые Линии">
+          <span className="holding-brand-mark" aria-hidden="true">КЛ</span>
+          <span>
+            <strong>Кривые Линии</strong>
+            <small>Москва · Московская область</small>
+          </span>
+        </a>
+        <span className="holding-status"><i aria-hidden="true" />сайт обновляется</span>
+      </header>
+
+      <section className="holding-content">
+        <p className="holding-kicker">Новая версия уже в работе</p>
+        <h1>Наводим<br /><em>красивый порядок.</em></h1>
+        <p className="holding-lead">
+          Скоро здесь появится новый сайт. А пока мы продолжаем работать и принимать ваши заявки.
+        </p>
+        <div className="holding-actions">
+          <a className="holding-button holding-button-primary" href={SITE.phoneHref}>
+            Позвонить <span aria-hidden="true">↗</span>
+          </a>
+          <a className="holding-button holding-button-secondary" href={SITE.whatsappHref} target="_blank" rel="noreferrer">
+            Написать в WhatsApp <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <footer className="holding-footer">
+        <div className="holding-directions" aria-label="Направления работы">
+          {directions.map((direction, index) => (
+            <span key={direction}><b>0{index + 1}</b>{direction}</span>
+          ))}
+        </div>
+        <div className="holding-contact">
+          <span>Ежедневно · 09:00—21:00</span>
+          <a href={SITE.phoneHref}>{SITE.phoneDisplay}</a>
+        </div>
+      </footer>
     </main>
   );
 }
+
+
