@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import Link from "next/link";
 
 import { SITE } from "@/lib/site";
 
@@ -34,13 +35,13 @@ export default function Home() {
       <div className="holding-curve holding-curve-two" aria-hidden="true" />
 
       <header className="holding-header">
-        <a className="holding-brand" href="/" aria-label="Кривые Линии">
+        <Link className="holding-brand" href="/" aria-label="Кривые Линии">
           <span className="holding-brand-mark" aria-hidden="true">КЛ</span>
           <span>
             <strong>Кривые Линии</strong>
             <small>Москва · Московская область</small>
           </span>
-        </a>
+        </Link>
         <span className="holding-status"><i aria-hidden="true" />сайт обновляется</span>
       </header>
 
