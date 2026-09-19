@@ -5,7 +5,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$root = "$env:USERPROFILE\KL_WEB"
+$root = "C:\Users\LenovoC440\KL_WEB"
 $release = "$root\release"
 $node = "$root\runtime\node\node.exe"
 $runner = "$root\run-klweb-standalone.ps1"
@@ -22,7 +22,7 @@ $runnerContent = @'
 param([int]$Port = 3100)
 
 $ErrorActionPreference = "Continue"
-$root = "$env:USERPROFILE\KL_WEB"
+$root = "C:\Users\LenovoC440\KL_WEB"
 $release = "$root\release"
 $node = "$root\runtime\node\node.exe"
 $outLog = "$root\logs\next.out.log"
