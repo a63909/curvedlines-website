@@ -3,6 +3,7 @@ import { copy } from './src/copy.mjs';
 
 const SITE = 'https://mayday.colorchain.ru/';
 const template = await readFile(new URL('./src/template.html', import.meta.url), 'utf8');
+const stylesheet = (await readFile(new URL('./dist/style.css', import.meta.url), 'utf8')).trimEnd();
 const escape = value => String(value).replace(/[&<>"']/g, ch => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[ch]));
@@ -26,13 +27,14 @@ for (const lang of ['ru', 'en']) {
           <h3>${escape(title)}</h3><p>${escape(body)}</p>
         </article>`).join('\n');
   const html = template.replace(/\{\{(\w+)\}\}/g, (_, key) => {
+    if (key === 'pageStyles') return stylesheet.replaceAll('url("./assets/', `url("${root}assets/`);
     if (key === 'featuresHtml') return featuresHtml;
     if (typeof values[key] !== 'string') throw new Error('Missing copy: ' + lang + '/' + key);
     return escape(values[key]);
   });
   const out = new URL(english ? './dist/en/' : './dist/', import.meta.url);
   await mkdir(out, { recursive: true });
-  await writeFile(new URL('index.html', out), html + '\n');
+  await writeFile(new URL('index.html', out), html.trimEnd() + '\n');
 }
 
 const uiKeys = ['androidFile', 'macFile', 'copy', 'copied', 'shareError'];
