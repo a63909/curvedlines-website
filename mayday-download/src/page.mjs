@@ -1,4 +1,4 @@
-export function setupPage({ androidRelease, macRelease, testFlightInvite }, ui, releaseBase) {
+export function setupPage({ androidRelease, macRelease, testFlightInvite }, ui, releaseBase, optionalFonts = []) {
   const byId = id => document.getElementById(id);
   const url = new URL(location.href);
   const lang = document.documentElement.lang === 'en' ? 'en' : 'ru';
@@ -101,4 +101,26 @@ export function setupPage({ androidRelease, macRelease, testFlightInvite }, ui, 
       if (error.name !== 'AbortError') byId('share-status').textContent = text.shareError;
     }
   });
+
+  if (optionalFonts.length && typeof FontFace === 'function' && typeof AbortController === 'function') {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        for (const { family, path, descriptors } of optionalFonts) {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 3000);
+          fetch(path, { signal: controller.signal })
+            .then(response => {
+              if (!response.ok) throw new Error('Font unavailable');
+              return response.arrayBuffer();
+            })
+            .then(bytes => new FontFace(family, bytes, descriptors).load())
+            .then(face => document.fonts.add(face))
+            .catch(() => {
+              // The system font remains readable if an optional font cannot be loaded.
+            })
+            .finally(() => clearTimeout(timeout));
+        }
+      }, 0);
+    }, { once: true });
+  }
 }
