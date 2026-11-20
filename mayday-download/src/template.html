@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="{{description}}">
+  <meta name="theme-color" content="#fffcfb">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="{{canonical}}">
+  <meta property="og:locale" content="{{locale}}">
+  <meta property="og:locale:alternate" content="{{alternateLocale}}">
+  <meta property="og:image" content="{{shareImage}}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{shareAlt}}">
+  <title>{{title}}</title>
+  <link rel="canonical" href="{{canonical}}">
+  <link rel="alternate" hreflang="ru" href="https://mayday.colorchain.ru/">
+  <link rel="alternate" hreflang="en" href="https://mayday.colorchain.ru/en/">
+  <link rel="alternate" hreflang="x-default" href="https://mayday.colorchain.ru/">
+  <link rel="icon" href="{{root}}assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="{{root}}style.css?v=mayday-4">
+</head>
+<body>
+  <a class="skip" href="#main">{{skip}}</a>
+  <header class="shell header">
+    <a class="brand" href="./" aria-label="{{home}}"><span class="mark"><img src="{{root}}assets/mayday-mark.svg" alt="" width="24" height="24"></span>Mayday</a>
+    <nav aria-label="{{navigation}}"><a href="#network">{{network}}</a><a href="#bots">{{builders}}</a><a href="#install">{{downloads}}</a></nav>
+    <a class="language" id="language" href="{{languageHref}}" lang="{{otherLang}}" hreflang="{{otherLang}}">{{language}}</a>
+  </header>
+
+  <main id="main">
+    <aside class="shell referral" id="bankomet" hidden>
+      <div><strong>{{referralHeading}}</strong><p>{{referralBody}}</p></div>
+      <a href="https://153.76.172.25:8447/?__mobile=1#mayday-install-return">{{referralLink}}</a>
+    </aside>
+
+    <section class="shell hero" aria-labelledby="title">
+      <div class="intro">
+        <p class="eyebrow">{{heroTag}}</p>
+        <h1 id="title">{{heroHeadline}}<br><em>{{heroAccent}}</em></h1>
+        <p class="lead">{{heroText}}</p>
+        <div class="actions">
+          <a class="button primary" id="hero-download" href="#install">{{heroDownload}}</a>
+          <a class="button outline" href="#network">{{featureJump}}</a>
+        </div>
+      </div>
+      <figure class="hero-visual" role="img" aria-label="{{chatIllustration}}">
+        <div class="visual-lines" aria-hidden="true"></div>
+        <div class="hero-phone" aria-hidden="true">
+          <div class="phone-status"><span>12:30</span><i></i><span>▮▮▮</span></div>
+          <div class="phone-header">
+            <span class="avatar">A</span><span><strong>{{chatName}}</strong><small>{{chatPrivate}}</small></span>
+            <img src="{{root}}assets/video.svg" alt="" width="23" height="23">
+          </div>
+          <div class="conversation">
+            <span class="day">{{chatToday}}</span>
+            <div class="bubble">{{chatFirst}}<small>12:28</small></div>
+            <div class="bubble outgoing">{{chatSecond}}<small>12:29 <span>✓✓</span></small></div>
+            <div class="bubble">{{chatThird}}<small>12:30</small></div>
+          </div>
+          <div class="composer">{{chatInput}}<span><img src="{{root}}assets/send.svg" alt="" width="17" height="17"></span></div>
+        </div>
+        <div class="visual-card visual-direct" aria-hidden="true"><img src="{{root}}assets/globe.svg" alt="" width="23" height="23">{{chatDirect}}</div>
+        <div class="visual-card visual-call" aria-hidden="true"><img src="{{root}}assets/video.svg" alt="" width="25" height="25">{{chatCall}}</div>
+        <div class="visual-card visual-id" aria-hidden="true"><img src="{{root}}assets/qr.svg" alt="" width="23" height="23">{{chatId}}</div>
+      </figure>
+    </section>
+
+    <section class="shell section" id="network" aria-labelledby="network-title">
+      <div class="section-head">
+        <p class="eyebrow">{{networkTag}}</p>
+        <h2 id="network-title">{{networkHeading}}</h2>
+        <p class="section-lead">{{networkIntro}}</p>
+      </div>
+      <div class="network-grid">
+        <article class="panel privacy">
+          <span class="icon-tile"><img src="{{root}}assets/shield.svg" alt="" width="25" height="25"></span>
+          <h3>{{privacyTitle}}</h3><p>{{privacyBody}}</p>
+          <p class="note">{{privacyNote}}</p>
+        </article>
+        <article class="panel routes">
+          <span class="icon-tile"><img src="{{root}}assets/globe.svg" alt="" width="25" height="25"></span>
+          <h3>{{routesTitle}}</h3><p>{{routesBody}}</p>
+          <div class="path-diagram" role="img" aria-label="{{routeLabel}}: {{routeYou}} — {{routeDirect}} / {{routeRelay}} — {{routePeer}}">
+            <span>{{routeYou}}</span><div class="path-lines"><strong>{{routeDirect}}</strong><small>{{routeRelay}}</small></div><span>{{routePeer}}</span>
+          </div>
+          <p class="note">{{routesNote}}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section reward" aria-labelledby="reward-title">
+        <div>
+          <p class="eyebrow">{{rewardsTag}}</p><h2 id="reward-title">{{rewardsHeading}}</h2>
+          <p class="section-lead">{{rewardsBody}}</p><p class="note">{{rewardsNote}}</p>
+        </div>
+        <div class="reward-card">
+          <h3>{{rewardRulesTitle}}</h3>
+          <div class="reward-number"><strong>1</strong><span>LBU₽ {{rewardUnit}}</span></div>
+          <ul><li>{{rewardDaily}}</li><li>{{rewardPeer}}</li></ul>
+        </div>
+    </section>
+
+    <section class="shell section builder" id="bots" aria-labelledby="bot-title">
+      <div class="section-head">
+        <p class="eyebrow">{{botTag}}</p><h2 id="bot-title">{{botHeading}}</h2>
+        <p class="section-lead">{{botIntro}}</p><p class="note">{{botWebsite}}</p>
+      </div>
+      <div class="bot-example" aria-label="{{botPlayLabel}}">
+        <header>
+          <span class="icon-tile"><img src="{{root}}assets/bot.svg" alt="" width="25" height="25"></span>
+          <div><strong>{{botName}}</strong><small>{{botType}}</small></div>
+        </header>
+        <p class="demo-caption">{{botDemoHint}}</p>
+        <div class="bot-reply" aria-live="polite">
+          <p data-reply="home">{{demoGreeting}}</p>
+          <p data-reply="catalog" hidden>{{demoCatalogBody}}</p>
+          <p data-reply="contact" hidden>{{demoContactBody}}</p>
+        </div>
+        <div class="demo-actions" id="demo-actions" hidden>
+          <button type="button" data-demo="home" aria-pressed="true">{{demoStart}}</button>
+          <button type="button" data-demo="catalog" aria-pressed="false">{{demoCatalog}}</button>
+          <button type="button" data-demo="contact" aria-pressed="false">{{demoContact}}</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" aria-labelledby="more-title">
+      <div class="section-head"><p class="eyebrow">{{moreTag}}</p><h2 id="more-title">{{moreHeading}}</h2></div>
+      <div class="feature-grid">{{featuresHtml}}</div>
+    </section>
+
+    <section class="section downloads" id="install" aria-labelledby="install-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="eyebrow">{{downloadsTag}}</p><h2 id="install-title">{{installHeading}}</h2><p class="section-lead">{{installIntro}}</p>
+        </div>
+        <div class="download-grid">
+          <article class="panel platform" id="android">
+            <div class="platform-heading"><img class="platform-icon" src="{{root}}assets/platforms/android.svg" alt="" width="36" height="36"><h3>Android</h3><span class="status" id="android-status">{{androidStatus}}</span></div>
+            <p id="release-note">{{androidBody}}</p>
+            <a class="button primary" id="download" hidden>{{androidDownload}}</a>
+            <p class="note" id="android-steps" hidden>{{androidSteps}}</p>
+            <p class="note" id="platform-note" hidden>{{desktopHint}}</p>
+            <details class="checksum" id="file-details" hidden><summary>{{fileDetails}}</summary><code id="file-hash"></code></details>
+          </article>
+          <article class="panel platform" id="windows">
+            <div class="platform-heading"><img class="platform-icon" src="{{root}}assets/platforms/windows.svg" alt="" width="36" height="36"><h3>Windows x64</h3><span class="status">{{windowsStatus}}</span></div>
+            <p>{{windowsBody}}</p>
+            <a class="button primary" href="{{root}}releases/Mayday-Windows-x64-0.2.2.zip" download>{{windowsDownload}}</a>
+            <details class="checksum">
+              <summary>{{windowsDetails}}</summary><p>{{windowsSteps}}</p>
+              <code aria-label="{{fileDetails}}">3f067034c45572d3fb0e0cd8718199fe86d5da79d2d5a944cc2db70f23ad50cf</code>
+            </details>
+          </article>
+        </div>
+        <ul class="other-platforms" aria-label="{{otherPlatforms}}">
+          <li id="linux">
+            <div class="platform-heading"><img class="platform-icon" src="{{root}}assets/platforms/linux.svg" alt="" width="29" height="29"><h3>Linux</h3></div>
+            <p>{{pendingPlatform}}</p>
+          </li>
+          <li id="macos">
+            <div class="platform-heading"><img class="platform-icon" src="{{root}}assets/platforms/macos.svg" alt="" width="29" height="29"><h3>macOS</h3></div>
+            <p id="mac-note">{{macBody}}</p>
+            <p class="note" id="mac-status">{{pendingPlatform}}</p>
+            <a class="button primary" id="mac-download" hidden>{{macDownload}}</a>
+            <details class="checksum" id="mac-details" hidden><summary>{{fileDetails}}</summary><code id="mac-hash"></code></details>
+          </li>
+          <li id="iphone">
+            <div class="platform-heading"><img class="platform-icon" src="{{root}}assets/platforms/iphone.svg" alt="" width="29" height="29"><h3>iPhone</h3></div>
+            <p>{{iosBody}}</p><p class="note" id="ios-status">{{iosStatus}}</p>
+            <a class="button primary" id="ios-invite" rel="noreferrer" hidden>{{iosInvite}}</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell footer">
+    <a class="brand" href="./" aria-label="{{home}}"><span class="mark"><img src="{{root}}assets/mayday-mark.svg" alt="" width="22" height="22"></span>Mayday</a>
+    <button class="share" id="share" type="button" hidden>{{share}}</button>
+    <p id="share-status" class="sr-only" role="status"></p>
+  </footer>
+  <script src="{{root}}page.mjs?v=mayday-2" type="module"></script>
+</body>
+</html>

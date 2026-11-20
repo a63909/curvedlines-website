@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Mayday: общение по Mayday ID, децентрализованная доставка, LBU₽ за подтверждённые сообщения, боты без кода. Android и Windows.">
+  <meta name="theme-color" content="#fffcfb">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mayday — мессенджер со своей сетью">
+  <meta property="og:description" content="Mayday: общение по Mayday ID, децентрализованная доставка, LBU₽ за подтверждённые сообщения, боты без кода. Android и Windows.">
+  <meta property="og:url" content="https://mayday.colorchain.ru/">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:image" content="https://mayday.colorchain.ru/assets/share.png?v=mayday-2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mayday — мессенджер со своей сетью">
+  <title>Mayday — мессенджер со своей сетью</title>
+  <link rel="canonical" href="https://mayday.colorchain.ru/">
+  <link rel="alternate" hreflang="ru" href="https://mayday.colorchain.ru/">
+  <link rel="alternate" hreflang="en" href="https://mayday.colorchain.ru/en/">
+  <link rel="alternate" hreflang="x-default" href="https://mayday.colorchain.ru/">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css?v=mayday-4">
+</head>
+<body>
+  <a class="skip" href="#main">К содержанию</a>
+  <header class="shell header">
+    <a class="brand" href="./" aria-label="На главную Mayday"><span class="mark"><img src="./assets/mayday-mark.svg" alt="" width="24" height="24"></span>Mayday</a>
+    <nav aria-label="Навигация по странице"><a href="#network">Сеть</a><a href="#bots">Боты и мини-приложения</a><a href="#install">Загрузки</a></nav>
+    <a class="language" id="language" href="./en/" lang="en" hreflang="en">English</a>
+  </header>
+
+  <main id="main">
+    <aside class="shell referral" id="bankomet" hidden>
+      <div><strong>Пришли из Банкомёта?</strong><p>Установите Mayday на Android, создайте профиль и вернитесь к входу через Mayday ID.</p></div>
+      <a href="https://153.76.172.25:8447/?__mobile=1#mayday-install-return">Вернуться в Банкомёт</a>
+    </aside>
+
+    <section class="shell hero" aria-labelledby="title">
+      <div class="intro">
+        <p class="eyebrow">Мессенджер Mayday</p>
+        <h1 id="title">Общайтесь<br><em>на своих условиях.</em></h1>
+        <p class="lead">Ваш Mayday ID вместо номера в чате. Децентрализованная доставка, награды за общение и боты, которые можно собрать с телефона.</p>
+        <div class="actions">
+          <a class="button primary" id="hero-download" href="#install">Выбрать версию</a>
+          <a class="button outline" href="#network">Что умеет Mayday</a>
+        </div>
+      </div>
+      <figure class="hero-visual" role="img" aria-label="Пример личного чата Mayday">
+        <div class="visual-lines" aria-hidden="true"></div>
+        <div class="hero-phone" aria-hidden="true">
+          <div class="phone-status"><span>12:30</span><i></i><span>▮▮▮</span></div>
+          <div class="phone-header">
+            <span class="avatar">A</span><span><strong>Аня</strong><small>Личная переписка</small></span>
+            <img src="./assets/video.svg" alt="" width="23" height="23">
+          </div>
+          <div class="conversation">
+            <span class="day">Сегодня</span>
+            <div class="bubble">Готова к созвону?<small>12:28</small></div>
+            <div class="bubble outgoing">Да, уже на связи!<small>12:29 <span>✓✓</span></small></div>
+            <div class="bubble">Тогда включаю камеру<small>12:30</small></div>
+          </div>
+          <div class="composer">Сообщение<span><img src="./assets/send.svg" alt="" width="17" height="17"></span></div>
+        </div>
+        <div class="visual-card visual-direct" aria-hidden="true"><img src="./assets/globe.svg" alt="" width="23" height="23">Прямой маршрут</div>
+        <div class="visual-card visual-call" aria-hidden="true"><img src="./assets/video.svg" alt="" width="25" height="25">Видеозвонок</div>
+        <div class="visual-card visual-id" aria-hidden="true"><img src="./assets/qr.svg" alt="" width="23" height="23">Общение по Mayday ID</div>
+      </figure>
+    </section>
+
+    <section class="shell section" id="network" aria-labelledby="network-title">
+      <div class="section-head">
+        <p class="eyebrow">Приватность и сеть</p>
+        <h2 id="network-title">Идентичность и доставка</h2>
+        <p class="section-lead">Mayday ID связывает профиль с ключами вашего аккаунта. Маршрут доставки приложение подбирает по доступной сети.</p>
+      </div>
+      <div class="network-grid">
+        <article class="panel privacy">
+          <span class="icon-tile"><img src="./assets/shield.svg" alt="" width="25" height="25"></span>
+          <h3>Общайтесь под своим именем или псевдонимом</h3><p>Делитесь своим Mayday ID или QR, чтобы начать чат. Номер не публикуется в профиле. Поиск по номеру включается отдельно по вашему выбору.</p>
+          <p class="note">При регистрации номер подтверждается по SMS.</p>
+        </article>
+        <article class="panel routes">
+          <span class="icon-tile"><img src="./assets/globe.svg" alt="" width="25" height="25"></span>
+          <h3>Децентрализованная доставка</h3><p>В одной локальной сети устройства могут обмениваться данными напрямую. Для связи через интернет доступны узлы доставки, включая добавленные вами в настройках.</p>
+          <div class="path-diagram" role="img" aria-label="Маршруты доставки: Вы — Напрямую / Через узел — Собеседник">
+            <span>Вы</span><div class="path-lines"><strong>Напрямую</strong><small>Через узел</small></div><span>Собеседник</span>
+          </div>
+          <p class="note">Личные сообщения шифруются на устройстве отправителя. Если прямой маршрут недоступен, зашифрованные данные могут пройти через узел.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section reward" aria-labelledby="reward-title">
+        <div>
+          <p class="eyebrow">Награды за общение</p><h2 id="reward-title">От сообщения до кошелька</h2>
+          <p class="section-lead">За подходящее исходящее сообщение с подтверждением доставки начисляется 1 LBU₽. Заберите накопленное в разделе «Награды за общение»: после подтверждения в сети токены появятся в кошельке Mayday.</p><p class="note">Награды уже зачислялись на тестовом запуске. LBU₽ — токен сети Mayday.</p>
+        </div>
+        <div class="reward-card">
+          <h3>Условия начисления</h3>
+          <div class="reward-number"><strong>1</strong><span>LBU₽ за подходящее сообщение</span></div>
+          <ul><li>до 50 LBU₽ в сутки</li><li>до 15 LBU₽ за сообщения одному собеседнику в сутки</li></ul>
+        </div>
+    </section>
+
+    <section class="shell section builder" id="bots" aria-labelledby="bot-title">
+      <div class="section-head">
+        <p class="eyebrow">Конструктор ботов</p><h2 id="bot-title">Бот без программирования</h2>
+        <p class="section-lead">Откройте «Сервисы → Боты → Мои боты». Добавьте приветствие, команды, картинки и кнопки. Для бота с готовыми ответами программирование не требуется.</p><p class="note">Подключите бота к сайту, чтобы получать заявки в чате. Для своего сценария используйте API.</p>
+      </div>
+      <div class="bot-example" aria-label="Интерактивный пример бота">
+        <header>
+          <span class="icon-tile"><img src="./assets/bot.svg" alt="" width="25" height="25"></span>
+          <div><strong>Мастерская</strong><small>Бот · пример</small></div>
+        </header>
+        <p class="demo-caption">Попробуйте кнопки в примере бота.</p>
+        <div class="bot-reply" aria-live="polite">
+          <p data-reply="home">Привет! Здесь можно посмотреть, что мы делаем, и узнать, как с нами связаться.</p>
+          <p data-reply="catalog" hidden>В каталоге три раздела: керамика, открытки и подарочные наборы.</p>
+          <p data-reply="contact" hidden>Принимаем заказы с понедельника по пятницу. Напишите, что хотите заказать.</p>
+        </div>
+        <div class="demo-actions" id="demo-actions" hidden>
+          <button type="button" data-demo="home" aria-pressed="true">Главная</button>
+          <button type="button" data-demo="catalog" aria-pressed="false">Каталог</button>
+          <button type="button" data-demo="contact" aria-pressed="false">Контакты</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" aria-labelledby="more-title">
+      <div class="section-head"><p class="eyebrow">Чаты и сервисы</p><h2 id="more-title">Что умеет Mayday</h2></div>
+      <div class="feature-grid">
+        <article class="feature">
+          <span class="icon-tile"><img src="./assets/users.svg" alt="" width="24" height="24"></span>
+          <h3>Группы и каналы</h3><p>Создайте группу с друзьями или оставьте её только для себя. Закрепляйте важное и публикуйте фото, видео и файлы в каналах.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="./assets/video.svg" alt="" width="24" height="24"></span>
+          <h3>Аудио и видео</h3><p>Созванивайтесь один на один. Для групп доступны аудиозвонки до восьми участников.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="./assets/image.svg" alt="" width="24" height="24"></span>
+          <h3>Истории и медиа</h3><p>Публикуйте фото и видео на 24 часа, редактируйте изображения и сохраняйте полученные фото в галерею.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="./assets/grid.svg" alt="" width="24" height="24"></span>
+          <h3>Мини-приложения</h3><p>Открывайте веб-сервисы из чата бота. Mayday запрашивает согласие перед передачей данных, для которых нужны разрешения.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="./assets/wallet.svg" alt="" width="24" height="24"></span>
+          <h3>Кошелёк</h3><p>Получайте и отправляйте LBU₽ по адресу или контакту. Подтверждайте операции в кошельке Mayday.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="./assets/game.svg" alt="" width="24" height="24"></span>
+          <h3>Игры в чате</h3><p>Играйте в длинные нарды и шахматы из чата «Игры».</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="./assets/chat.svg" alt="" width="24" height="24"></span>
+          <h3>Цитаты и реакции</h3><p>Смахните сообщение, чтобы ответить на него, или выберите эмоцию в меню сообщения.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="./assets/image.svg" alt="" width="24" height="24"></span>
+          <h3>Альбом профиля</h3><p>Выберите фото из галереи или сделайте снимок камерой. Прежние фотографии остаются в альбоме.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="./assets/qr.svg" alt="" width="24" height="24"></span>
+          <h3>Вход с Mayday ID</h3><p>Подтверждайте вход в подключённые сервисы, например в Банкомёт, прямо в Mayday.</p>
+        </article></div>
+    </section>
+
+    <section class="section downloads" id="install" aria-labelledby="install-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="eyebrow">Приложения Mayday</p><h2 id="install-title">Выберите устройство</h2><p class="section-lead">Клиенту Windows для работы нужен телефон с Mayday. Найдите инструкцию рядом с файлом.</p>
+        </div>
+        <div class="download-grid">
+          <article class="panel platform" id="android">
+            <div class="platform-heading"><img class="platform-icon" src="./assets/platforms/android.svg" alt="" width="36" height="36"><h3>Android</h3><span class="status" id="android-status">Готовим к публикации</span></div>
+            <p id="release-note">Android 7.0 и новее. Здесь появится APK для внешних тестов.</p>
+            <a class="button primary" id="download" hidden>Скачать APK</a>
+            <p class="note" id="android-steps" hidden>Скачайте APK на телефон, откройте файл и завершите регистрацию в Mayday.</p>
+            <p class="note" id="platform-note" hidden>Откройте эту страницу на Android, чтобы установить приложение.</p>
+            <details class="checksum" id="file-details" hidden><summary>Контрольная сумма SHA-256</summary><code id="file-hash"></code></details>
+          </article>
+          <article class="panel platform" id="windows">
+            <div class="platform-heading"><img class="platform-icon" src="./assets/platforms/windows.svg" alt="" width="36" height="36"><h3>Windows x64</h3><span class="status">Тестовая сборка 0.2.2</span></div>
+            <p>Для запуска нужен .NET Desktop Runtime 8.</p>
+            <a class="button primary" href="./releases/Mayday-Windows-x64-0.2.2.zip" download>Скачать ZIP</a>
+            <details class="checksum">
+              <summary>Установка и SHA-256</summary><p>Распакуйте ZIP и запустите Mayday.exe. На телефоне откройте «Настройки → Устройства → Подключить компьютер» и отсканируйте QR. Телефон остаётся подключённым во время работы.</p>
+              <code aria-label="Контрольная сумма SHA-256">3f067034c45572d3fb0e0cd8718199fe86d5da79d2d5a944cc2db70f23ad50cf</code>
+            </details>
+          </article>
+        </div>
+        <ul class="other-platforms" aria-label="Другие платформы">
+          <li id="linux">
+            <div class="platform-heading"><img class="platform-icon" src="./assets/platforms/linux.svg" alt="" width="29" height="29"><h3>Linux</h3></div>
+            <p>Готовой сборки нет</p>
+          </li>
+          <li id="macos">
+            <div class="platform-heading"><img class="platform-icon" src="./assets/platforms/macos.svg" alt="" width="29" height="29"><h3>macOS</h3></div>
+            <p id="mac-note">Отдельное приложение для Mac. После сборки и заверения Apple здесь будет установщик DMG.</p>
+            <p class="note" id="mac-status">Готовой сборки нет</p>
+            <a class="button primary" id="mac-download" hidden>Скачать DMG</a>
+            <details class="checksum" id="mac-details" hidden><summary>Контрольная сумма SHA-256</summary><code id="mac-hash"></code></details>
+          </li>
+          <li id="iphone">
+            <div class="platform-heading"><img class="platform-icon" src="./assets/platforms/iphone.svg" alt="" width="29" height="29"><h3>iPhone</h3></div>
+            <p>Приглашение на тестирование будет открываться в TestFlight.</p><p class="note" id="ios-status">Бета пока закрыта</p>
+            <a class="button primary" id="ios-invite" rel="noreferrer" hidden>Открыть TestFlight</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell footer">
+    <a class="brand" href="./" aria-label="На главную Mayday"><span class="mark"><img src="./assets/mayday-mark.svg" alt="" width="22" height="22"></span>Mayday</a>
+    <button class="share" id="share" type="button" hidden>Поделиться ссылкой</button>
+    <p id="share-status" class="sr-only" role="status"></p>
+  </footer>
+  <script src="./page.mjs?v=mayday-2" type="module"></script>
+</body>
+</html>
+
