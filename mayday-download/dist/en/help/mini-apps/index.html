@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Open a website inside Mayday, configure permissions, and read context in JavaScript.">
+  <meta name="referrer" content="no-referrer">
+  <title>Mini apps · Mayday Help</title>
+  <link rel="canonical" href="https://mayday.colorchain.ru/en/help/mini-apps/">
+  <link rel="alternate" hreflang="ru" href="https://mayday.colorchain.ru/help/mini-apps/">
+  <link rel="alternate" hreflang="en" href="https://mayday.colorchain.ru/en/help/mini-apps/">
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../help.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="shell header help-header">
+    <a class="brand" href="../../../en/" aria-label="Mayday website">
+      <span class="mark"><img src="../../../assets/mayday-mark.svg" alt="" width="24" height="24"></span>Mayday
+    </a>
+    <a class="language" href="../../../help/mini-apps/" lang="ru" hreflang="ru">Русский</a>
+  </header>
+  <div class="shell help-layout">
+    <nav class="help-nav" aria-label="Help topics">
+        <a href="../../../en/help/">Mayday Help</a>
+        <ul><li><a href="../../../en/help/getting-started/">Getting started</a></li>
+<li><a href="../../../en/help/network/">Mayday network</a></li>
+<li><a href="../../../en/help/relay-operator/">Host your own Mayday relay</a></li>
+<li><a href="../../../en/help/mini-apps/" aria-current="page">Mini apps</a></li></ul>
+      </nav>
+    <main id="main"><article class="help-article">
+    <div class="help-intro">
+      <h1>Mini apps</h1>
+      <p>Open a website inside Mayday, configure permissions, and read context in JavaScript.</p>
+    </div>
+    <nav class="help-contents" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul><li><a href="#connect">Connect a website to a bot</a></li><li><a href="#sdk">Read the Mayday context</a></li><li><a href="#permissions">Profile and data permissions</a></li></ul>
+    </nav>
+    
+    <section class="help-section" aria-labelledby="connect">
+      <h2 id="connect">Connect a website to a bot</h2>
+      
+      <ol><li>Prepare a page with a public HTTPS address.</li><li>In Mayday for Android, go to Services → Bots → My bots. Choose Mini app for an existing bot or create a bot for your website.</li><li>Enter a name and HTTPS address. Save your settings and use the mini app button in the bot chat to open it.</li></ol>
+      
+      
+    </section>
+    <section class="help-section" aria-labelledby="sdk">
+      <h2 id="sdk">Read the Mayday context</h2>
+      <p>Mayday for Android provides window.Mayday when it opens your mini app. Mayday.ready() returns context, including the user interface language and theme, the app, and the bot. This example displays the mini app name and leaves a hint in a regular browser.</p>
+      
+      <pre><code>&lt;p id=&quot;status&quot;&gt;Open this page from your bot chat in Mayday.&lt;/p&gt;
+&lt;script&gt;
+  if (window.Mayday) {
+    const status = document.querySelector(&#39;#status&#39;);
+    Mayday.ready()
+      .then(({ app }) =&gt; { status.textContent = app.name; })
+      .catch(() =&gt; { status.textContent = &#39;Could not load Mayday.&#39;; });
+  }
+&lt;/script&gt;</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="permissions">
+      <h2 id="permissions">Profile and data permissions</h2>
+      <p>Mayday.requestAuth({ challenge }) requests sign-in and access to the public profile with the user’s consent. Enable the Sign in and profile permission in your mini app settings.</p><p>Mayday.sendData(data) sends a string or JSON data of up to 4096 bytes after serialization. Enable Data for this bot. The user confirms each submission.</p>
+      
+      
+      
+    </section>
+  </article></main>
+  </div>
+  <footer class="shell footer help-footer">
+    <a href="../../../en/">Mayday website</a>
+    <a href="../../../en/#install">Mayday downloads</a>
+  </footer>
+</body>
+</html>

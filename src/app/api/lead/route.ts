@@ -1,8 +1,11 @@
 import nodemailer from "nodemailer";
+import { randomUUID } from "node:crypto";
+import { deliverMaydayLead } from "@/lib/mayday-leads";
 
 export const runtime = "nodejs";
 
 type LeadPayload = {
+  requestId?: string;
   name?: string;
   phone?: string;
   service?: string;
@@ -25,7 +28,7 @@ type NormalizedLead = {
   source: string;
 };
 
-type DeliveryChannel = "email" | "webhook" | "max" | "none";
+type DeliveryChannel = "email" | "webhook" | "max" | "mayday" | "none";
 
 type DeliveryError = {
   channel: DeliveryChannel;
@@ -70,6 +73,7 @@ function sanitizeSensitiveText(value: string) {
     process.env.SMTP_PASS,
     process.env.SMTP_USER,
     process.env.MAX_BOT_TOKEN,
+    process.env.MAYDAY_SITE_KEY,
     process.env.MAX_API_BASE,
     process.env.LEAD_WEBHOOK_URL,
   ].filter((secret): secret is string => Boolean(secret));
@@ -399,6 +403,22 @@ export async function POST(request: Request) {
     "Заявка отправлена. Мы свяжемся с вами, чтобы уточнить детали работ.";
   let delivered = false;
   let configuredChannels = 0;
+
+  if (process.env.MAYDAY_SITE_KEY?.trim()) {
+    configuredChannels += 1;
+    try {
+      await deliverMaydayLead({
+        request_id: typeof body.requestId === "string" && /^[A-Za-z0-9_-]{8,80}$/.test(body.requestId) ? body.requestId : randomUUID(),
+        name, phone, service, message: comment,
+        page: page || "https://curvedlines.ru",
+      });
+      delivered = true;
+      logLeadDelivery("mayday", "success");
+    } catch {
+      logLeadDelivery("mayday", "fail");
+      deliveryErrors.push({ channel: "mayday", message: "Mayday delivery failed." });
+    }
+  }
 
   if (smtpConfig) {
     configuredChannels += 1;

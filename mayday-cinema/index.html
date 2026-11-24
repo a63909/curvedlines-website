@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101212">
+  <meta name="description" content="КАДР — киноновинки и открытые фильмы в Mayday.">
+  <title>КАДР — кино в Mayday</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./cinema.js"></script>
+</head>
+<body>
+  <a class="skip" href="#catalog">К каталогу</a>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="#home" aria-label="Кадр, главная">
+        <span class="mark" aria-hidden="true"></span><span>КАДР<span class="dot">.</span></span>
+      </a>
+      <nav class="nav" aria-label="Разделы">
+        <button data-view="home" aria-current="page">Главная</button>
+        <button data-view="film">Фильмы</button>
+        <button data-view="series">Сериалы</button>
+        <button data-view="archive">Архив</button>
+        <button data-view="saved">Смотреть позже</button>
+      </nav>
+      <form class="search" role="search">
+        <span class="glass" aria-hidden="true"></span>
+        <input id="search" type="search" placeholder="Поиск по каталогу" aria-label="Поиск по каталогу" autocomplete="off">
+      </form>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="hero" class="hero" aria-labelledby="hero-title">
+      <img class="hero-image" src="./assets/courier-hero.webp" alt="" fetchpriority="high">
+      <div class="hero-copy">
+        <p class="tag"><span></span> Цифровая премьера</p>
+        <h1 id="hero-title">Курьер</h1>
+        <p class="meta"><span>2026</span><span>Боевик · триллер</span><span class="age">18+</span></p>
+        <p class="hero-summary">Курьеру поручают доставить донорский орган для срочной операции. За грузом уже охотятся люди наркобарона.</p>
+        <div class="actions">
+          <button class="button primary" id="hero-watch"><span class="triangle" aria-hidden="true"></span> Смотреть на КИОН</button>
+          <button class="button secondary square" data-save="courier" aria-label="Курьер — смотреть позже" aria-pressed="false"><span class="save-glyph" aria-hidden="true"></span></button>
+        </div>
+      </div>
+      <div class="hero-source">КИОН <span>·</span> 10 ноября</div>
+    </section>
+
+    <section id="catalog" class="catalog" aria-labelledby="section-title">
+      <div class="section-top">
+        <div>
+          <p class="eyebrow" id="catalog-period">Ноябрь 2026</p>
+          <h2 id="section-title">Новинки</h2>
+        </div>
+        <div class="genres" id="genres" aria-label="Жанр"></div>
+      </div>
+      <p class="visually-hidden" id="result-count" role="status"></p>
+      <ul id="titles" class="titles"></ul>
+      <p id="empty" class="empty" hidden></p>
+      <div class="more-wrap"><button id="more" type="button" class="button secondary" hidden>Показать ещё</button></div>
+      <noscript>Для поиска и просмотра включите JavaScript.</noscript>
+    </section>
+    <section id="open-shelf" class="catalog" aria-labelledby="open-title">
+      <div class="section-top"><h2 id="open-title">Смотреть в плеере</h2>
+        <button type="button" class="button secondary archive-entry" data-view="archive">Весь архив</button>
+      </div>
+      <ul id="open-titles" class="titles"></ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <a class="brand" href="#home" aria-label="Кадр, главная"><span class="mark" aria-hidden="true"></span><span>КАДР<span class="dot">.</span></span></a>
+      <span>Кино в Mayday</span>
+      <a href="#catalog">К каталогу</a>
+    </div>
+  </footer>
+
+  <dialog id="details" class="details" aria-labelledby="details-title">
+    <div class="dialog-body">
+      <form method="dialog"><button class="button square close" aria-label="Закрыть">×</button></form>
+      <div id="detail-cover" class="detail-cover"></div>
+      <div class="detail-text">
+        <p class="eyebrow" id="details-source"></p>
+        <h2 id="details-title"></h2>
+        <p class="meta" id="details-meta"></p>
+        <p id="details-description"></p>
+        <div id="player" class="player" hidden></div>
+        <p id="details-note" class="detail-note"></p>
+        <div class="actions">
+          <a id="provider" class="button primary" rel="noopener noreferrer"><span class="triangle" aria-hidden="true"></span><span></span></a>
+          <button id="detail-save" class="button secondary square" aria-pressed="false"><span class="save-glyph" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>
+

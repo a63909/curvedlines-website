@@ -101,7 +101,7 @@ function ActionLink({
 
   if (isExternalHref(href)) {
     return (
-      <a href={href} target="_blank" rel="noreferrer" className={className}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
         {children}
       </a>
     );
@@ -723,7 +723,7 @@ export function ContactsSection({
             <a
               href={SITE.whatsappHref}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="rounded-[24px] bg-[color:var(--surface-muted)] p-5 transition hover:bg-[color:var(--soft)]"
             >
               <p className="text-sm font-medium uppercase tracking-[0.16em] text-[color:var(--accent)]">

@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Брось вызов другу или попробуй обыграть ИИ Mayday. Длинные нарды без ставки.">
+  <meta name="theme-color" content="#fffcfb">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Сможешь обыграть меня в нарды? · Mayday">
+  <meta property="og:description" content="Брось вызов другу или попробуй обыграть ИИ Mayday. Длинные нарды без ставки.">
+  <meta property="og:url" content="https://mayday.colorchain.ru/nardy/">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:image" content="https://mayday.colorchain.ru/assets/nardy-board.jpg?v=mayday-2">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="720">
+  <meta property="og:image:alt" content="Длинные нарды в Mayday">
+  <title>Сможешь обыграть меня в нарды? · Mayday</title>
+  <link rel="canonical" href="https://mayday.colorchain.ru/nardy/">
+  <link rel="alternate" hreflang="ru" href="https://mayday.colorchain.ru/nardy/">
+  <link rel="alternate" hreflang="en" href="https://mayday.colorchain.ru/en/nardy/">
+  <link rel="alternate" hreflang="x-default" href="https://mayday.colorchain.ru/nardy/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2228%22 fill=%22%23d52d3b%22/%3E%3Cpath fill=%22%23fff%22 transform=%22translate(17 17) scale(.66)%22 d=%22M97.89%2C47.33 97.09%2C45.74 96.18%2C44.83 95.39%2C44.38 93.91%2C44.26 92.32%2C44.94 85.16%2C49.26 83.69%2C49.94 83%2C49.83 81.87%2C48.01 77.89%2C36.31 75.51%2C31.31 72.78%2C28.24 70.39%2C26.88 68.92%2C26.43 65.73%2C26.2 62.67%2C26.88 59.71%2C28.47 57.1%2C30.97 55.06%2C33.92 53.24%2C37.45 48.47%2C49.15 47.22%2C50.62 46.53%2C50.97 45.17%2C50.85 43.92%2C49.72 43.13%2C48.24 40.4%2C40.63 38.35%2C36.99 36.54%2C34.95 34.61%2C33.58 31.99%2C32.56 30.63%2C32.33 27.11%2C32.56 23.7%2C33.92 21.2%2C35.74 18.13%2C39.04 14.95%2C43.35 8.7%2C53.12 3.14%2C62.78 2.11%2C65.51 2.23%2C68.8 2.91%2C70.51 3.82%2C71.76 5.29%2C72.89 6.89%2C73.57 7.91%2C73.8 10.52%2C73.69 12.57%2C72.89 13.7%2C72.1 16.31%2C68.8 21.88%2C56.65 24.04%2C52.67 25.29%2C50.85 26.99%2C49.15 29.04%2C48.24 31.54%2C48.47 32.9%2C49.26 34.04%2C50.4 35.97%2C53.69 38.47%2C59.94 40.06%2C62.55 41.2%2C63.69 42.56%2C64.49 44.6%2C65.05 47.56%2C64.83 49.38%2C64.03 50.97%2C62.78 53.81%2C58.46 56.87%2C51.42 58.69%2C48.01 61.19%2C45.06 62.89%2C44.15 63.92%2C43.92 65.96%2C44.15 67.21%2C44.83 68.46%2C46.08 70.05%2C48.92 72.89%2C56.08 75.28%2C60.96 77.21%2C63.35 79.25%2C64.26 81.07%2C64.14 82.32%2C63.58 88.34%2C58.69 97.32%2C50.17 98%2C48.35Z%22/%3E%3C/svg%3E" type="image/svg+xml">
+  <style>
+:root {
+  --bg: #fffcfb;
+  --surface: #fff;
+  --ink: #202429;
+  --muted: #5c5960;
+  --brand: #d52d3b;
+  --pressed: #b82032;
+  --blush: #fae7e9;
+  --edge: #eee4e3;
+  --round: 24px;
+  font: 100%/1.55 Manrope, "Segoe UI", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body, figure, h1, h2, h3, p { margin: 0; }
+a { color: inherit; }
+button { font: inherit; }
+img { vertical-align: middle; }
+:focus-visible { outline: 3px solid #195f9a; outline-offset: 4px; }
+.shell { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
+.skip, .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.skip:focus { top: 8px; left: 8px; z-index: 5; clip-path: none; width: auto; height: auto; padding: 10px; background: white; }
+.header, .footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 76px; }
+.header { border-bottom: 1px solid var(--edge); }
+.header nav { display: flex; gap: 28px; margin-inline-start: auto; align-items: center; }
+.header nav a, .language { font-size: .92rem; font-weight: 680; text-decoration: none; }
+.header nav a:hover, .language:hover, .referral a:hover { color: var(--pressed); }
+.language { min-height: 44px; display: flex; align-items: center; border: 1px solid var(--edge); border-radius: 13px; padding-inline: 14px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-size: 1.35rem; font-weight: 800; letter-spacing: -.035em; text-decoration: none; }
+.mark { display: grid; place-items: center; width: 41px; height: 41px; border-radius: 13px; background: var(--brand); flex: none; }
+.eyebrow { color: var(--pressed); font-size: .875rem; font-weight: 800; letter-spacing: .115em; text-transform: uppercase; margin-bottom: 13px; }
+h1, h2 { line-height: 1.04; letter-spacing: -.05em; font-weight: 800; }
+h1 { font-size: clamp(3.28rem, 6.1vw, 5.65rem); }
+h1 em { color: var(--brand); font: italic 500 1.06em/.97 "Cormorant Garamond", Georgia, serif; letter-spacing: -.045em; }
+h2 { font-size: clamp(2.15rem, 4.25vw, 3.55rem); }
+h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
+.lead, .section-lead { color: var(--muted); }
+.lead { margin-block: 22px 27px; font-size: clamp(1.055rem, 1.6vw, 1.22rem); max-width: 41ch; }
+.section-lead { margin-top: 16px; max-width: 60ch; font-size: 1.07rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 11px 18px; border-radius: 14px; font-weight: 740; text-decoration: none; }
+.primary { background: var(--pressed); color: white; }
+.primary:hover { background: #971829; }
+.primary img { filter: brightness(0) invert(1); }
+.outline { border: 1px solid var(--edge); background: var(--surface); }
+.outline:hover { border-color: #d6b7bd; }
+.hero { display: grid; align-items: center; grid-template-columns: minmax(0, 1.07fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 55px); padding-block: clamp(42px, 6vw, 88px); }
+.hero-visual { position: relative; isolation: isolate; display: grid; place-items: center; min-height: 500px; border-radius: 35px; background: radial-gradient(ellipse at 25% 0, #ffd9d9 0, #f8afb8 63%, #ef8394 100%); overflow: hidden; }
+.nardy-visual { margin: 0; padding: clamp(9px, 2vw, 21px); border-radius: 24px; background: #271c22; box-shadow: 0 22px 44px #561b2638; }
+.nardy-visual img { display: block; width: 100%; height: auto; border-radius: 13px; }
+.nardy-install-note { margin-top: 16px; max-width: 42ch; }
+.visual-lines { position: absolute; z-index: -1; width: 126%; aspect-ratio: 1; border: 1px solid #fff8; border-radius: 50%; translate: 12% 9%; }
+.visual-lines::before, .visual-lines::after { content: ""; position: absolute; border: 1px solid #fffc; border-radius: 50%; inset: 10%; }
+.visual-lines::after { inset: 21%; }
+.hero-phone { display: flex; flex-direction: column; width: min(245px, 68%); min-height: 395px; border: 6px solid #30272d; border-radius: 32px; overflow: hidden; background: var(--bg); box-shadow: 0 24px 55px #67182e48; rotate: -9deg; }
+.phone-status, .composer { display: flex; justify-content: space-between; align-items: center; padding-inline: 12px; }
+.phone-status { height: 33px; font-size: .7rem; font-weight: 750; }
+.phone-status i { width: 49px; height: 12px; border-radius: 20px; background: #30272d; }
+.phone-header { display: flex; align-items: center; gap: 8px; padding: 7px 11px 11px; line-height: 1.18; font-size: 1rem; }
+.phone-header img { margin-inline-start: auto; }
+.phone-header small { display: block; font-size: .72rem; margin-top: 4px; color: var(--muted); }
+.avatar { display: grid; place-items: center; min-width: 34px; height: 34px; border-radius: 50%; background: #f0c4bd; font-weight: 760; }
+.conversation { display: flex; flex-direction: column; align-items: start; flex: 1; gap: 11px; padding: 15px 10px; background: linear-gradient(117deg, #dfe8f7, #f9dce1); font-size: .83rem; }
+.day { align-self: center; padding: 2px 9px; background: #fffc; border-radius: 99px; font-size: .7rem; }
+.bubble { padding: 7px 10px 4px; background: #fff; border-radius: 15px 15px 15px 5px; }
+.bubble small { display: block; text-align: right; color: #535159; font-size: .63rem; }
+.bubble small span { color: #045c8a; }
+.outgoing { align-self: end; background: #f0bac5; border-radius: 15px 15px 5px 15px; }
+.composer { min-height: 44px; color: var(--muted); font-size: .75rem; }
+.composer span { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: var(--brand); }
+.composer img { filter: brightness(0) invert(1); }
+.visual-card { position: absolute; display: flex; align-items: center; gap: 8px; border-radius: 17px; padding: 11px 13px; background: #fff8f9; box-shadow: 0 13px 26px #60122927; font-size: .88rem; font-weight: 770; }
+.visual-direct { top: 11%; left: 4%; rotate: -6deg; }
+.visual-call { top: 60%; right: 4%; rotate: 8deg; }
+.visual-id { bottom: 7%; left: 8%; rotate: -3deg; }
+.referral { margin-top: 18px; padding: 16px 21px; display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; background: var(--blush); border: 1px solid #f4d5db; border-radius: 16px; }
+.referral p { margin-top: 4px; color: var(--muted); }
+.referral a { color: #922032; font-weight: 740; text-underline-offset: 3px; flex-shrink: 0; }
+.section { margin-bottom: clamp(57px, 8vw, 100px); scroll-margin-top: 20px; }
+.section-head { margin-bottom: 25px; max-width: 780px; }
+.network-grid, .download-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.panel { padding: clamp(21px, 3vw, 33px); border-radius: var(--round); border: 1px solid var(--edge); background: var(--surface); }
+.privacy { background: #fbecef; border-color: #f2d8dd; }
+.panel h3 { margin-block: 15px 8px; }
+.panel p, .feature p { color: var(--muted); }
+.icon-tile { flex: 0 0 auto; width: 47px; height: 47px; display: inline-grid; place-items: center; border-radius: 14px; background: var(--blush); }
+.privacy .icon-tile { background: #fff9fa; }
+.note { margin-top: 13px; color: var(--muted); font-size: .9rem; }
+.privacy .note { padding-top: 13px; border-top: 1px solid #edd0d5; }
+.path-diagram { display: grid; align-items: center; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; margin-top: 18px; font-size: .86rem; text-align: center; }
+.path-diagram > span { background: #f4eff3; padding: 5px 9px; border-radius: 9px; }
+.path-lines { position: relative; display: grid; gap: 4px; place-items: center; isolation: isolate; }
+.path-lines::before, .path-lines::after { content: ""; position: absolute; z-index: -1; inset-inline: 0; height: 1px; top: 24%; background: #e77b8c; }
+.path-lines::after { top: 77%; background: none; border-top: 1px dashed #937d8c; }
+.path-lines strong, .path-lines small { width: fit-content; padding-inline: 7px; background: white; }
+.path-lines small { font-size: inherit; color: var(--muted); }
+.reward { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); align-items: center; gap: clamp(25px, 4vw, 57px); padding: clamp(25px, 5vw, 57px); border-radius: 31px; background: #24212a; color: #fff8f7; }
+.reward .eyebrow { color: #ffaeb9; }
+.reward .section-lead, .reward .note { color: #eadde5; }
+.reward-card { padding: 23px; border-radius: 18px; background: #352e3b; border: 1px solid #5b4759; }
+.reward-number { display: flex; align-items: center; gap: 15px; padding-block: 10px 12px; }
+.reward-number strong { font-size: 4.25rem; line-height: .99; color: #ffacb8; letter-spacing: -.06em; }
+.reward-number span { max-width: 22ch; }
+.reward-card ul { list-style: none; padding: 0; margin: 0; }
+.reward-card li { border-top: 1px solid #5b4759; padding-block: 9px; }
+.builder { display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1fr); gap: clamp(22px, 5vw, 75px); align-items: center; }
+.builder .section-head { margin-bottom: 0; }
+.bot-example { border-radius: var(--round); border: 1px solid #ead9dc; background: #fcf1f2; padding: clamp(17px, 3vw, 29px); }
+.bot-example header { display: flex; align-items: center; gap: 11px; line-height: 1.22; }
+.bot-example header strong { display: block; font-size: 1.12rem; }
+.bot-example header small { color: var(--muted); font-size: .875rem; }
+.bot-example .icon-tile { background: #fff; }
+.demo-caption { color: var(--muted); margin-block: 15px 8px; font-size: .9rem; }
+.bot-reply { min-height: 92px; border-radius: 17px 17px 17px 5px; background: var(--surface); padding: 14px 16px; }
+.demo-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.demo-actions button { flex: 1 1 auto; min-height: 44px; border: 1px solid #e9cbd2; border-radius: 11px; padding: 7px 12px; color: #6e2031; background: #fff9fa; font-weight: 650; cursor: pointer; }
+.demo-actions button[aria-pressed=true] { background: var(--pressed); color: #fff; border-color: var(--pressed); }
+.feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature { padding: 20px; border: 1px solid var(--edge); border-radius: 17px; background: var(--surface); }
+.feature h3 { margin-block: 12px 6px; font-size: 1.16rem; }
+.downloads { background: #f8eef0; margin-bottom: 0; padding-block: clamp(39px, 6vw, 68px); }
+.platform-heading { display: flex; flex-wrap: wrap; gap: 7px 12px; align-items: center; margin-bottom: 10px; }
+.platform-heading h3 { margin: 0; font-size: 1.54rem; }
+.status { padding: 4px 8px; border-radius: 9px; background: var(--blush); color: #822231; font-weight: 680; font-size: .875rem; }
+.platform-icon { flex: none; }
+.platform .button, .other-platforms .button { margin-top: 15px; }
+.other-platforms .button { justify-self: start; }
+.checksum { margin-top: 13px; font-size: .875rem; }
+.checksum summary { cursor: pointer; font-weight: 650; }
+.checksum p { padding-top: 6px; }
+.checksum code { display: block; padding: 6px 0 0; overflow-wrap: anywhere; }
+.other-platforms { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.other-platforms li { display: grid; gap: 3px; padding: 14px 16px; border-radius: 13px; background: #fffc; }
+.other-platforms li .platform-heading { margin-bottom: 4px; }
+.other-platforms li h3 { font-size: 1.16rem; }
+.other-platforms p { color: var(--muted); font-size: .9rem; }
+.other-platforms .note { margin-top: 4px; }
+.footer { padding-block: 18px; }
+.footer .brand { font-size: 1.13rem; }
+.footer .mark { width: 34px; height: 34px; border-radius: 11px; }
+.share { background: none; color: var(--pressed); border: 0; cursor: pointer; min-height: 44px; font-weight: 730; text-underline-offset: 3px; }
+.share:hover { text-decoration: underline; }
+@media (max-width: 945px) {
+  .hero-visual { min-height: 450px; }
+  .hero-phone { min-height: 365px; }
+  .visual-card { gap: 5px; font-size: .79rem; padding: 8px; }
+  .visual-card img { width: 18px; height: 18px; }
+}
+@media (max-width: 760px) {
+  .shell { width: calc(100% - 36px); }
+  .header { min-height: 65px; }
+  .header nav { gap: 12px; }
+  .header nav a:not(:last-child) { display: none; }
+  .hero { grid-template-columns: 1fr; gap: 24px; padding-block: 32px 48px; }
+  h1 { font-size: clamp(2.65rem, 8.5vw, 4.4rem); }
+  .lead { margin-block: 17px 18px; }
+  .hero-visual { min-height: 350px; border-radius: 25px; }
+  .hero-phone { min-height: 298px; width: min(210px, 62%); rotate: -7deg; }
+  .visual-direct { top: 8%; left: 3%; }
+  .visual-call { top: 62%; right: 3%; }
+  .visual-id { bottom: 5%; left: 5%; }
+  .network-grid, .download-grid, .reward, .builder { grid-template-columns: minmax(0, 1fr); }
+  .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .feature { padding: 16px; }
+  .referral { display: block; }
+  .referral a { display: inline-block; margin-top: 8px; }
+}
+@media (max-width: 425px) {
+  .other-platforms, .feature-grid { grid-template-columns: 1fr; }
+  .visual-card { border-radius: 10px; }
+}
+@media (max-width: 350px) {
+  .shell { width: calc(100% - 26px); }
+  .header { gap: 8px; }
+  .header .brand { font-size: 1.17rem; gap: 6px; }
+  .header .mark { width: 33px; height: 33px; }
+  .header nav a, .language { font-size: .875rem; }
+  .language { padding-inline: 9px; }
+  h1 { font-size: 2.45rem; }
+  h2 { font-size: 1.8rem; }
+  .hero-phone { width: min(200px, 73%); }
+}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">К содержанию</a>
+  <header class="shell header">
+    <a class="brand" href="../" aria-label="На главную Mayday"><span class="mark"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Cpath fill=%22%23fff%22 d=%22M97.89%2C47.33 97.09%2C45.74 96.18%2C44.83 95.39%2C44.38 93.91%2C44.26 92.32%2C44.94 85.16%2C49.26 83.69%2C49.94 83%2C49.83 81.87%2C48.01 77.89%2C36.31 75.51%2C31.31 72.78%2C28.24 70.39%2C26.88 68.92%2C26.43 65.73%2C26.2 62.67%2C26.88 59.71%2C28.47 57.1%2C30.97 55.06%2C33.92 53.24%2C37.45 48.47%2C49.15 47.22%2C50.62 46.53%2C50.97 45.17%2C50.85 43.92%2C49.72 43.13%2C48.24 40.4%2C40.63 38.35%2C36.99 36.54%2C34.95 34.61%2C33.58 31.99%2C32.56 30.63%2C32.33 27.11%2C32.56 23.7%2C33.92 21.2%2C35.74 18.13%2C39.04 14.95%2C43.35 8.7%2C53.12 3.14%2C62.78 2.11%2C65.51 2.23%2C68.8 2.91%2C70.51 3.82%2C71.76 5.29%2C72.89 6.89%2C73.57 7.91%2C73.8 10.52%2C73.69 12.57%2C72.89 13.7%2C72.1 16.31%2C68.8 21.88%2C56.65 24.04%2C52.67 25.29%2C50.85 26.99%2C49.15 29.04%2C48.24 31.54%2C48.47 32.9%2C49.26 34.04%2C50.4 35.97%2C53.69 38.47%2C59.94 40.06%2C62.55 41.2%2C63.69 42.56%2C64.49 44.6%2C65.05 47.56%2C64.83 49.38%2C64.03 50.97%2C62.78 53.81%2C58.46 56.87%2C51.42 58.69%2C48.01 61.19%2C45.06 62.89%2C44.15 63.92%2C43.92 65.96%2C44.15 67.21%2C44.83 68.46%2C46.08 70.05%2C48.92 72.89%2C56.08 75.28%2C60.96 77.21%2C63.35 79.25%2C64.26 81.07%2C64.14 82.32%2C63.58 88.34%2C58.69 97.32%2C50.17 98%2C48.35Z%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>Mayday</a>
+    <nav aria-label="Навигация по странице"><a href="#network">Сеть</a><a href="#bots">Боты и мини-приложения</a><a href="#install">Загрузки</a><a class="help-link" href="../help/">Справка</a></nav>
+    <a class="language" id="language" href="../en/nardy/" lang="en" hreflang="en">English</a>
+  </header>
+
+  <main id="main">
+    <aside class="shell referral" id="bankomet" hidden>
+      <div><strong>Пришли из Банкомёта?</strong><p>Установите Mayday на Android, создайте профиль и вернитесь к входу через Mayday ID.</p></div>
+      <a href="https://153.76.172.25:8447/?__mobile=1#mayday-install-return">Вернуться в Банкомёт</a>
+    </aside>
+
+    <section class="shell hero" aria-labelledby="title">
+      <div class="intro">
+        <p class="eyebrow">Длинные нарды в Mayday</p>
+        <h1 id="title">Сможешь обыграть<br><em>меня в нарды?</em></h1>
+        <p class="lead">Сыграй с другом без ставки. А если захочешь размяться, попробуй обыграть нашего ИИ.</p>
+        <div class="actions">
+          <a class="button primary" id="hero-download" href="#android">Скачать Mayday</a>
+          <a class="button outline" id="open-mayday" hidden>Открыть вызов</a>
+          <a class="button outline" id="hero-secondary" href="mayday://nardy/ai">Сыграть с ИИ</a>
+        </div>
+        <p class="note nardy-install-note" >Установи Mayday, подтверди номер и вернись по этой ссылке. Затем нажми «Открыть вызов».</p>
+      </div>
+      <figure class="hero-visual" role="img" aria-label="Пример личного чата Mayday" hidden>
+        <div class="visual-lines" aria-hidden="true"></div>
+        <div class="hero-phone" aria-hidden="true">
+          <div class="phone-status"><span>12:30</span><i></i><span>▮▮▮</span></div>
+          <div class="phone-header">
+            <span class="avatar">A</span><span><strong>Аня</strong><small>Личная переписка</small></span>
+            <img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M251.77%2C73a8%2C8%2C0%2C0%2C0-8.21.39L208%2C97.05V72a16%2C16%2C0%2C0%2C0-16-16H32A16%2C16%2C0%2C0%2C0%2C16%2C72V184a16%2C16%2C0%2C0%2C0%2C16%2C16H192a16%2C16%2C0%2C0%2C0%2C16-16V159l35.56%2C23.71A8%2C8%2C0%2C0%2C0%2C248%2C184a8%2C8%2C0%2C0%2C0%2C8-8V80A8%2C8%2C0%2C0%2C0%2C251.77%2C73ZM192%2C184H32V72H192V184Zm48-22.95-32-21.33V116.28L240%2C95Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="23" height="23">
+          </div>
+          <div class="conversation">
+            <span class="day">Сегодня</span>
+            <div class="bubble">Готова к созвону?<small>12:28</small></div>
+            <div class="bubble outgoing">Да, уже на связи!<small>12:29 <span>✓✓</span></small></div>
+            <div class="bubble">Тогда включаю камеру<small>12:30</small></div>
+          </div>
+          <div class="composer">Сообщение<span><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Cpath d=%22M12%2C20 L12%2C4 M5%2C11 L12%2C4 L19%2C11%22 fill=%22none%22 stroke=%22%23FFFFFF%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E" alt="" width="17" height="17"></span></div>
+        </div>
+        <div class="visual-card visual-direct" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M128%2C24h0A104%2C104%2C0%2C1%2C0%2C232%2C128%2C104.12%2C104.12%2C0%2C0%2C0%2C128%2C24Zm88%2C104a87.61%2C87.61%2C0%2C0%2C1-3.33%2C24H174.16a157.44%2C157.44%2C0%2C0%2C0%2C0-48h38.51A87.61%2C87.61%2C0%2C0%2C1%2C216%2C128ZM102%2C168H154a115.11%2C115.11%2C0%2C0%2C1-26%2C45A115.27%2C115.27%2C0%2C0%2C1%2C102%2C168Zm-3.9-16a140.84%2C140.84%2C0%2C0%2C1%2C0-48h59.88a140.84%2C140.84%2C0%2C0%2C1%2C0%2C48ZM40%2C128a87.61%2C87.61%2C0%2C0%2C1%2C3.33-24H81.84a157.44%2C157.44%2C0%2C0%2C0%2C0%2C48H43.33A87.61%2C87.61%2C0%2C0%2C1%2C40%2C128ZM154%2C88H102a115.11%2C115.11%2C0%2C0%2C1%2C26-45A115.27%2C115.27%2C0%2C0%2C1%2C154%2C88Zm52.33%2C0H170.71a135.28%2C135.28%2C0%2C0%2C0-22.3-45.6A88.29%2C88.29%2C0%2C0%2C1%2C206.37%2C88ZM107.59%2C42.4A135.28%2C135.28%2C0%2C0%2C0%2C85.29%2C88H49.63A88.29%2C88.29%2C0%2C0%2C1%2C107.59%2C42.4ZM49.63%2C168H85.29a135.28%2C135.28%2C0%2C0%2C0%2C22.3%2C45.6A88.29%2C88.29%2C0%2C0%2C1%2C49.63%2C168Zm98.78%2C45.6a135.28%2C135.28%2C0%2C0%2C0%2C22.3-45.6h35.66A88.29%2C88.29%2C0%2C0%2C1%2C148.41%2C213.6Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="23" height="23">Прямой маршрут</div>
+        <div class="visual-card visual-call" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M251.77%2C73a8%2C8%2C0%2C0%2C0-8.21.39L208%2C97.05V72a16%2C16%2C0%2C0%2C0-16-16H32A16%2C16%2C0%2C0%2C0%2C16%2C72V184a16%2C16%2C0%2C0%2C0%2C16%2C16H192a16%2C16%2C0%2C0%2C0%2C16-16V159l35.56%2C23.71A8%2C8%2C0%2C0%2C0%2C248%2C184a8%2C8%2C0%2C0%2C0%2C8-8V80A8%2C8%2C0%2C0%2C0%2C251.77%2C73ZM192%2C184H32V72H192V184Zm48-22.95-32-21.33V116.28L240%2C95Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="25" height="25">Видеозвонок</div>
+        <div class="visual-card visual-id" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M104%2C40H56A16%2C16%2C0%2C0%2C0%2C40%2C56v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C104%2C40Zm0%2C64H56V56h48v48Zm0%2C32H56a16%2C16%2C0%2C0%2C0-16%2C16v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V152A16%2C16%2C0%2C0%2C0%2C104%2C136Zm0%2C64H56V152h48v48ZM200%2C40H152a16%2C16%2C0%2C0%2C0-16%2C16v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C200%2C40Zm0%2C64H152V56h48v48Zm-64%2C72V144a8%2C8%2C0%2C0%2C1%2C16%2C0v32a8%2C8%2C0%2C0%2C1-16%2C0Zm80-16a8%2C8%2C0%2C0%2C1-8%2C8H184v40a8%2C8%2C0%2C0%2C1-8%2C8H144a8%2C8%2C0%2C0%2C1%2C0-16h24V144a8%2C8%2C0%2C0%2C1%2C16%2C0v8h24A8%2C8%2C0%2C0%2C1%2C216%2C160Zm0%2C32v16a8%2C8%2C0%2C0%2C1-16%2C0V192a8%2C8%2C0%2C0%2C1%2C16%2C0Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="23" height="23">Общение по Mayday ID</div>
+      </figure>
+      <figure class="nardy-visual" >
+        <img src="../assets/nardy-board.jpg" width="1600" height="720" alt="Доска длинных нард в Mayday" fetchpriority="high">
+      </figure>
+    </section>
+
+    <section class="shell section" id="network" aria-labelledby="network-title">
+      <div class="section-head">
+        <p class="eyebrow">Приватность и сеть</p>
+        <h2 id="network-title">Идентичность и доставка</h2>
+        <p class="section-lead">Mayday ID связывает профиль с ключами вашего аккаунта. Маршрут доставки приложение подбирает по доступной сети.</p>
+      </div>
+      <div class="network-grid">
+        <article class="panel privacy">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M208%2C40H48A16%2C16%2C0%2C0%2C0%2C32%2C56v56c0%2C52.72%2C25.52%2C84.67%2C46.93%2C102.19%2C23.06%2C18.86%2C46%2C25.26%2C47%2C25.53a8%2C8%2C0%2C0%2C0%2C4.2%2C0c1-.27%2C23.91-6.67%2C47-25.53C198.48%2C196.67%2C224%2C164.72%2C224%2C112V56A16%2C16%2C0%2C0%2C0%2C208%2C40Zm0%2C72c0%2C37.07-13.66%2C67.16-40.6%2C89.42A129.3%2C129.3%2C0%2C0%2C1%2C128%2C223.62a128.25%2C128.25%2C0%2C0%2C1-38.92-21.81C61.82%2C179.51%2C48%2C149.3%2C48%2C112l0-56%2C160%2C0ZM82.34%2C141.66a8%2C8%2C0%2C0%2C1%2C11.32-11.32L112%2C148.69l50.34-50.35a8%2C8%2C0%2C0%2C1%2C11.32%2C11.32l-56%2C56a8%2C8%2C0%2C0%2C1-11.32%2C0Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="25" height="25"></span>
+          <h3>Общайтесь под своим именем или псевдонимом</h3><p>Делитесь своим Mayday ID или QR, чтобы начать чат. Номер не публикуется в профиле. Поиск по номеру включается отдельно по вашему выбору.</p>
+          <p class="note">При регистрации номер подтверждается по SMS.</p>
+        </article>
+        <article class="panel routes">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M128%2C24h0A104%2C104%2C0%2C1%2C0%2C232%2C128%2C104.12%2C104.12%2C0%2C0%2C0%2C128%2C24Zm88%2C104a87.61%2C87.61%2C0%2C0%2C1-3.33%2C24H174.16a157.44%2C157.44%2C0%2C0%2C0%2C0-48h38.51A87.61%2C87.61%2C0%2C0%2C1%2C216%2C128ZM102%2C168H154a115.11%2C115.11%2C0%2C0%2C1-26%2C45A115.27%2C115.27%2C0%2C0%2C1%2C102%2C168Zm-3.9-16a140.84%2C140.84%2C0%2C0%2C1%2C0-48h59.88a140.84%2C140.84%2C0%2C0%2C1%2C0%2C48ZM40%2C128a87.61%2C87.61%2C0%2C0%2C1%2C3.33-24H81.84a157.44%2C157.44%2C0%2C0%2C0%2C0%2C48H43.33A87.61%2C87.61%2C0%2C0%2C1%2C40%2C128ZM154%2C88H102a115.11%2C115.11%2C0%2C0%2C1%2C26-45A115.27%2C115.27%2C0%2C0%2C1%2C154%2C88Zm52.33%2C0H170.71a135.28%2C135.28%2C0%2C0%2C0-22.3-45.6A88.29%2C88.29%2C0%2C0%2C1%2C206.37%2C88ZM107.59%2C42.4A135.28%2C135.28%2C0%2C0%2C0%2C85.29%2C88H49.63A88.29%2C88.29%2C0%2C0%2C1%2C107.59%2C42.4ZM49.63%2C168H85.29a135.28%2C135.28%2C0%2C0%2C0%2C22.3%2C45.6A88.29%2C88.29%2C0%2C0%2C1%2C49.63%2C168Zm98.78%2C45.6a135.28%2C135.28%2C0%2C0%2C0%2C22.3-45.6h35.66A88.29%2C88.29%2C0%2C0%2C1%2C148.41%2C213.6Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="25" height="25"></span>
+          <h3>Децентрализованная доставка</h3><p>В одной локальной сети устройства могут обмениваться данными напрямую. Для связи через интернет доступны узлы доставки, включая добавленные вами в настройках.</p>
+          <div class="path-diagram" role="img" aria-label="Маршруты доставки: Вы — Напрямую / Через узел — Собеседник">
+            <span>Вы</span><div class="path-lines"><strong>Напрямую</strong><small>Через узел</small></div><span>Собеседник</span>
+          </div>
+          <p class="note">Личные сообщения шифруются на устройстве отправителя. Если прямой маршрут недоступен, зашифрованные данные могут пройти через узел.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section reward" aria-labelledby="reward-title">
+        <div>
+          <p class="eyebrow">Награды за общение</p><h2 id="reward-title">От сообщения до кошелька</h2>
+          <p class="section-lead">За подходящее исходящее сообщение с подтверждением доставки начисляется 1 LBU₽. Заберите накопленное в разделе «Награды за общение»: после подтверждения в сети токены появятся в кошельке Mayday.</p><p class="note">LBU₽ — токен сети Mayday. Вывод в рублях пока недоступен.</p>
+        </div>
+        <div class="reward-card">
+          <h3>Условия начисления</h3>
+          <div class="reward-number"><strong>1</strong><span>LBU₽ за подходящее сообщение</span></div>
+          <ul><li>до 50 LBU₽ в сутки</li><li>до 15 LBU₽ за сообщения одному собеседнику в сутки</li></ul>
+        </div>
+    </section>
+
+    <section class="shell section builder" id="bots" aria-labelledby="bot-title">
+      <div class="section-head">
+        <p class="eyebrow">Конструктор ботов</p><h2 id="bot-title">Бот без программирования</h2>
+        <p class="section-lead">Откройте «Сервисы → Боты → Мои боты». Добавьте приветствие, команды, картинки и кнопки. Для бота с готовыми ответами программирование не требуется.</p><p class="note">Подключите бота к сайту, чтобы получать заявки в чате. Для своего сценария используйте API.</p>
+      </div>
+      <div class="bot-example" aria-label="Интерактивный пример бота">
+        <header>
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Cpath d=%22M12%2C3 L12%2C6 M9%2C3 L15%2C3 M5%2C6 L19%2C6 Q21%2C6 21%2C8 L21%2C18 Q21%2C20 19%2C20 L5%2C20 Q3%2C20 3%2C18 L3%2C8 Q3%2C6 5%2C6 M8%2C11 L8%2C12 M16%2C11 L16%2C12 M8%2C16 L16%2C16%22 fill=%22none%22 stroke=%22%23000000%22 stroke-width=%221.8%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E" alt="" width="25" height="25"></span>
+          <div><strong>Мастерская</strong><small>Бот · пример</small></div>
+        </header>
+        <p class="demo-caption">Попробуйте кнопки в примере бота.</p>
+        <div class="bot-reply" aria-live="polite">
+          <p data-reply="home">Привет! Здесь можно посмотреть, что мы делаем, и узнать, как с нами связаться.</p>
+          <p data-reply="catalog" hidden>В каталоге три раздела: керамика, открытки и подарочные наборы.</p>
+          <p data-reply="contact" hidden>Принимаем заказы с понедельника по пятницу. Напишите, что хотите заказать.</p>
+        </div>
+        <div class="demo-actions" id="demo-actions" hidden>
+          <button type="button" data-demo="home" aria-pressed="true">Главная</button>
+          <button type="button" data-demo="catalog" aria-pressed="false">Каталог</button>
+          <button type="button" data-demo="contact" aria-pressed="false">Контакты</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" aria-labelledby="more-title">
+      <div class="section-head"><p class="eyebrow">Чаты и сервисы</p><h2 id="more-title">Что умеет Mayday</h2></div>
+      <div class="feature-grid">
+        <article class="feature">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M117.25%2C157.92a60%2C60%2C0%2C1%2C0-66.5%2C0A95.83%2C95.83%2C0%2C0%2C0%2C3.53%2C195.63a8%2C8%2C0%2C1%2C0%2C13.4%2C8.74%2C80%2C80%2C0%2C0%2C1%2C134.14%2C0%2C8%2C8%2C0%2C0%2C0%2C13.4-8.74A95.83%2C95.83%2C0%2C0%2C0%2C117.25%2C157.92ZM40%2C108a44%2C44%2C0%2C1%2C1%2C44%2C44A44.05%2C44.05%2C0%2C0%2C1%2C40%2C108Zm210.14%2C98.7a8%2C8%2C0%2C0%2C1-11.07-2.33A79.83%2C79.83%2C0%2C0%2C0%2C172%2C168a8%2C8%2C0%2C0%2C1%2C0-16%2C44%2C44%2C0%2C1%2C0-16.34-84.87%2C8%2C8%2C0%2C1%2C1-5.94-14.85%2C60%2C60%2C0%2C0%2C1%2C55.53%2C105.64%2C95.83%2C95.83%2C0%2C0%2C1%2C47.22%2C37.71A8%2C8%2C0%2C0%2C1%2C250.14%2C206.7Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>
+          <h3>Группы и каналы</h3><p>Создайте группу с друзьями или оставьте её только для себя. Закрепляйте важное и публикуйте фото, видео и файлы в каналах.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M251.77%2C73a8%2C8%2C0%2C0%2C0-8.21.39L208%2C97.05V72a16%2C16%2C0%2C0%2C0-16-16H32A16%2C16%2C0%2C0%2C0%2C16%2C72V184a16%2C16%2C0%2C0%2C0%2C16%2C16H192a16%2C16%2C0%2C0%2C0%2C16-16V159l35.56%2C23.71A8%2C8%2C0%2C0%2C0%2C248%2C184a8%2C8%2C0%2C0%2C0%2C8-8V80A8%2C8%2C0%2C0%2C0%2C251.77%2C73ZM192%2C184H32V72H192V184Zm48-22.95-32-21.33V116.28L240%2C95Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>
+          <h3>Аудио и видео</h3><p>Созванивайтесь один на один. Для групп доступны аудиозвонки до восьми участников.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M216%2C40H40A16%2C16%2C0%2C0%2C0%2C24%2C56V200a16%2C16%2C0%2C0%2C0%2C16%2C16H216a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C216%2C40Zm0%2C16V158.75l-26.07-26.06a16%2C16%2C0%2C0%2C0-22.63%2C0l-20%2C20-44-44a16%2C16%2C0%2C0%2C0-22.62%2C0L40%2C149.37V56ZM40%2C172l52-52%2C80%2C80H40Zm176%2C28H194.63l-36-36%2C20-20L216%2C181.38V200ZM144%2C100a12%2C12%2C0%2C1%2C1%2C12%2C12A12%2C12%2C0%2C0%2C1%2C144%2C100Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>
+          <h3>Истории и медиа</h3><p>Публикуйте фото и видео на 24 часа, редактируйте изображения и сохраняйте полученные фото в галерею.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M104%2C40H56A16%2C16%2C0%2C0%2C0%2C40%2C56v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C104%2C40Zm0%2C64H56V56h48v48Zm96-64H152a16%2C16%2C0%2C0%2C0-16%2C16v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C200%2C40Zm0%2C64H152V56h48v48Zm-96%2C32H56a16%2C16%2C0%2C0%2C0-16%2C16v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V152A16%2C16%2C0%2C0%2C0%2C104%2C136Zm0%2C64H56V152h48v48Zm96-64H152a16%2C16%2C0%2C0%2C0-16%2C16v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V152A16%2C16%2C0%2C0%2C0%2C200%2C136Zm0%2C64H152V152h48v48Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>
+          <h3>Мини-приложения</h3><p>Открывайте веб-сервисы из чата бота. Mayday запрашивает согласие перед передачей данных, для которых нужны разрешения.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M216%2C64H56a8%2C8%2C0%2C0%2C1%2C0-16H192a8%2C8%2C0%2C0%2C0%2C0-16H56A24%2C24%2C0%2C0%2C0%2C32%2C56V184a24%2C24%2C0%2C0%2C0%2C24%2C24H216a16%2C16%2C0%2C0%2C0%2C16-16V80A16%2C16%2C0%2C0%2C0%2C216%2C64Zm0%2C128H56a8%2C8%2C0%2C0%2C1-8-8V78.63A23.84%2C23.84%2C0%2C0%2C0%2C56%2C80H216Zm-48-60a12%2C12%2C0%2C1%2C1%2C12%2C12A12%2C12%2C0%2C0%2C1%2C168%2C132Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>
+          <h3>Кошелёк</h3><p>Получайте и отправляйте LBU₽ по адресу или контакту. Подтверждайте операции в кошельке Mayday.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M176%2C112H152a8%2C8%2C0%2C0%2C1%2C0-16h24a8%2C8%2C0%2C0%2C1%2C0%2C16ZM104%2C96H96V88a8%2C8%2C0%2C0%2C0-16%2C0v8H72a8%2C8%2C0%2C0%2C0%2C0%2C16h8v8a8%2C8%2C0%2C0%2C0%2C16%2C0v-8h8a8%2C8%2C0%2C0%2C0%2C0-16ZM241.48%2C200.65a36%2C36%2C0%2C0%2C1-54.94%2C4.81c-.12-.12-.24-.24-.35-.37L146.48%2C160h-37L69.81%2C205.09l-.35.37A36.08%2C36.08%2C0%2C0%2C1%2C44%2C216%2C36%2C36%2C0%2C0%2C1%2C8.56%2C173.75a.68.68%2C0%2C0%2C1%2C0-.14L24.93%2C89.52A59.88%2C59.88%2C0%2C0%2C1%2C83.89%2C40H172a60.08%2C60.08%2C0%2C0%2C1%2C59%2C49.25c0%2C.06%2C0%2C.12%2C0%2C.18l16.37%2C84.17a.68.68%2C0%2C0%2C1%2C0%2C.14A35.74%2C35.74%2C0%2C0%2C1%2C241.48%2C200.65ZM172%2C144a44%2C44%2C0%2C0%2C0%2C0-88H83.89A43.9%2C43.9%2C0%2C0%2C0%2C40.68%2C92.37l0%2C.13L24.3%2C176.59A20%2C20%2C0%2C0%2C0%2C58%2C194.3l41.92-47.59a8%2C8%2C0%2C0%2C1%2C6-2.71Zm59.7%2C32.59-8.74-45A60%2C60%2C0%2C0%2C1%2C172%2C160h-4.2L198%2C194.31a20.09%2C20.09%2C0%2C0%2C0%2C17.46%2C5.39%2C20%2C20%2C0%2C0%2C0%2C16.23-23.11Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>
+          <h3>Игры в чате</h3><p>Играйте в длинные нарды и шахматы из чата «Игры».</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M140%2C128a12%2C12%2C0%2C1%2C1-12-12A12%2C12%2C0%2C0%2C1%2C140%2C128ZM84%2C116a12%2C12%2C0%2C1%2C0%2C12%2C12A12%2C12%2C0%2C0%2C0%2C84%2C116Zm88%2C0a12%2C12%2C0%2C1%2C0%2C12%2C12A12%2C12%2C0%2C0%2C0%2C172%2C116Zm60%2C12A104%2C104%2C0%2C0%2C1%2C79.12%2C219.82L45.07%2C231.17a16%2C16%2C0%2C0%2C1-20.24-20.24l11.35-34.05A104%2C104%2C0%2C1%2C1%2C232%2C128Zm-16%2C0A88%2C88%2C0%2C1%2C0%2C51.81%2C172.06a8%2C8%2C0%2C0%2C1%2C.66%2C6.54L40%2C216%2C77.4%2C203.53a7.85%2C7.85%2C0%2C0%2C1%2C2.53-.42%2C8%2C8%2C0%2C0%2C1%2C4%2C1.08A88%2C88%2C0%2C0%2C0%2C216%2C128Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>
+          <h3>Цитаты и реакции</h3><p>Смахните сообщение, чтобы ответить на него, или выберите эмоцию в меню сообщения.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M216%2C40H40A16%2C16%2C0%2C0%2C0%2C24%2C56V200a16%2C16%2C0%2C0%2C0%2C16%2C16H216a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C216%2C40Zm0%2C16V158.75l-26.07-26.06a16%2C16%2C0%2C0%2C0-22.63%2C0l-20%2C20-44-44a16%2C16%2C0%2C0%2C0-22.62%2C0L40%2C149.37V56ZM40%2C172l52-52%2C80%2C80H40Zm176%2C28H194.63l-36-36%2C20-20L216%2C181.38V200ZM144%2C100a12%2C12%2C0%2C1%2C1%2C12%2C12A12%2C12%2C0%2C0%2C1%2C144%2C100Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>
+          <h3>Альбом профиля</h3><p>Выберите фото из галереи или сделайте снимок камерой. Прежние фотографии остаются в альбоме.</p>
+        </article>
+
+        <article class="feature">
+          <span class="icon-tile"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M104%2C40H56A16%2C16%2C0%2C0%2C0%2C40%2C56v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C104%2C40Zm0%2C64H56V56h48v48Zm0%2C32H56a16%2C16%2C0%2C0%2C0-16%2C16v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V152A16%2C16%2C0%2C0%2C0%2C104%2C136Zm0%2C64H56V152h48v48ZM200%2C40H152a16%2C16%2C0%2C0%2C0-16%2C16v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C200%2C40Zm0%2C64H152V56h48v48Zm-64%2C72V144a8%2C8%2C0%2C0%2C1%2C16%2C0v32a8%2C8%2C0%2C0%2C1-16%2C0Zm80-16a8%2C8%2C0%2C0%2C1-8%2C8H184v40a8%2C8%2C0%2C0%2C1-8%2C8H144a8%2C8%2C0%2C0%2C1%2C0-16h24V144a8%2C8%2C0%2C0%2C1%2C16%2C0v8h24A8%2C8%2C0%2C0%2C1%2C216%2C160Zm0%2C32v16a8%2C8%2C0%2C0%2C1-16%2C0V192a8%2C8%2C0%2C0%2C1%2C16%2C0Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>
+          <h3>Вход с Mayday ID</h3><p>Подтверждайте вход в подключённые сервисы, например в Банкомёт, прямо в Mayday.</p>
+        </article></div>
+    </section>
+
+    <section class="section downloads" id="install" aria-labelledby="install-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="eyebrow">Приложения Mayday</p><h2 id="install-title">Выберите устройство</h2><p class="section-lead">Клиенту Windows для работы нужен телефон с Mayday. Найдите инструкцию рядом с файлом.</p>
+        </div>
+        <div class="download-grid">
+          <article class="panel platform" id="android">
+            <div class="platform-heading"><img class="platform-icon" src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cpath d=%22m12 11-3-5m19 5 3-5%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M3 26c.4-8.6 7.7-15.5 17-15.5S36.6 17.4 37 26v3H3z%22 fill=%22currentColor%22/%3E%3Ccircle cx=%2213.3%22 cy=%2221%22 r=%221.7%22 fill=%22%23f1efe8%22/%3E%3Ccircle cx=%2226.7%22 cy=%2221%22 r=%221.7%22 fill=%22%23f1efe8%22/%3E%3C/svg%3E" alt="" width="36" height="36"><h3>Android</h3><span class="status" id="android-status">Готовим к публикации</span></div>
+            <p id="release-note">Android 7.0 и новее. Здесь появится APK для внешних тестов.</p>
+            <a class="button primary" id="download" hidden>Скачать APK</a>
+            <p class="note" id="android-steps" hidden>Скачайте APK на телефон, откройте файл и завершите регистрацию в Mayday.</p>
+            <p class="note" id="platform-note" hidden>Откройте эту страницу на Android, чтобы установить приложение.</p>
+            <details class="checksum" id="file-details" hidden><summary>Контрольная сумма SHA-256</summary><code id="file-hash"></code></details>
+          </article>
+          <article class="panel platform" id="windows">
+            <div class="platform-heading"><img class="platform-icon" src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cpath fill=%22currentColor%22 d=%22M4 5.9 18.7 4v14.6H4zm17.2-2.2L36 1.8v16.8H21.2zM4 21.1h14.7v14.5L4 33.8zm17.2 0H36v16.7l-14.8-1.9z%22/%3E%3C/svg%3E" alt="" width="36" height="36"><h3>Windows x64</h3><span class="status">Версия 0.3.1</span></div>
+            <p>Мастер установки даёт выбрать папку и добавляет ярлыки Mayday. Все необходимые библиотеки входят в установщик.</p>
+            <div class="actions">
+              <a class="button primary" href="../releases/MaydaySetup-x64-0.3.1.exe" download>Скачать установщик (EXE)</a>
+              <a class="button outline" href="../releases/Mayday-Windows-x64-0.3.1.msi" download>Установщик MSI</a>
+            </div>
+            <details class="checksum">
+              <summary>Установка и SHA-256</summary><p>Запустите MaydaySetup и выберите папку установки. Откройте Mayday с рабочего стола или из меню «Пуск». В обновлённом Mayday на телефоне откройте «Настройки → Устройства → Подключить компьютер» и отсканируйте QR один раз. В дальнейшем компьютер подключается автоматически, когда телефон доступен.</p>
+              <p>EXE</p><code aria-label="EXE SHA-256">65c17f81e07def102a2fc9f8f1a7fcab200dd9f1e43913bf1befa7c44e7d8962</code>
+              <p>MSI</p><code aria-label="MSI SHA-256">dd02d7e578e04e44db9aa3d7d362f19f48b9427b7820809de05b98aadeac2d9e</code>
+            </details>
+          </article>
+        </div>
+        <ul class="other-platforms" aria-label="Другие платформы">
+          <li id="linux">
+            <div class="platform-heading"><img class="platform-icon" src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cpath fill=%22currentColor%22 d=%22M20 3c5 0 8 4 8 10 0 4 2 6 4.2 11.3 1.3 3.1 1.2 6.7-1.2 9.1-2.2 2.1-6.4 3.4-11 3.4s-8.8-1.3-11-3.4c-2.4-2.4-2.5-6-1.2-9.1C10 19 12 17 12 13c0-6 3-10 8-10Z%22/%3E%3Cpath fill=%22%23f1efe8%22 d=%22M20 17.5c3.8 0 7 5.8 7 10.2 0 3.9-2.9 5.6-7 5.6s-7-1.7-7-5.6c0-4.4 3.2-10.2 7-10.2Z%22/%3E%3Ccircle fill=%22%23f1efe8%22 cx=%2217%22 cy=%2212.5%22 r=%222.1%22/%3E%3Ccircle fill=%22%23f1efe8%22 cx=%2223%22 cy=%2212.5%22 r=%222.1%22/%3E%3Cpath fill=%22%23e4ad27%22 d=%22m15.6 16.1 4.4-2 4.4 2-4.4 3.1zM8.1 33c1-2.1 5.8-2.4 8.3 1.2 1.1 1.7-1.2 2.7-4.4 2.4-3.6-.3-5-1.6-3.9-3.6zm23.8 0c-1-2.1-5.8-2.4-8.3 1.2-1.1 1.7 1.2 2.7 4.4 2.4 3.6-.3 5-1.6 3.9-3.6z%22/%3E%3C/svg%3E" alt="" width="29" height="29"><h3>Linux</h3></div>
+            <p>Готовой сборки нет</p>
+          </li>
+          <li id="macos">
+            <div class="platform-heading"><img class="platform-icon" src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cg fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%224%22 y=%226%22 width=%2232%22 height=%2223%22 rx=%222%22/%3E%3Cpath d=%22M4 24.5h32M20 29v5m-6 0h12m-12-21v3m12-3v3m-9 3c1.6 1.9 4.4 1.9 6 0%22/%3E%3C/g%3E%3C/svg%3E" alt="" width="29" height="29"><h3>macOS</h3></div>
+            <p id="mac-note">Отдельное приложение для Mac. После сборки и заверения Apple здесь будет установщик DMG.</p>
+            <p class="note" id="mac-status">Готовой сборки нет</p>
+            <a class="button primary" id="mac-download" hidden>Скачать DMG</a>
+            <details class="checksum" id="mac-details" hidden><summary>Контрольная сумма SHA-256</summary><code id="mac-hash"></code></details>
+          </li>
+          <li id="iphone">
+            <div class="platform-heading"><img class="platform-icon" src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cg fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%2210%22 y=%223%22 width=%2220%22 height=%2234%22 rx=%225%22/%3E%3Cpath d=%22M17 8h6m-6 24h6%22/%3E%3C/g%3E%3C/svg%3E" alt="" width="29" height="29"><h3>iPhone</h3></div>
+            <p>Приглашение на тестирование будет открываться в TestFlight.</p><p class="note" id="ios-status">Бета пока закрыта</p>
+            <a class="button primary" id="ios-invite" rel="noreferrer" hidden>Открыть TestFlight</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell footer">
+    <a class="brand" href="../" aria-label="На главную Mayday"><span class="mark"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Cpath fill=%22%23fff%22 d=%22M97.89%2C47.33 97.09%2C45.74 96.18%2C44.83 95.39%2C44.38 93.91%2C44.26 92.32%2C44.94 85.16%2C49.26 83.69%2C49.94 83%2C49.83 81.87%2C48.01 77.89%2C36.31 75.51%2C31.31 72.78%2C28.24 70.39%2C26.88 68.92%2C26.43 65.73%2C26.2 62.67%2C26.88 59.71%2C28.47 57.1%2C30.97 55.06%2C33.92 53.24%2C37.45 48.47%2C49.15 47.22%2C50.62 46.53%2C50.97 45.17%2C50.85 43.92%2C49.72 43.13%2C48.24 40.4%2C40.63 38.35%2C36.99 36.54%2C34.95 34.61%2C33.58 31.99%2C32.56 30.63%2C32.33 27.11%2C32.56 23.7%2C33.92 21.2%2C35.74 18.13%2C39.04 14.95%2C43.35 8.7%2C53.12 3.14%2C62.78 2.11%2C65.51 2.23%2C68.8 2.91%2C70.51 3.82%2C71.76 5.29%2C72.89 6.89%2C73.57 7.91%2C73.8 10.52%2C73.69 12.57%2C72.89 13.7%2C72.1 16.31%2C68.8 21.88%2C56.65 24.04%2C52.67 25.29%2C50.85 26.99%2C49.15 29.04%2C48.24 31.54%2C48.47 32.9%2C49.26 34.04%2C50.4 35.97%2C53.69 38.47%2C59.94 40.06%2C62.55 41.2%2C63.69 42.56%2C64.49 44.6%2C65.05 47.56%2C64.83 49.38%2C64.03 50.97%2C62.78 53.81%2C58.46 56.87%2C51.42 58.69%2C48.01 61.19%2C45.06 62.89%2C44.15 63.92%2C43.92 65.96%2C44.15 67.21%2C44.83 68.46%2C46.08 70.05%2C48.92 72.89%2C56.08 75.28%2C60.96 77.21%2C63.35 79.25%2C64.26 81.07%2C64.14 82.32%2C63.58 88.34%2C58.69 97.32%2C50.17 98%2C48.35Z%22/%3E%3C/svg%3E" alt="" width="22" height="22"></span>Mayday</a>
+    <a class="help-link" href="../help/">Справка</a>
+    <button class="share" id="share" type="button" hidden>Поделиться ссылкой</button>
+    <p id="share-status" class="sr-only" role="status"></p>
+  </footer>
+  <script>
+(function setupPage({ androidRelease, macRelease, testFlightInvite }, ui, releaseBase, optionalFonts = []) {
+  const byId = id => document.getElementById(id);
+  const url = new URL(location.href);
+  const lang = document.documentElement.lang === 'en' ? 'en' : 'ru';
+  const text = ui[lang];
+  const bankometPath = /\/(?:en\/)?bankomet\/$/.test(url.pathname);
+  const invitePath = /\/(?:en\/)?invite\/$/.test(url.pathname);
+  const nardyPath = /\/(?:en\/)?nardy\/$/.test(url.pathname);
+  const botPath = /\/(?:en\/)?bot\/$/.test(url.pathname);
+  const referral = bankometPath || url.searchParams.get('from') === 'bankomet';
+  byId('bankomet').hidden = !referral;
+
+  const profileId = invitePath ? /^\?id=([0-9a-f]{40})$/i.exec(url.search)?.[1] : null;
+  const validProfileInvite = Boolean(profileId && !/^0{40}$/.test(profileId));
+  const candidateBot = botPath ? /^\?id=([a-f0-9]{40})$/.exec(url.search)?.[1] : null;
+  const botId = candidateBot && !/^0{40}$/.test(candidateBot) ? candidateBot : null;
+  const requestId = bankometPath ? /^#requestId=([A-Za-z0-9_-]{43})$/.exec(url.hash)?.[1] : null;
+  let challengeId = null;
+  const openMayday = byId('open-mayday');
+  if (openMayday && validProfileInvite) {
+    openMayday.href = 'mayday://profile/' + profileId.toLowerCase();
+    openMayday.hidden = false;
+  } else if (openMayday && requestId) {
+    openMayday.href = 'mayday://auth/v1?requestId=' + requestId;
+    openMayday.hidden = false;
+  } else if (openMayday && botId) {
+    openMayday.href = 'mayday://bot/v1?id=' + botId;
+    openMayday.hidden = false;
+  }
+
+  function updateChallenge() {
+    const id = /^#id=([0-9a-f]{40})$/i.exec(location.hash)?.[1]?.toLowerCase();
+    challengeId = id && !/^0{40}$/.test(id) ? id : null;
+    if (openMayday) {
+      if (challengeId) openMayday.href = 'mayday://nardy/v1?id=' + challengeId;
+      else openMayday.removeAttribute('href');
+      openMayday.hidden = !challengeId;
+    }
+    const note = document.querySelector('.nardy-install-note');
+    if (note) note.hidden = !challengeId;
+  }
+
+  if (nardyPath) {
+    updateChallenge();
+    const secondary = byId('hero-secondary');
+    for (const action of [openMayday, secondary]) {
+      action?.addEventListener('click', () => {
+        // A browser with no Mayday handler stays here and can offer the APK.
+        window.setTimeout(() => {
+          if (document.visibilityState === 'visible') byId('android')?.scrollIntoView();
+        }, 900);
+      });
+    }
+    // Preserve the original invite on returning after a download or switching languages.
+    for (const anchor of document.querySelectorAll('a[href^="#"]')) {
+      const section = byId(anchor.getAttribute('href').slice(1));
+      if (!section) continue;
+      anchor.addEventListener('click', event => {
+        if (!challengeId || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        section.scrollIntoView();
+      });
+    }
+  }
+
+  const language = byId('language');
+  const languageHref = language.getAttribute('href');
+  function setLanguageDestination() {
+    const alternate = new URL(languageHref, url);
+    if (referral && !bankometPath) alternate.searchParams.set('from', 'bankomet');
+    if (profileId) alternate.searchParams.set('id', profileId);
+    if (botId) alternate.searchParams.set('id', botId);
+    if (requestId) alternate.hash = 'requestId=' + requestId;
+    if (challengeId) alternate.hash = 'id=' + challengeId;
+    if (['#network', '#bots', '#install', '#android', '#windows', '#macos', '#iphone', '#linux'].includes(location.hash)) {
+      alternate.hash = location.hash;
+    }
+    language.href = alternate.href;
+  }
+  setLanguageDestination();
+  window.addEventListener('hashchange', () => {
+    if (nardyPath) updateChallenge();
+    setLanguageDestination();
+  });
+
+  const demo = byId('demo-actions');
+  const replies = Array.from(document.querySelectorAll('[data-reply]'));
+  const choices = Array.from(demo.querySelectorAll('[data-demo]'));
+  for (const button of choices) {
+    button.addEventListener('click', () => {
+      for (const choice of choices) choice.setAttribute('aria-pressed', String(choice === button));
+      for (const reply of replies) reply.hidden = reply.dataset.reply !== button.dataset.demo;
+    });
+  }
+  demo.hidden = false;
+
+  if (androidRelease) {
+    const { filename, version, bytes, sha256 } = androidRelease;
+    const valid = typeof filename === 'string' && /^mayday-[0-9]+\.apk$/.test(filename)
+      && typeof version === 'string' && /^[0-9]+(?:\.[0-9]+)*$/.test(version)
+      && Number.isSafeInteger(bytes) && bytes > 0
+      && typeof sha256 === 'string' && /^[a-f0-9]{64}$/.test(sha256);
+
+    if (valid) {
+      const href = new URL(filename, releaseBase).href;
+      const download = byId('download');
+      download.href = href;
+      download.download = filename;
+      download.hidden = false;
+      const size = new Intl.NumberFormat(lang, { maximumFractionDigits: 1 }).format(bytes / 1e6);
+      byId('release-note').textContent = text.androidFile.replace('{version}', version).replace('{size}', size);
+      byId('android-status').hidden = true;
+      byId('android-steps').hidden = false;
+      byId('file-hash').textContent = sha256;
+      byId('file-details').hidden = false;
+      const platform = navigator.userAgentData?.platform || navigator.userAgent;
+      byId('platform-note').hidden = /Android/i.test(platform);
+    }
+  }
+
+  if (macRelease) {
+    const { filename, version, bytes, sha256 } = macRelease;
+    const valid = typeof filename === 'string' && /^mayday-macos-(?:(?:universal|arm64|x64)-)?[0-9]+(?:\.[0-9]+)+\.dmg$/.test(filename)
+      && typeof version === 'string' && /^[0-9]+(?:\.[0-9]+)+$/.test(version)
+      && Number.isSafeInteger(bytes) && bytes > 0
+      && typeof sha256 === 'string' && /^[a-f0-9]{64}$/.test(sha256);
+
+    if (valid) {
+      const download = byId('mac-download');
+      download.href = new URL(filename, releaseBase).href;
+      download.download = filename;
+      download.hidden = false;
+      byId('mac-status').hidden = true;
+      const size = new Intl.NumberFormat(lang, { maximumFractionDigits: 1 }).format(bytes / 1e6);
+      byId('mac-note').textContent = text.macFile.replace('{version}', version).replace('{size}', size);
+      byId('mac-hash').textContent = sha256;
+      byId('mac-details').hidden = false;
+    }
+  }
+
+  if (typeof testFlightInvite === 'string' && /^https:\/\/testflight\.apple\.com\/join\/[A-Za-z0-9]{8,24}$/.test(testFlightInvite)) {
+    const invite = byId('ios-invite');
+    invite.href = testFlightInvite;
+    invite.hidden = false;
+    byId('ios-status').hidden = true;
+  }
+
+  for (const link of document.querySelectorAll('a[download][href]')) {
+    link.addEventListener('click', () => {
+      if (typeof globalThis.crypto?.randomUUID !== 'function') return;
+      const target = new URL(link.href);
+      target.searchParams.set('download', crypto.randomUUID().replaceAll('-', ''));
+      link.href = target.href;
+    });
+  }
+
+  const share = byId('share');
+  const canShare = url.protocol !== 'file:' && typeof navigator.share === 'function';
+  const canCopy = url.protocol !== 'file:' && typeof navigator.clipboard?.writeText === 'function';
+  share.hidden = !canShare && !canCopy;
+  if (!canShare && canCopy) share.textContent = text.copy;
+  share.addEventListener('click', async () => {
+    const clean = new URL(location.href);
+    if ((invitePath && !validProfileInvite) || bankometPath) {
+      clean.pathname = clean.pathname.replace(/(?:invite|bankomet)\/$/, '');
+    }
+    clean.search = '';
+    if (botId) clean.searchParams.set('id', botId);
+    if (validProfileInvite) clean.searchParams.set('id', profileId);
+    clean.hash = challengeId ? 'id=' + challengeId : '';
+    try {
+      if (canShare) {
+        const data = validProfileInvite && text.inviteTitle
+          ? { title: text.inviteTitle, text: text.inviteDescription, url: clean.href }
+          : { title: 'Mayday', url: clean.href };
+        await navigator.share(data);
+      } else {
+        await navigator.clipboard.writeText(clean.href);
+        byId('share-status').textContent = text.copied;
+        share.textContent = text.copied;
+      }
+    } catch (error) {
+      if (error.name !== 'AbortError') byId('share-status').textContent = text.shareError;
+    }
+  });
+
+  if (optionalFonts.length && typeof FontFace === 'function' && typeof AbortController === 'function') {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        for (const { family, path, descriptors } of optionalFonts) {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 3000);
+          fetch(path, { signal: controller.signal })
+            .then(response => {
+              if (!response.ok) throw new Error('Font unavailable');
+              return response.arrayBuffer();
+            })
+            .then(bytes => new FontFace(family, bytes, descriptors).load())
+            .then(face => document.fonts.add(face))
+            .catch(() => {
+              // The system font remains readable if an optional font cannot be loaded.
+            })
+            .finally(() => clearTimeout(timeout));
+        }
+      }, 0);
+    }, { once: true });
+  }
+})({"androidRelease":{"filename":"mayday-60.apk","version":"1.0","bytes":96577352,"sha256":"35213138800c50c4c8e2c184e35013e57aed4adfddb309b5f6034c583be26d32"},"macRelease":null,"testFlightInvite":null}, {"ru":{"androidFile":"Тестовая версия {version} · {size} МБ","macFile":"Версия {version} · {size} МБ · DMG","copy":"Скопировать ссылку","copied":"Ссылка скопирована","shareError":"Не удалось поделиться ссылкой","inviteTitle":"Добавь меня в Mayday","inviteDescription":"Альтернатива Telegram и MAX. Голосовые и видеозвонки, боты без программирования, личные чаты со сквозным шифрованием, общение без VPN и LBU₽ за подтверждённые сообщения."}}, new URL('../releases/', location.href), [{"family":"Manrope","descriptors":{"style":"normal","weight":"400 800"},"path":"../assets/fonts/manrope-latin.woff2"},{"family":"Manrope","descriptors":{"style":"normal","weight":"400 800","unicodeRange":"U+0400-052F, U+2116"},"path":"../assets/fonts/manrope-cyrillic.woff2"},{"family":"Cormorant Garamond","descriptors":{"style":"italic","weight":"500"},"path":"../assets/fonts/cormorantgaramond-latin.woff2"},{"family":"Cormorant Garamond","descriptors":{"style":"italic","weight":"500","unicodeRange":"U+0400-052F, U+2116"},"path":"../assets/fonts/cormorantgaramond-cyrillic.woff2"}]);
+  </script>
+</body>
+</html>

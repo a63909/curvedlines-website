@@ -65,6 +65,9 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
 .outline:hover { border-color: #d6b7bd; }
 .hero { display: grid; align-items: center; grid-template-columns: minmax(0, 1.07fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 55px); padding-block: clamp(42px, 6vw, 88px); }
 .hero-visual { position: relative; isolation: isolate; display: grid; place-items: center; min-height: 500px; border-radius: 35px; background: radial-gradient(ellipse at 25% 0, #ffd9d9 0, #f8afb8 63%, #ef8394 100%); overflow: hidden; }
+.nardy-visual { margin: 0; padding: clamp(9px, 2vw, 21px); border-radius: 24px; background: #271c22; box-shadow: 0 22px 44px #561b2638; }
+.nardy-visual img { display: block; width: 100%; height: auto; border-radius: 13px; }
+.nardy-install-note { margin-top: 16px; max-width: 42ch; }
 .visual-lines { position: absolute; z-index: -1; width: 126%; aspect-ratio: 1; border: 1px solid #fff8; border-radius: 50%; translate: 12% 9%; }
 .visual-lines::before, .visual-lines::after { content: ""; position: absolute; border: 1px solid #fffc; border-radius: 50%; inset: 10%; }
 .visual-lines::after { inset: 21%; }

@@ -1,0 +1,76 @@
+.help-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(26px, 5vw, 76px);
+  padding-block: clamp(26px, 5vw, 65px);
+}
+.help-nav {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  border: 1px solid var(--edge);
+  border-radius: 16px;
+  padding: 8px;
+  background: var(--surface);
+}
+.help-nav ul, .help-topic-list { list-style: none; padding: 0; margin: 0; }
+.help-nav a {
+  display: block;
+  padding: 8px 11px;
+  border-radius: 9px;
+  font-weight: 680;
+  font-size: .9rem;
+  text-decoration: none;
+}
+.help-nav a:hover, .help-nav a[aria-current] { background: var(--blush); color: var(--pressed); }
+.help-intro { padding-bottom: 24px; border-bottom: 1px solid var(--edge); }
+.help-intro h1 { font-size: clamp(2.12rem, 5vw, 3.35rem); line-height: 1.1; }
+.help-intro p { color: var(--muted); max-width: 65ch; margin-top: 12px; }
+.help-article { max-width: 740px; }
+.help-contents {
+  margin-top: 24px;
+  padding: 15px 20px;
+  border-radius: 14px;
+  background: var(--blush);
+}
+.help-contents ul, .help-section ol { margin: 8px 0 0; padding-inline-start: 22px; }
+.help-contents a, .help-section a, .help-footer a {
+  color: var(--pressed);
+  text-underline-offset: 3px;
+}
+.help-contents a { display: inline-block; padding-block: 2px; }
+.help-section, .help-topic-group { margin-top: 32px; }
+.help-section h2, .help-topic-group h2 { font-size: clamp(1.34rem, 3vw, 1.72rem); line-height: 1.19; letter-spacing: -.025em; }
+.help-section h2 { scroll-margin-top: 18px; }
+.help-section p, .help-section li + li { margin-top: 10px; }
+.help-section pre {
+  max-width: 100%;
+  overflow: auto;
+  padding: 14px 16px;
+  border: 1px solid var(--edge);
+  border-radius: 14px;
+  background: var(--surface);
+  font-size: .88rem;
+  line-height: 1.55;
+}
+.help-topic-list { display: grid; gap: 10px; margin-top: 14px; }
+.help-topic {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--edge);
+  border-radius: 16px;
+  background: var(--surface);
+  text-decoration: none;
+}
+.help-topic:hover { border-color: var(--brand); }
+.help-topic strong, .help-topic strong + span { display: block; }
+.help-topic strong + span { color: var(--muted); margin-top: 2px; font-size: .92rem; }
+.help-footer { border-top: 1px solid var(--edge); flex-wrap: wrap; justify-content: flex-start; }
+
+@media (max-width: 680px) {
+  .help-layout { display: block; }
+  .help-nav { position: static; margin-bottom: 24px; }
+  .help-nav ul { display: flex; flex-wrap: wrap; }
+}

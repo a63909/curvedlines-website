@@ -1,5 +1,7 @@
 # Curved Lines Site
 
+Mayday: the lead route supports the server-only `MAYDAY_SITE_KEY` and optional `MAYDAY_LEADS_URL` (default: `https://153.76.172.25/mayday-bots/v1/leads`). Generate a website key in the bot's **Website leads** screen; never use a `NEXT_PUBLIC_` variable. Existing MAX/email delivery remains. This source change needs deployment and a production-only key on each actual hosting instance. Tests: `node --experimental-strip-types --test test/mayday-leads.test.mjs`.
+
 Next.js 16 App Router сайт для услуг:
 
 - ремонт квартир

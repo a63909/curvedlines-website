@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.tamarashadow.std",
+      "sha256_cert_fingerprints": [
+        "AA:B2:BE:80:06:94:4C:A5:11:69:24:45:D7:9A:DA:56:F5:C7:34:45:20:04:91:6A:EF:6F:DF:9E:22:82:C1:1C"
+      ]
+    }
+  }
+]

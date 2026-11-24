@@ -3,21 +3,85 @@ export function setupPage({ androidRelease, macRelease, testFlightInvite }, ui, 
   const url = new URL(location.href);
   const lang = document.documentElement.lang === 'en' ? 'en' : 'ru';
   const text = ui[lang];
-  const referral = url.searchParams.get('from') === 'bankomet';
+  const bankometPath = /\/(?:en\/)?bankomet\/$/.test(url.pathname);
+  const invitePath = /\/(?:en\/)?invite\/$/.test(url.pathname);
+  const nardyPath = /\/(?:en\/)?nardy\/$/.test(url.pathname);
+  const botPath = /\/(?:en\/)?bot\/$/.test(url.pathname);
+  const referral = bankometPath || url.searchParams.get('from') === 'bankomet';
   byId('bankomet').hidden = !referral;
+
+  const profileId = invitePath ? /^\?id=([0-9a-f]{40})$/i.exec(url.search)?.[1] : null;
+  const validProfileInvite = Boolean(profileId && !/^0{40}$/.test(profileId));
+  const candidateBot = botPath ? /^\?id=([a-f0-9]{40})$/.exec(url.search)?.[1] : null;
+  const botId = candidateBot && !/^0{40}$/.test(candidateBot) ? candidateBot : null;
+  const requestId = bankometPath ? /^#requestId=([A-Za-z0-9_-]{43})$/.exec(url.hash)?.[1] : null;
+  let challengeId = null;
+  const openMayday = byId('open-mayday');
+  if (openMayday && validProfileInvite) {
+    openMayday.href = 'mayday://profile/' + profileId.toLowerCase();
+    openMayday.hidden = false;
+  } else if (openMayday && requestId) {
+    openMayday.href = 'mayday://auth/v1?requestId=' + requestId;
+    openMayday.hidden = false;
+  } else if (openMayday && botId) {
+    openMayday.href = 'mayday://bot/v1?id=' + botId;
+    openMayday.hidden = false;
+  }
+
+  function updateChallenge() {
+    const id = /^#id=([0-9a-f]{40})$/i.exec(location.hash)?.[1]?.toLowerCase();
+    challengeId = id && !/^0{40}$/.test(id) ? id : null;
+    if (openMayday) {
+      if (challengeId) openMayday.href = 'mayday://nardy/v1?id=' + challengeId;
+      else openMayday.removeAttribute('href');
+      openMayday.hidden = !challengeId;
+    }
+    const note = document.querySelector('.nardy-install-note');
+    if (note) note.hidden = !challengeId;
+  }
+
+  if (nardyPath) {
+    updateChallenge();
+    const secondary = byId('hero-secondary');
+    for (const action of [openMayday, secondary]) {
+      action?.addEventListener('click', () => {
+        // A browser with no Mayday handler stays here and can offer the APK.
+        window.setTimeout(() => {
+          if (document.visibilityState === 'visible') byId('android')?.scrollIntoView();
+        }, 900);
+      });
+    }
+    // Preserve the original invite on returning after a download or switching languages.
+    for (const anchor of document.querySelectorAll('a[href^="#"]')) {
+      const section = byId(anchor.getAttribute('href').slice(1));
+      if (!section) continue;
+      anchor.addEventListener('click', event => {
+        if (!challengeId || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        section.scrollIntoView();
+      });
+    }
+  }
 
   const language = byId('language');
   const languageHref = language.getAttribute('href');
   function setLanguageDestination() {
     const alternate = new URL(languageHref, url);
-    if (referral) alternate.searchParams.set('from', 'bankomet');
+    if (referral && !bankometPath) alternate.searchParams.set('from', 'bankomet');
+    if (profileId) alternate.searchParams.set('id', profileId);
+    if (botId) alternate.searchParams.set('id', botId);
+    if (requestId) alternate.hash = 'requestId=' + requestId;
+    if (challengeId) alternate.hash = 'id=' + challengeId;
     if (['#network', '#bots', '#install', '#android', '#windows', '#macos', '#iphone', '#linux'].includes(location.hash)) {
       alternate.hash = location.hash;
     }
     language.href = alternate.href;
   }
   setLanguageDestination();
-  window.addEventListener('hashchange', setLanguageDestination);
+  window.addEventListener('hashchange', () => {
+    if (nardyPath) updateChallenge();
+    setLanguageDestination();
+  });
 
   const demo = byId('demo-actions');
   const replies = Array.from(document.querySelectorAll('[data-reply]'));
@@ -81,6 +145,15 @@ export function setupPage({ androidRelease, macRelease, testFlightInvite }, ui, 
     byId('ios-status').hidden = true;
   }
 
+  for (const link of document.querySelectorAll('a[download][href]')) {
+    link.addEventListener('click', () => {
+      if (typeof globalThis.crypto?.randomUUID !== 'function') return;
+      const target = new URL(link.href);
+      target.searchParams.set('download', crypto.randomUUID().replaceAll('-', ''));
+      link.href = target.href;
+    });
+  }
+
   const share = byId('share');
   const canShare = url.protocol !== 'file:' && typeof navigator.share === 'function';
   const canCopy = url.protocol !== 'file:' && typeof navigator.clipboard?.writeText === 'function';
@@ -88,11 +161,20 @@ export function setupPage({ androidRelease, macRelease, testFlightInvite }, ui, 
   if (!canShare && canCopy) share.textContent = text.copy;
   share.addEventListener('click', async () => {
     const clean = new URL(location.href);
+    if ((invitePath && !validProfileInvite) || bankometPath) {
+      clean.pathname = clean.pathname.replace(/(?:invite|bankomet)\/$/, '');
+    }
     clean.search = '';
-    clean.hash = '';
+    if (botId) clean.searchParams.set('id', botId);
+    if (validProfileInvite) clean.searchParams.set('id', profileId);
+    clean.hash = challengeId ? 'id=' + challengeId : '';
     try {
-      if (canShare) await navigator.share({ title: 'Mayday', url: clean.href });
-      else {
+      if (canShare) {
+        const data = validProfileInvite && text.inviteTitle
+          ? { title: text.inviteTitle, text: text.inviteDescription, url: clean.href }
+          : { title: 'Mayday', url: clean.href };
+        await navigator.share(data);
+      } else {
         await navigator.clipboard.writeText(clean.href);
         byId('share-status').textContent = text.copied;
         share.textContent = text.copied;

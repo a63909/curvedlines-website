@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Как открыть сайт внутри Mayday, настроить разрешения и получить контекст в JavaScript.">
+  <meta name="referrer" content="no-referrer">
+  <title>Мини-приложения · Справка Mayday</title>
+  <link rel="canonical" href="https://mayday.colorchain.ru/help/mini-apps/">
+  <link rel="alternate" hreflang="ru" href="https://mayday.colorchain.ru/help/mini-apps/">
+  <link rel="alternate" hreflang="en" href="https://mayday.colorchain.ru/en/help/mini-apps/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../help.css">
+</head>
+<body>
+  <a class="skip" href="#main">К содержанию</a>
+  <header class="shell header help-header">
+    <a class="brand" href="../../" aria-label="На сайт Mayday">
+      <span class="mark"><img src="../../assets/mayday-mark.svg" alt="" width="24" height="24"></span>Mayday
+    </a>
+    <a class="language" href="../../en/help/mini-apps/" lang="en" hreflang="en">English</a>
+  </header>
+  <div class="shell help-layout">
+    <nav class="help-nav" aria-label="Разделы справки">
+        <a href="../../help/">Справка Mayday</a>
+        <ul><li><a href="../../help/getting-started/">Первые шаги</a></li>
+<li><a href="../../help/network/">Сеть Mayday</a></li>
+<li><a href="../../help/relay-operator/">Как создать свой узел Mayday</a></li>
+<li><a href="../../help/mini-apps/" aria-current="page">Мини-приложения</a></li></ul>
+      </nav>
+    <main id="main"><article class="help-article">
+    <div class="help-intro">
+      <h1>Мини-приложения</h1>
+      <p>Как открыть сайт внутри Mayday, настроить разрешения и получить контекст в JavaScript.</p>
+    </div>
+    <nav class="help-contents" aria-label="На этой странице">
+      <strong>На этой странице</strong>
+      <ul><li><a href="#connect">Подключить сайт к боту</a></li><li><a href="#sdk">Получить контекст Mayday</a></li><li><a href="#permissions">Профиль и отправка данных</a></li></ul>
+    </nav>
+    
+    <section class="help-section" aria-labelledby="connect">
+      <h2 id="connect">Подключить сайт к боту</h2>
+      
+      <ol><li>Подготовьте веб-страницу с публичным HTTPS-адресом.</li><li>В Mayday для Android откройте «Сервисы → Боты → Мои боты». Выберите «Мини-приложение» у нужного бота или создайте бота для своего сайта.</li><li>Укажите название и HTTPS-адрес. Сохраните настройки и откройте приложение кнопкой в чате бота.</li></ol>
+      
+      
+    </section>
+    <section class="help-section" aria-labelledby="sdk">
+      <h2 id="sdk">Получить контекст Mayday</h2>
+      <p>Mayday для Android добавляет объект window.Mayday при открытии мини-приложения. Вызов Mayday.ready() возвращает контекст, включая настройки языка и темы, сведения о приложении и боте. Пример ниже показывает название приложения, а в обычном браузере оставляет подсказку.</p>
+      
+      <pre><code>&lt;p id=&quot;status&quot;&gt;Open this page from your bot chat in Mayday.&lt;/p&gt;
+&lt;script&gt;
+  if (window.Mayday) {
+    const status = document.querySelector(&#39;#status&#39;);
+    Mayday.ready()
+      .then(({ app }) =&gt; { status.textContent = app.name; })
+      .catch(() =&gt; { status.textContent = &#39;Could not load Mayday.&#39;; });
+  }
+&lt;/script&gt;</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="permissions">
+      <h2 id="permissions">Профиль и отправка данных</h2>
+      <p>Mayday.requestAuth({ challenge }) запрашивает вход и публичный профиль с согласия пользователя. Для этого включите разрешение «Вход и профиль» в настройках мини-приложения.</p><p>Mayday.sendData(data) позволяет отправить боту строку или данные в формате JSON размером до 4096 байт после сериализации. Для этого включите «Данные для этого бота». Пользователь подтверждает каждую отправку.</p>
+      
+      
+      
+    </section>
+  </article></main>
+  </div>
+  <footer class="shell footer help-footer">
+    <a href="../../">На сайт Mayday</a>
+    <a href="../../#install">Загрузки Mayday</a>
+  </footer>
+</body>
+</html>

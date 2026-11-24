@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Запуск непубличного шлюза на своём сервере и выдача ссылки для конкретного Mayday ID.">
+  <meta name="referrer" content="no-referrer">
+  <title>Как создать свой узел Mayday · Справка Mayday</title>
+  <link rel="canonical" href="https://mayday.colorchain.ru/help/relay-operator/">
+  <link rel="alternate" hreflang="ru" href="https://mayday.colorchain.ru/help/relay-operator/">
+  <link rel="alternate" hreflang="en" href="https://mayday.colorchain.ru/en/help/relay-operator/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../help.css">
+</head>
+<body>
+  <a class="skip" href="#main">К содержанию</a>
+  <header class="shell header help-header">
+    <a class="brand" href="../../" aria-label="На сайт Mayday">
+      <span class="mark"><img src="../../assets/mayday-mark.svg" alt="" width="24" height="24"></span>Mayday
+    </a>
+    <a class="language" href="../../en/help/relay-operator/" lang="en" hreflang="en">English</a>
+  </header>
+  <div class="shell help-layout">
+    <nav class="help-nav" aria-label="Разделы справки">
+        <a href="../../help/">Справка Mayday</a>
+        <ul><li><a href="../../help/getting-started/">Первые шаги</a></li>
+<li><a href="../../help/network/">Сеть Mayday</a></li>
+<li><a href="../../help/relay-operator/" aria-current="page">Как создать свой узел Mayday</a></li>
+<li><a href="../../help/mini-apps/">Мини-приложения</a></li></ul>
+      </nav>
+    <main id="main"><article class="help-article">
+    <div class="help-intro">
+      <h1>Как создать свой узел Mayday</h1>
+      <p>Запуск непубличного шлюза на своём сервере и выдача ссылки для конкретного Mayday ID.</p>
+    </div>
+    <nav class="help-contents" aria-label="На этой странице">
+      <strong>На этой странице</strong>
+      <ul><li><a href="#requirements">Что понадобится</a></li><li><a href="#gateway">Запустите шлюз Mayday</a></li><li><a href="#https">Настройте вход по HTTPS</a></li><li><a href="#start-https">Запустите HTTPS-процесс</a></li><li><a href="#issue">Выпустите ссылку для аккаунта</a></li><li><a href="#check">Проверьте подключение с телефона</a></li></ul>
+    </nav>
+    
+    <section class="help-section" aria-labelledby="requirements">
+      <h2 id="requirements">Что понадобится</h2>
+      <p>Узел в разделе «Сеть Mayday» — это серверный шлюз мессенджера. Чтобы запустить свой, нужен компьютер или VPS, к которому телефон сможет подключиться по HTTPS, доменное имя и действующий TLS-сертификат для этого имени.</p><p>Пример ниже рассчитан на Linux-сервер с Node.js 22.20.0 или новее и доступом к исходникам Mayday. Поместите исходники в /opt/mayday или замените этот путь во всех командах. Замените relay.example.org своим доменом, который указывает на сервер. Если шлюз уже настроен, переходите к выдаче ссылки.</p>
+      
+      
+      
+    </section>
+    <section class="help-section" aria-labelledby="gateway">
+      <h2 id="gateway">Запустите шлюз Mayday</h2>
+      <p>Установите зависимости и запустите шлюз в непубличном режиме. Он слушает только локальный адрес 127.0.0.1:3188. Файл private/entries.json хранит выданные приглашения, поэтому сохраняйте его при обновлении.</p>
+      
+      <pre><code>cd /opt/mayday
+umask 077
+mkdir -p private data
+test -e private/entries.json || printf &#39;[]\n&#39; &gt; private/entries.json
+npm ci --prefix app/mayday-gateway --omit=dev
+
+MAYDAY_DATA_DIR=&quot;$PWD/data&quot; \
+MAYDAY_PUBLIC_URL=https://relay.example.org \
+MAYDAY_PRIVATE_NODE=true \
+MAYDAY_PRIVATE_ENTRIES_FILE=&quot;$PWD/private/entries.json&quot; \
+PORT=3188 node app/mayday-gateway/server.mjs</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="https">
+      <h2 id="https">Настройте вход по HTTPS</h2>
+      <p>Сохраните пример как /opt/mayday/private/direct.json. Укажите пути к своему сертификату и ключу. Оба процесса должны читать один и тот же private/entries.json. Для подключения из интернета откройте входящий TCP-порт 443.</p>
+      
+      <pre><code>{
+  &quot;urls&quot;: [&quot;https://relay.example.org&quot;],
+  &quot;port&quot;: 443,
+  &quot;backendPort&quot;: 3188,
+  &quot;cert&quot;: &quot;/path/to/fullchain.pem&quot;,
+  &quot;key&quot;: &quot;/path/to/privkey.pem&quot;,
+  &quot;entriesFile&quot;: &quot;/opt/mayday/private/entries.json&quot;,
+  &quot;privateOnly&quot;: true
+}</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="start-https">
+      <h2 id="start-https">Запустите HTTPS-процесс</h2>
+      <p>Оставьте шлюз запущенным и выполните команду в другом терминале. Учётной записи процесса нужен доступ к ключу и право слушать порт 443. Для постоянной работы настройте запуск обоих процессов как служб.</p>
+      
+      <pre><code>node /opt/mayday/tools/mayday-gateway/direct-https.mjs /opt/mayday</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="issue">
+      <h2 id="issue">Выпустите ссылку для аккаунта</h2>
+      <p>В Mayday откройте «Мой профиль» нужного аккаунта и нажмите «Копировать» под Mayday ID. В команде укажите этот ID целиком, свой HTTPS-домен и имя узла, которое увидит получатель. Выполните команду из каталога с исходниками Mayday.</p><p>Готовая ссылка начинается с mayday://entry# и появится в файле private/invite-01.txt. Отправьте содержимое файла только владельцу указанного аккаунта. Ссылка действует 90 дней. Для каждого следующего приглашения указывайте новое имя выходного файла.</p>
+      
+      <pre><code>node tools/mayday-gateway/issue-entry.mjs \
+  private/entries.json private/invite-01.txt \
+  https://relay.example.org &#39;&lt;MAYDAY_ID&gt;&#39; &#39;Backup relay&#39;</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="check">
+      <h2 id="check">Проверьте подключение с телефона</h2>
+      
+      <ol><li>Войдите в аккаунт, для которого выпущена ссылка. В разделе «Настройки → Сеть Mayday» вставьте ссылку целиком и нажмите «Добавить узел».</li><li>Выключите Wi-Fi на телефоне и проверьте, что через мобильный интернет у нового узла появился статус «Подключён».</li></ol>
+      
+      <p><a href="../../help/network/#add">Инструкция для получателя ссылки</a></p>
+    </section>
+  </article></main>
+  </div>
+  <footer class="shell footer help-footer">
+    <a href="../../">На сайт Mayday</a>
+    <a href="../../#install">Загрузки Mayday</a>
+  </footer>
+</body>
+</html>

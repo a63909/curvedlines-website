@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <meta name="description" content="Mayday: общение по Mayday ID, децентрализованная доставка, LBU₽ за подтверждённые сообщения, боты без кода. Android и Windows.">
+  <meta name="description" content="Альтернатива Telegram и MAX. Голосовые и видеозвонки, боты без программирования, личные чаты со сквозным шифрованием, общение без VPN и LBU₽ за подтверждённые сообщения.">
   <meta name="theme-color" content="#fffcfb">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Mayday — мессенджер со своей сетью">
-  <meta property="og:description" content="Mayday: общение по Mayday ID, децентрализованная доставка, LBU₽ за подтверждённые сообщения, боты без кода. Android и Windows.">
+  <meta property="og:title" content="Mayday — альтернатива Telegram и MAX">
+  <meta property="og:description" content="Альтернатива Telegram и MAX. Голосовые и видеозвонки, боты без программирования, личные чаты со сквозным шифрованием, общение без VPN и LBU₽ за подтверждённые сообщения.">
   <meta property="og:url" content="https://mayday.colorchain.ru/">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:locale:alternate" content="en_US">
@@ -16,7 +16,7 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Mayday — мессенджер со своей сетью">
-  <title>Mayday — мессенджер со своей сетью</title>
+  <title>Mayday — альтернатива Telegram и MAX</title>
   <link rel="canonical" href="https://mayday.colorchain.ru/">
   <link rel="alternate" hreflang="ru" href="https://mayday.colorchain.ru/">
   <link rel="alternate" hreflang="en" href="https://mayday.colorchain.ru/en/">
@@ -73,6 +73,9 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
 .outline:hover { border-color: #d6b7bd; }
 .hero { display: grid; align-items: center; grid-template-columns: minmax(0, 1.07fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 55px); padding-block: clamp(42px, 6vw, 88px); }
 .hero-visual { position: relative; isolation: isolate; display: grid; place-items: center; min-height: 500px; border-radius: 35px; background: radial-gradient(ellipse at 25% 0, #ffd9d9 0, #f8afb8 63%, #ef8394 100%); overflow: hidden; }
+.nardy-visual { margin: 0; padding: clamp(9px, 2vw, 21px); border-radius: 24px; background: #271c22; box-shadow: 0 22px 44px #561b2638; }
+.nardy-visual img { display: block; width: 100%; height: auto; border-radius: 13px; }
+.nardy-install-note { margin-top: 16px; max-width: 42ch; }
 .visual-lines { position: absolute; z-index: -1; width: 126%; aspect-ratio: 1; border: 1px solid #fff8; border-radius: 50%; translate: 12% 9%; }
 .visual-lines::before, .visual-lines::after { content: ""; position: absolute; border: 1px solid #fffc; border-radius: 50%; inset: 10%; }
 .visual-lines::after { inset: 21%; }
@@ -210,7 +213,7 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
   <a class="skip" href="#main">К содержанию</a>
   <header class="shell header">
     <a class="brand" href="./" aria-label="На главную Mayday"><span class="mark"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Cpath fill=%22%23fff%22 d=%22M97.89%2C47.33 97.09%2C45.74 96.18%2C44.83 95.39%2C44.38 93.91%2C44.26 92.32%2C44.94 85.16%2C49.26 83.69%2C49.94 83%2C49.83 81.87%2C48.01 77.89%2C36.31 75.51%2C31.31 72.78%2C28.24 70.39%2C26.88 68.92%2C26.43 65.73%2C26.2 62.67%2C26.88 59.71%2C28.47 57.1%2C30.97 55.06%2C33.92 53.24%2C37.45 48.47%2C49.15 47.22%2C50.62 46.53%2C50.97 45.17%2C50.85 43.92%2C49.72 43.13%2C48.24 40.4%2C40.63 38.35%2C36.99 36.54%2C34.95 34.61%2C33.58 31.99%2C32.56 30.63%2C32.33 27.11%2C32.56 23.7%2C33.92 21.2%2C35.74 18.13%2C39.04 14.95%2C43.35 8.7%2C53.12 3.14%2C62.78 2.11%2C65.51 2.23%2C68.8 2.91%2C70.51 3.82%2C71.76 5.29%2C72.89 6.89%2C73.57 7.91%2C73.8 10.52%2C73.69 12.57%2C72.89 13.7%2C72.1 16.31%2C68.8 21.88%2C56.65 24.04%2C52.67 25.29%2C50.85 26.99%2C49.15 29.04%2C48.24 31.54%2C48.47 32.9%2C49.26 34.04%2C50.4 35.97%2C53.69 38.47%2C59.94 40.06%2C62.55 41.2%2C63.69 42.56%2C64.49 44.6%2C65.05 47.56%2C64.83 49.38%2C64.03 50.97%2C62.78 53.81%2C58.46 56.87%2C51.42 58.69%2C48.01 61.19%2C45.06 62.89%2C44.15 63.92%2C43.92 65.96%2C44.15 67.21%2C44.83 68.46%2C46.08 70.05%2C48.92 72.89%2C56.08 75.28%2C60.96 77.21%2C63.35 79.25%2C64.26 81.07%2C64.14 82.32%2C63.58 88.34%2C58.69 97.32%2C50.17 98%2C48.35Z%22/%3E%3C/svg%3E" alt="" width="24" height="24"></span>Mayday</a>
-    <nav aria-label="Навигация по странице"><a href="#network">Сеть</a><a href="#bots">Боты и мини-приложения</a><a href="#install">Загрузки</a></nav>
+    <nav aria-label="Навигация по странице"><a href="#network">Сеть</a><a href="#bots">Боты и мини-приложения</a><a href="#install">Загрузки</a><a class="help-link" href="./help/">Справка</a></nav>
     <a class="language" id="language" href="./en/" lang="en" hreflang="en">English</a>
   </header>
 
@@ -224,13 +227,15 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
       <div class="intro">
         <p class="eyebrow">Мессенджер Mayday</p>
         <h1 id="title">Общайтесь<br><em>на своих условиях.</em></h1>
-        <p class="lead">Ваш Mayday ID вместо номера в чате. Децентрализованная доставка, награды за общение и боты, которые можно собрать с телефона.</p>
+        <p class="lead">Альтернатива Telegram и MAX со своей сетью. Общайтесь по Mayday ID без VPN, совершайте голосовые и видеозвонки, ведите группы и каналы. Личные чаты защищены сквозным шифрованием. Создавайте ботов без программирования и получайте LBU₽ за подтверждённые сообщения.</p>
         <div class="actions">
-          <a class="button primary" id="hero-download" href="#install">Выбрать версию</a>
-          <a class="button outline" href="#network">Что умеет Mayday</a>
+          <a class="button primary" id="hero-download" href="#install">Скачать Mayday</a>
+          <a class="button outline" id="open-mayday" hidden>Открыть Mayday</a>
+          <a class="button outline" id="hero-secondary" href="#network">Что умеет Mayday</a>
         </div>
+        <p class="note nardy-install-note" hidden>Установи Mayday, подтверди номер и вернись по этой ссылке. Затем нажми «Открыть вызов».</p>
       </div>
-      <figure class="hero-visual" role="img" aria-label="Пример личного чата Mayday">
+      <figure class="hero-visual" role="img" aria-label="Пример личного чата Mayday" >
         <div class="visual-lines" aria-hidden="true"></div>
         <div class="hero-phone" aria-hidden="true">
           <div class="phone-status"><span>12:30</span><i></i><span>▮▮▮</span></div>
@@ -249,6 +254,9 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
         <div class="visual-card visual-direct" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M128%2C24h0A104%2C104%2C0%2C1%2C0%2C232%2C128%2C104.12%2C104.12%2C0%2C0%2C0%2C128%2C24Zm88%2C104a87.61%2C87.61%2C0%2C0%2C1-3.33%2C24H174.16a157.44%2C157.44%2C0%2C0%2C0%2C0-48h38.51A87.61%2C87.61%2C0%2C0%2C1%2C216%2C128ZM102%2C168H154a115.11%2C115.11%2C0%2C0%2C1-26%2C45A115.27%2C115.27%2C0%2C0%2C1%2C102%2C168Zm-3.9-16a140.84%2C140.84%2C0%2C0%2C1%2C0-48h59.88a140.84%2C140.84%2C0%2C0%2C1%2C0%2C48ZM40%2C128a87.61%2C87.61%2C0%2C0%2C1%2C3.33-24H81.84a157.44%2C157.44%2C0%2C0%2C0%2C0%2C48H43.33A87.61%2C87.61%2C0%2C0%2C1%2C40%2C128ZM154%2C88H102a115.11%2C115.11%2C0%2C0%2C1%2C26-45A115.27%2C115.27%2C0%2C0%2C1%2C154%2C88Zm52.33%2C0H170.71a135.28%2C135.28%2C0%2C0%2C0-22.3-45.6A88.29%2C88.29%2C0%2C0%2C1%2C206.37%2C88ZM107.59%2C42.4A135.28%2C135.28%2C0%2C0%2C0%2C85.29%2C88H49.63A88.29%2C88.29%2C0%2C0%2C1%2C107.59%2C42.4ZM49.63%2C168H85.29a135.28%2C135.28%2C0%2C0%2C0%2C22.3%2C45.6A88.29%2C88.29%2C0%2C0%2C1%2C49.63%2C168Zm98.78%2C45.6a135.28%2C135.28%2C0%2C0%2C0%2C22.3-45.6h35.66A88.29%2C88.29%2C0%2C0%2C1%2C148.41%2C213.6Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="23" height="23">Прямой маршрут</div>
         <div class="visual-card visual-call" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M251.77%2C73a8%2C8%2C0%2C0%2C0-8.21.39L208%2C97.05V72a16%2C16%2C0%2C0%2C0-16-16H32A16%2C16%2C0%2C0%2C0%2C16%2C72V184a16%2C16%2C0%2C0%2C0%2C16%2C16H192a16%2C16%2C0%2C0%2C0%2C16-16V159l35.56%2C23.71A8%2C8%2C0%2C0%2C0%2C248%2C184a8%2C8%2C0%2C0%2C0%2C8-8V80A8%2C8%2C0%2C0%2C0%2C251.77%2C73ZM192%2C184H32V72H192V184Zm48-22.95-32-21.33V116.28L240%2C95Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="25" height="25">Видеозвонок</div>
         <div class="visual-card visual-id" aria-hidden="true"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22%3E%3Cpath d=%22M104%2C40H56A16%2C16%2C0%2C0%2C0%2C40%2C56v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C104%2C40Zm0%2C64H56V56h48v48Zm0%2C32H56a16%2C16%2C0%2C0%2C0-16%2C16v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V152A16%2C16%2C0%2C0%2C0%2C104%2C136Zm0%2C64H56V152h48v48ZM200%2C40H152a16%2C16%2C0%2C0%2C0-16%2C16v48a16%2C16%2C0%2C0%2C0%2C16%2C16h48a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C200%2C40Zm0%2C64H152V56h48v48Zm-64%2C72V144a8%2C8%2C0%2C0%2C1%2C16%2C0v32a8%2C8%2C0%2C0%2C1-16%2C0Zm80-16a8%2C8%2C0%2C0%2C1-8%2C8H184v40a8%2C8%2C0%2C0%2C1-8%2C8H144a8%2C8%2C0%2C0%2C1%2C0-16h24V144a8%2C8%2C0%2C0%2C1%2C16%2C0v8h24A8%2C8%2C0%2C0%2C1%2C216%2C160Zm0%2C32v16a8%2C8%2C0%2C0%2C1-16%2C0V192a8%2C8%2C0%2C0%2C1%2C16%2C0Z%22 fill=%22%23000000%22/%3E%3C/svg%3E" alt="" width="23" height="23">Общение по Mayday ID</div>
+      </figure>
+      <figure class="nardy-visual" hidden>
+        
       </figure>
     </section>
 
@@ -278,7 +286,7 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
     <section class="shell section reward" aria-labelledby="reward-title">
         <div>
           <p class="eyebrow">Награды за общение</p><h2 id="reward-title">От сообщения до кошелька</h2>
-          <p class="section-lead">За подходящее исходящее сообщение с подтверждением доставки начисляется 1 LBU₽. Заберите накопленное в разделе «Награды за общение»: после подтверждения в сети токены появятся в кошельке Mayday.</p><p class="note">Награды уже зачислялись на тестовом запуске. LBU₽ — токен сети Mayday.</p>
+          <p class="section-lead">За подходящее исходящее сообщение с подтверждением доставки начисляется 1 LBU₽. Заберите накопленное в разделе «Награды за общение»: после подтверждения в сети токены появятся в кошельке Mayday.</p><p class="note">LBU₽ — токен сети Mayday. Вывод в рублях пока недоступен.</p>
         </div>
         <div class="reward-card">
           <h3>Условия начисления</h3>
@@ -375,12 +383,16 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
             <details class="checksum" id="file-details" hidden><summary>Контрольная сумма SHA-256</summary><code id="file-hash"></code></details>
           </article>
           <article class="panel platform" id="windows">
-            <div class="platform-heading"><img class="platform-icon" src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cpath fill=%22currentColor%22 d=%22M4 5.9 18.7 4v14.6H4zm17.2-2.2L36 1.8v16.8H21.2zM4 21.1h14.7v14.5L4 33.8zm17.2 0H36v16.7l-14.8-1.9z%22/%3E%3C/svg%3E" alt="" width="36" height="36"><h3>Windows x64</h3><span class="status">Тестовая сборка 0.2.2</span></div>
-            <p>Для запуска нужен .NET Desktop Runtime 8.</p>
-            <a class="button primary" href="./releases/Mayday-Windows-x64-0.2.2.zip" download>Скачать ZIP</a>
+            <div class="platform-heading"><img class="platform-icon" src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cpath fill=%22currentColor%22 d=%22M4 5.9 18.7 4v14.6H4zm17.2-2.2L36 1.8v16.8H21.2zM4 21.1h14.7v14.5L4 33.8zm17.2 0H36v16.7l-14.8-1.9z%22/%3E%3C/svg%3E" alt="" width="36" height="36"><h3>Windows x64</h3><span class="status">Версия 0.3.1</span></div>
+            <p>Мастер установки даёт выбрать папку и добавляет ярлыки Mayday. Все необходимые библиотеки входят в установщик.</p>
+            <div class="actions">
+              <a class="button primary" href="./releases/MaydaySetup-x64-0.3.1.exe" download>Скачать установщик (EXE)</a>
+              <a class="button outline" href="./releases/Mayday-Windows-x64-0.3.1.msi" download>Установщик MSI</a>
+            </div>
             <details class="checksum">
-              <summary>Установка и SHA-256</summary><p>Распакуйте ZIP и запустите Mayday.exe. На телефоне откройте «Настройки → Устройства → Подключить компьютер» и отсканируйте QR. Телефон остаётся подключённым во время работы.</p>
-              <code aria-label="Контрольная сумма SHA-256">3f067034c45572d3fb0e0cd8718199fe86d5da79d2d5a944cc2db70f23ad50cf</code>
+              <summary>Установка и SHA-256</summary><p>Запустите MaydaySetup и выберите папку установки. Откройте Mayday с рабочего стола или из меню «Пуск». В обновлённом Mayday на телефоне откройте «Настройки → Устройства → Подключить компьютер» и отсканируйте QR один раз. В дальнейшем компьютер подключается автоматически, когда телефон доступен.</p>
+              <p>EXE</p><code aria-label="EXE SHA-256">65c17f81e07def102a2fc9f8f1a7fcab200dd9f1e43913bf1befa7c44e7d8962</code>
+              <p>MSI</p><code aria-label="MSI SHA-256">dd02d7e578e04e44db9aa3d7d362f19f48b9427b7820809de05b98aadeac2d9e</code>
             </details>
           </article>
         </div>
@@ -408,6 +420,7 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
 
   <footer class="shell footer">
     <a class="brand" href="./" aria-label="На главную Mayday"><span class="mark"><img src="data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Cpath fill=%22%23fff%22 d=%22M97.89%2C47.33 97.09%2C45.74 96.18%2C44.83 95.39%2C44.38 93.91%2C44.26 92.32%2C44.94 85.16%2C49.26 83.69%2C49.94 83%2C49.83 81.87%2C48.01 77.89%2C36.31 75.51%2C31.31 72.78%2C28.24 70.39%2C26.88 68.92%2C26.43 65.73%2C26.2 62.67%2C26.88 59.71%2C28.47 57.1%2C30.97 55.06%2C33.92 53.24%2C37.45 48.47%2C49.15 47.22%2C50.62 46.53%2C50.97 45.17%2C50.85 43.92%2C49.72 43.13%2C48.24 40.4%2C40.63 38.35%2C36.99 36.54%2C34.95 34.61%2C33.58 31.99%2C32.56 30.63%2C32.33 27.11%2C32.56 23.7%2C33.92 21.2%2C35.74 18.13%2C39.04 14.95%2C43.35 8.7%2C53.12 3.14%2C62.78 2.11%2C65.51 2.23%2C68.8 2.91%2C70.51 3.82%2C71.76 5.29%2C72.89 6.89%2C73.57 7.91%2C73.8 10.52%2C73.69 12.57%2C72.89 13.7%2C72.1 16.31%2C68.8 21.88%2C56.65 24.04%2C52.67 25.29%2C50.85 26.99%2C49.15 29.04%2C48.24 31.54%2C48.47 32.9%2C49.26 34.04%2C50.4 35.97%2C53.69 38.47%2C59.94 40.06%2C62.55 41.2%2C63.69 42.56%2C64.49 44.6%2C65.05 47.56%2C64.83 49.38%2C64.03 50.97%2C62.78 53.81%2C58.46 56.87%2C51.42 58.69%2C48.01 61.19%2C45.06 62.89%2C44.15 63.92%2C43.92 65.96%2C44.15 67.21%2C44.83 68.46%2C46.08 70.05%2C48.92 72.89%2C56.08 75.28%2C60.96 77.21%2C63.35 79.25%2C64.26 81.07%2C64.14 82.32%2C63.58 88.34%2C58.69 97.32%2C50.17 98%2C48.35Z%22/%3E%3C/svg%3E" alt="" width="22" height="22"></span>Mayday</a>
+    <a class="help-link" href="./help/">Справка</a>
     <button class="share" id="share" type="button" hidden>Поделиться ссылкой</button>
     <p id="share-status" class="sr-only" role="status"></p>
   </footer>
@@ -417,21 +430,85 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
   const url = new URL(location.href);
   const lang = document.documentElement.lang === 'en' ? 'en' : 'ru';
   const text = ui[lang];
-  const referral = url.searchParams.get('from') === 'bankomet';
+  const bankometPath = /\/(?:en\/)?bankomet\/$/.test(url.pathname);
+  const invitePath = /\/(?:en\/)?invite\/$/.test(url.pathname);
+  const nardyPath = /\/(?:en\/)?nardy\/$/.test(url.pathname);
+  const botPath = /\/(?:en\/)?bot\/$/.test(url.pathname);
+  const referral = bankometPath || url.searchParams.get('from') === 'bankomet';
   byId('bankomet').hidden = !referral;
+
+  const profileId = invitePath ? /^\?id=([0-9a-f]{40})$/i.exec(url.search)?.[1] : null;
+  const validProfileInvite = Boolean(profileId && !/^0{40}$/.test(profileId));
+  const candidateBot = botPath ? /^\?id=([a-f0-9]{40})$/.exec(url.search)?.[1] : null;
+  const botId = candidateBot && !/^0{40}$/.test(candidateBot) ? candidateBot : null;
+  const requestId = bankometPath ? /^#requestId=([A-Za-z0-9_-]{43})$/.exec(url.hash)?.[1] : null;
+  let challengeId = null;
+  const openMayday = byId('open-mayday');
+  if (openMayday && validProfileInvite) {
+    openMayday.href = 'mayday://profile/' + profileId.toLowerCase();
+    openMayday.hidden = false;
+  } else if (openMayday && requestId) {
+    openMayday.href = 'mayday://auth/v1?requestId=' + requestId;
+    openMayday.hidden = false;
+  } else if (openMayday && botId) {
+    openMayday.href = 'mayday://bot/v1?id=' + botId;
+    openMayday.hidden = false;
+  }
+
+  function updateChallenge() {
+    const id = /^#id=([0-9a-f]{40})$/i.exec(location.hash)?.[1]?.toLowerCase();
+    challengeId = id && !/^0{40}$/.test(id) ? id : null;
+    if (openMayday) {
+      if (challengeId) openMayday.href = 'mayday://nardy/v1?id=' + challengeId;
+      else openMayday.removeAttribute('href');
+      openMayday.hidden = !challengeId;
+    }
+    const note = document.querySelector('.nardy-install-note');
+    if (note) note.hidden = !challengeId;
+  }
+
+  if (nardyPath) {
+    updateChallenge();
+    const secondary = byId('hero-secondary');
+    for (const action of [openMayday, secondary]) {
+      action?.addEventListener('click', () => {
+        // A browser with no Mayday handler stays here and can offer the APK.
+        window.setTimeout(() => {
+          if (document.visibilityState === 'visible') byId('android')?.scrollIntoView();
+        }, 900);
+      });
+    }
+    // Preserve the original invite on returning after a download or switching languages.
+    for (const anchor of document.querySelectorAll('a[href^="#"]')) {
+      const section = byId(anchor.getAttribute('href').slice(1));
+      if (!section) continue;
+      anchor.addEventListener('click', event => {
+        if (!challengeId || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        section.scrollIntoView();
+      });
+    }
+  }
 
   const language = byId('language');
   const languageHref = language.getAttribute('href');
   function setLanguageDestination() {
     const alternate = new URL(languageHref, url);
-    if (referral) alternate.searchParams.set('from', 'bankomet');
+    if (referral && !bankometPath) alternate.searchParams.set('from', 'bankomet');
+    if (profileId) alternate.searchParams.set('id', profileId);
+    if (botId) alternate.searchParams.set('id', botId);
+    if (requestId) alternate.hash = 'requestId=' + requestId;
+    if (challengeId) alternate.hash = 'id=' + challengeId;
     if (['#network', '#bots', '#install', '#android', '#windows', '#macos', '#iphone', '#linux'].includes(location.hash)) {
       alternate.hash = location.hash;
     }
     language.href = alternate.href;
   }
   setLanguageDestination();
-  window.addEventListener('hashchange', setLanguageDestination);
+  window.addEventListener('hashchange', () => {
+    if (nardyPath) updateChallenge();
+    setLanguageDestination();
+  });
 
   const demo = byId('demo-actions');
   const replies = Array.from(document.querySelectorAll('[data-reply]'));
@@ -495,6 +572,15 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
     byId('ios-status').hidden = true;
   }
 
+  for (const link of document.querySelectorAll('a[download][href]')) {
+    link.addEventListener('click', () => {
+      if (typeof globalThis.crypto?.randomUUID !== 'function') return;
+      const target = new URL(link.href);
+      target.searchParams.set('download', crypto.randomUUID().replaceAll('-', ''));
+      link.href = target.href;
+    });
+  }
+
   const share = byId('share');
   const canShare = url.protocol !== 'file:' && typeof navigator.share === 'function';
   const canCopy = url.protocol !== 'file:' && typeof navigator.clipboard?.writeText === 'function';
@@ -502,11 +588,20 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
   if (!canShare && canCopy) share.textContent = text.copy;
   share.addEventListener('click', async () => {
     const clean = new URL(location.href);
+    if ((invitePath && !validProfileInvite) || bankometPath) {
+      clean.pathname = clean.pathname.replace(/(?:invite|bankomet)\/$/, '');
+    }
     clean.search = '';
-    clean.hash = '';
+    if (botId) clean.searchParams.set('id', botId);
+    if (validProfileInvite) clean.searchParams.set('id', profileId);
+    clean.hash = challengeId ? 'id=' + challengeId : '';
     try {
-      if (canShare) await navigator.share({ title: 'Mayday', url: clean.href });
-      else {
+      if (canShare) {
+        const data = validProfileInvite && text.inviteTitle
+          ? { title: text.inviteTitle, text: text.inviteDescription, url: clean.href }
+          : { title: 'Mayday', url: clean.href };
+        await navigator.share(data);
+      } else {
         await navigator.clipboard.writeText(clean.href);
         byId('share-status').textContent = text.copied;
         share.textContent = text.copied;
@@ -537,7 +632,7 @@ h3 { font-size: 1.3rem; line-height: 1.23; letter-spacing: -.018em; }
       }, 0);
     }, { once: true });
   }
-})({"androidRelease":null,"macRelease":null,"testFlightInvite":null}, {"ru":{"androidFile":"Тестовая версия {version} · {size} МБ","macFile":"Версия {version} · {size} МБ · DMG","copy":"Скопировать ссылку","copied":"Ссылка скопирована","shareError":"Не удалось поделиться ссылкой"}}, new URL('./releases/', location.href), [{"family":"Manrope","descriptors":{"style":"normal","weight":"400 800"},"path":"./assets/fonts/manrope-latin.woff2"},{"family":"Manrope","descriptors":{"style":"normal","weight":"400 800","unicodeRange":"U+0400-052F, U+2116"},"path":"./assets/fonts/manrope-cyrillic.woff2"},{"family":"Cormorant Garamond","descriptors":{"style":"italic","weight":"500"},"path":"./assets/fonts/cormorantgaramond-latin.woff2"},{"family":"Cormorant Garamond","descriptors":{"style":"italic","weight":"500","unicodeRange":"U+0400-052F, U+2116"},"path":"./assets/fonts/cormorantgaramond-cyrillic.woff2"}]);
+})({"androidRelease":{"filename":"mayday-60.apk","version":"1.0","bytes":96577352,"sha256":"35213138800c50c4c8e2c184e35013e57aed4adfddb309b5f6034c583be26d32"},"macRelease":null,"testFlightInvite":null}, {"ru":{"androidFile":"Тестовая версия {version} · {size} МБ","macFile":"Версия {version} · {size} МБ · DMG","copy":"Скопировать ссылку","copied":"Ссылка скопирована","shareError":"Не удалось поделиться ссылкой","inviteTitle":"Добавь меня в Mayday","inviteDescription":"Альтернатива Telegram и MAX. Голосовые и видеозвонки, боты без программирования, личные чаты со сквозным шифрованием, общение без VPN и LBU₽ за подтверждённые сообщения."}}, new URL('./releases/', location.href), [{"family":"Manrope","descriptors":{"style":"normal","weight":"400 800"},"path":"./assets/fonts/manrope-latin.woff2"},{"family":"Manrope","descriptors":{"style":"normal","weight":"400 800","unicodeRange":"U+0400-052F, U+2116"},"path":"./assets/fonts/manrope-cyrillic.woff2"},{"family":"Cormorant Garamond","descriptors":{"style":"italic","weight":"500"},"path":"./assets/fonts/cormorantgaramond-latin.woff2"},{"family":"Cormorant Garamond","descriptors":{"style":"italic","weight":"500","unicodeRange":"U+0400-052F, U+2116"},"path":"./assets/fonts/cormorantgaramond-cyrillic.woff2"}]);
   </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useState, useTransition } from "react";
+import { type FormEvent, useRef, useState, useTransition } from "react";
 
 import { reachMetrikaGoal } from "@/lib/metrika";
 import { SERVICE_OPTIONS, SITE } from "@/lib/site";
@@ -42,6 +42,7 @@ export function LeadForm({ defaultWorkType }: LeadFormProps) {
   );
   const [result, setResult] = useState<ResultState>(null);
   const [isPending, startTransition] = useTransition();
+  const pendingRequest = useRef({ fingerprint: "", id: "" });
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,12 +55,16 @@ export function LeadForm({ defaultWorkType }: LeadFormProps) {
 
   const submitForm = async () => {
     try {
+      const fingerprint = JSON.stringify(form);
+      if (pendingRequest.current.fingerprint !== fingerprint) {
+        pendingRequest.current = { fingerprint, id: crypto.randomUUID() };
+      }
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, page: window.location.href.split("#")[0], requestId: pendingRequest.current.id }),
       });
 
       const payload = (await response.json()) as { message?: string };
@@ -78,6 +83,7 @@ export function LeadForm({ defaultWorkType }: LeadFormProps) {
       });
       reachMetrikaGoal("lead_submit_success");
       setForm(makeInitialState(defaultWorkType));
+      pendingRequest.current = { fingerprint: "", id: "" };
     } catch (error) {
       setResult({
         type: "error",
@@ -116,7 +122,7 @@ export function LeadForm({ defaultWorkType }: LeadFormProps) {
         <a
           href={SITE.whatsappHref}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="inline-flex min-h-11 items-center justify-center rounded-full bg-[color:var(--soft)] px-5 text-sm font-semibold text-[color:var(--foreground)] transition hover:bg-[color:var(--soft-strong)]"
         >
           Написать в WhatsApp

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Run a private gateway on your server and issue an invitation for a specific Mayday ID.">
+  <meta name="referrer" content="no-referrer">
+  <title>Host your own Mayday relay · Mayday Help</title>
+  <link rel="canonical" href="https://mayday.colorchain.ru/en/help/relay-operator/">
+  <link rel="alternate" hreflang="ru" href="https://mayday.colorchain.ru/help/relay-operator/">
+  <link rel="alternate" hreflang="en" href="https://mayday.colorchain.ru/en/help/relay-operator/">
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../help.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="shell header help-header">
+    <a class="brand" href="../../../en/" aria-label="Mayday website">
+      <span class="mark"><img src="../../../assets/mayday-mark.svg" alt="" width="24" height="24"></span>Mayday
+    </a>
+    <a class="language" href="../../../help/relay-operator/" lang="ru" hreflang="ru">Русский</a>
+  </header>
+  <div class="shell help-layout">
+    <nav class="help-nav" aria-label="Help topics">
+        <a href="../../../en/help/">Mayday Help</a>
+        <ul><li><a href="../../../en/help/getting-started/">Getting started</a></li>
+<li><a href="../../../en/help/network/">Mayday network</a></li>
+<li><a href="../../../en/help/relay-operator/" aria-current="page">Host your own Mayday relay</a></li>
+<li><a href="../../../en/help/mini-apps/">Mini apps</a></li></ul>
+      </nav>
+    <main id="main"><article class="help-article">
+    <div class="help-intro">
+      <h1>Host your own Mayday relay</h1>
+      <p>Run a private gateway on your server and issue an invitation for a specific Mayday ID.</p>
+    </div>
+    <nav class="help-contents" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul><li><a href="#requirements">What you need</a></li><li><a href="#gateway">Start the Mayday gateway</a></li><li><a href="#https">Configure the HTTPS entry point</a></li><li><a href="#start-https">Start the HTTPS process</a></li><li><a href="#issue">Issue a link for an account</a></li><li><a href="#check">Check the connection from a phone</a></li></ul>
+    </nav>
+    
+    <section class="help-section" aria-labelledby="requirements">
+      <h2 id="requirements">What you need</h2>
+      <p>A relay in the Mayday network settings is a messaging gateway. To run one, you’ll need a computer or VPS that your phone can reach over HTTPS, a domain name, and a valid TLS certificate for that name.</p><p>This example uses a Linux server with Node.js 22.20.0 or later and access to the Mayday source code. Place the source in /opt/mayday or adapt the paths throughout. Replace relay.example.org with your own domain pointing to the server. If your gateway is already set up, skip to issuing an invitation.</p>
+      
+      
+      
+    </section>
+    <section class="help-section" aria-labelledby="gateway">
+      <h2 id="gateway">Start the Mayday gateway</h2>
+      <p>Install the dependencies and run the gateway in private mode. It listens only on the local address 127.0.0.1:3188. The private/entries.json file stores issued invitations. Keep it when you update the gateway.</p>
+      
+      <pre><code>cd /opt/mayday
+umask 077
+mkdir -p private data
+test -e private/entries.json || printf &#39;[]\n&#39; &gt; private/entries.json
+npm ci --prefix app/mayday-gateway --omit=dev
+
+MAYDAY_DATA_DIR=&quot;$PWD/data&quot; \
+MAYDAY_PUBLIC_URL=https://relay.example.org \
+MAYDAY_PRIVATE_NODE=true \
+MAYDAY_PRIVATE_ENTRIES_FILE=&quot;$PWD/private/entries.json&quot; \
+PORT=3188 node app/mayday-gateway/server.mjs</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="https">
+      <h2 id="https">Configure the HTTPS entry point</h2>
+      <p>Save this example as /opt/mayday/private/direct.json. Set the paths to your own certificate and key. Both processes must read the same private/entries.json file. Allow inbound TCP connections on port 443 for access over the internet.</p>
+      
+      <pre><code>{
+  &quot;urls&quot;: [&quot;https://relay.example.org&quot;],
+  &quot;port&quot;: 443,
+  &quot;backendPort&quot;: 3188,
+  &quot;cert&quot;: &quot;/path/to/fullchain.pem&quot;,
+  &quot;key&quot;: &quot;/path/to/privkey.pem&quot;,
+  &quot;entriesFile&quot;: &quot;/opt/mayday/private/entries.json&quot;,
+  &quot;privateOnly&quot;: true
+}</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="start-https">
+      <h2 id="start-https">Start the HTTPS process</h2>
+      <p>Leave the gateway running and run this command in another terminal. The process needs permission to read the key and listen on port 443. For a permanent setup, run both processes as services.</p>
+      
+      <pre><code>node /opt/mayday/tools/mayday-gateway/direct-https.mjs /opt/mayday</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="issue">
+      <h2 id="issue">Issue a link for an account</h2>
+      <p>Open My profile in the target Mayday account and tap Copy under Mayday ID. Use the full ID, your HTTPS domain, and the relay name the recipient will see. Run the command from the Mayday source directory.</p><p>The link starts with mayday://entry# and is written to private/invite-01.txt. Send the contents only to the owner of that account. The link is valid for 90 days. Choose a new output filename for each invitation.</p>
+      
+      <pre><code>node tools/mayday-gateway/issue-entry.mjs \
+  private/entries.json private/invite-01.txt \
+  https://relay.example.org &#39;&lt;MAYDAY_ID&gt;&#39; &#39;Backup relay&#39;</code></pre>
+      
+    </section>
+    <section class="help-section" aria-labelledby="check">
+      <h2 id="check">Check the connection from a phone</h2>
+      
+      <ol><li>Sign in to the account the link was issued for. In Settings → Mayday network, paste the complete link and tap Add node.</li><li>Turn off Wi-Fi on the phone and check that the new relay shows Connected over mobile data.</li></ol>
+      
+      <p><a href="../../../en/help/network/#add">Instructions for the invitation recipient</a></p>
+    </section>
+  </article></main>
+  </div>
+  <footer class="shell footer help-footer">
+    <a href="../../../en/">Mayday website</a>
+    <a href="../../../en/#install">Mayday downloads</a>
+  </footer>
+</body>
+</html>

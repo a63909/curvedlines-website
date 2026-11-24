@@ -9,18 +9,18 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="{{title}}">
   <meta property="og:description" content="{{description}}">
-  <meta property="og:url" content="{{canonical}}">
+  <meta property="og:url" content="{{shareUrl}}">
   <meta property="og:locale" content="{{locale}}">
   <meta property="og:locale:alternate" content="{{alternateLocale}}">
   <meta property="og:image" content="{{shareImage}}">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="{{shareWidth}}">
+  <meta property="og:image:height" content="{{shareHeight}}">
   <meta property="og:image:alt" content="{{shareAlt}}">
   <title>{{title}}</title>
   <link rel="canonical" href="{{canonical}}">
-  <link rel="alternate" hreflang="ru" href="https://mayday.colorchain.ru/">
-  <link rel="alternate" hreflang="en" href="https://mayday.colorchain.ru/en/">
-  <link rel="alternate" hreflang="x-default" href="https://mayday.colorchain.ru/">
+  <link rel="alternate" hreflang="ru" href="{{alternateRu}}">
+  <link rel="alternate" hreflang="en" href="{{alternateEn}}">
+  <link rel="alternate" hreflang="x-default" href="{{alternateRu}}">
   <link rel="icon" href="{{root}}assets/favicon.svg" type="image/svg+xml">
   <style>
 {{pageStyles}}
@@ -29,8 +29,8 @@
 <body>
   <a class="skip" href="#main">{{skip}}</a>
   <header class="shell header">
-    <a class="brand" href="./" aria-label="{{home}}"><span class="mark"><img src="{{root}}assets/mayday-mark.svg" alt="" width="24" height="24"></span>Mayday</a>
-    <nav aria-label="{{navigation}}"><a href="#network">{{network}}</a><a href="#bots">{{builders}}</a><a href="#install">{{downloads}}</a></nav>
+    <a class="brand" href="{{root}}{{homePath}}" aria-label="{{home}}"><span class="mark"><img src="{{root}}assets/mayday-mark.svg" alt="" width="24" height="24"></span>Mayday</a>
+    <nav aria-label="{{navigation}}"><a href="#network">{{network}}</a><a href="#bots">{{builders}}</a><a href="#install">{{downloads}}</a><a class="help-link" href="{{root}}{{homePath}}help/">{{help}}</a></nav>
     <a class="language" id="language" href="{{languageHref}}" lang="{{otherLang}}" hreflang="{{otherLang}}">{{language}}</a>
   </header>
 
@@ -46,11 +46,13 @@
         <h1 id="title">{{heroHeadline}}<br><em>{{heroAccent}}</em></h1>
         <p class="lead">{{heroText}}</p>
         <div class="actions">
-          <a class="button primary" id="hero-download" href="#install">{{heroDownload}}</a>
-          <a class="button outline" href="#network">{{featureJump}}</a>
+          <a class="button primary" id="hero-download" href="{{heroDownloadHref}}">{{heroDownload}}</a>
+          <a class="button outline" id="open-mayday" hidden>{{openMayday}}</a>
+          <a class="button outline" id="hero-secondary" href="{{featureHref}}">{{featureJump}}</a>
         </div>
+        <p class="note nardy-install-note" {{showNardy}}>{{nardyInstallNote}}</p>
       </div>
-      <figure class="hero-visual" role="img" aria-label="{{chatIllustration}}">
+      <figure class="hero-visual" role="img" aria-label="{{chatIllustration}}" {{showChat}}>
         <div class="visual-lines" aria-hidden="true"></div>
         <div class="hero-phone" aria-hidden="true">
           <div class="phone-status"><span>12:30</span><i></i><span>▮▮▮</span></div>
@@ -69,6 +71,9 @@
         <div class="visual-card visual-direct" aria-hidden="true"><img src="{{root}}assets/globe.svg" alt="" width="23" height="23">{{chatDirect}}</div>
         <div class="visual-card visual-call" aria-hidden="true"><img src="{{root}}assets/video.svg" alt="" width="25" height="25">{{chatCall}}</div>
         <div class="visual-card visual-id" aria-hidden="true"><img src="{{root}}assets/qr.svg" alt="" width="23" height="23">{{chatId}}</div>
+      </figure>
+      <figure class="nardy-visual" {{showNardy}}>
+        {{nardyImage}}
       </figure>
     </section>
 
@@ -153,10 +158,14 @@
           <article class="panel platform" id="windows">
             <div class="platform-heading"><img class="platform-icon" src="{{root}}assets/platforms/windows.svg" alt="" width="36" height="36"><h3>Windows x64</h3><span class="status">{{windowsStatus}}</span></div>
             <p>{{windowsBody}}</p>
-            <a class="button primary" href="{{root}}releases/Mayday-Windows-x64-0.2.2.zip" download>{{windowsDownload}}</a>
+            <div class="actions">
+              <a class="button primary" href="{{root}}releases/MaydaySetup-x64-0.3.1.exe" download>{{windowsDownload}}</a>
+              <a class="button outline" href="{{root}}releases/Mayday-Windows-x64-0.3.1.msi" download>{{windowsMsi}}</a>
+            </div>
             <details class="checksum">
               <summary>{{windowsDetails}}</summary><p>{{windowsSteps}}</p>
-              <code aria-label="{{fileDetails}}">3f067034c45572d3fb0e0cd8718199fe86d5da79d2d5a944cc2db70f23ad50cf</code>
+              <p>EXE</p><code aria-label="EXE SHA-256">65c17f81e07def102a2fc9f8f1a7fcab200dd9f1e43913bf1befa7c44e7d8962</code>
+              <p>MSI</p><code aria-label="MSI SHA-256">dd02d7e578e04e44db9aa3d7d362f19f48b9427b7820809de05b98aadeac2d9e</code>
             </details>
           </article>
         </div>
@@ -183,7 +192,8 @@
   </main>
 
   <footer class="shell footer">
-    <a class="brand" href="./" aria-label="{{home}}"><span class="mark"><img src="{{root}}assets/mayday-mark.svg" alt="" width="22" height="22"></span>Mayday</a>
+    <a class="brand" href="{{root}}{{homePath}}" aria-label="{{home}}"><span class="mark"><img src="{{root}}assets/mayday-mark.svg" alt="" width="22" height="22"></span>Mayday</a>
+    <a class="help-link" href="{{root}}{{homePath}}help/">{{help}}</a>
     <button class="share" id="share" type="button" hidden>{{share}}</button>
     <p id="share-status" class="sr-only" role="status"></p>
   </footer>

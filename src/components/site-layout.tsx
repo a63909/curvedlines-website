@@ -112,7 +112,7 @@ export function SiteFooter() {
           </h2>
           <div className="mt-4 flex flex-col gap-3 text-sm text-white/76">
             <a href={SITE.phoneHref}>{SITE.phoneDisplay}</a>
-            <a href={SITE.whatsappHref} target="_blank" rel="noreferrer">
+            <a href={SITE.whatsappHref} target="_blank" rel="noopener noreferrer">
               {SITE.whatsappLabel}
             </a>
             <p>{SITE.hoursLabel}</p>
@@ -138,7 +138,7 @@ export function FloatingContacts() {
         <a
           href={SITE.whatsappHref}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="flex min-h-12 min-w-44 items-center justify-center rounded-full border border-[color:var(--border)] bg-white px-5 text-sm font-semibold text-[color:var(--foreground)] transition hover:border-[color:var(--accent)]"
         >
           WhatsApp

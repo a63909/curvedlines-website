@@ -1,0 +1,13 @@
+[Unit]
+Description=Refresh the private Mayday download dashboard
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/mayday-download-dashboard-refresh
+Environment=PYTHONIOENCODING=utf-8
+UMask=0027
+PrivateTmp=yes
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/mayday-download-dashboard
